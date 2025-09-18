@@ -1,2 +1,2 @@
-# Main_project
+# IT in a real organization
 
