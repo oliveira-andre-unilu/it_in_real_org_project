@@ -2,8 +2,4 @@
 
 Software project done during the fifth semester of the Bachelor program at the University of Luxembourg.
 
-This line was added by Leo.
-
-This line was added by me.
-
-N
+All teh project goals and specs are currently listed under **REQ/Project_Charter.md**
