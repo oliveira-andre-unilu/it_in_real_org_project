@@ -59,15 +59,11 @@ Presented by **LamCo Solutions**
 
 ## Project goals
 
-The main goals of this application are the following:
+- Simple User interface for the mobile app
 
-- Having an easy User interface for the mobile app, this specially since the application would be used by different types of users.
+- The mobile shall work offline 
 
-- The mobile app shall be independent of the Data Server. The users shall be able to add working schedules without any internet connection and, when the do have som internet connection, the data should be uploaded into the main server.
-
-- The main Data server does not need to have any UI (apart from a PHPAdmin page eventually) and shall always guarantee a fast connection for all users.
-
-- The administrator page shall will eventually have a more complex interface but it needs to several graphs that will demonstrate all the admin needs in a easy and direct way.
+- The administrator page with several graphs that will demonstrate all the admin needs in a easy and direct way
 
 - All the other goals will be specified more specifically in the SPEC sheet
 
@@ -75,11 +71,48 @@ The main goals of this application are the following:
 ---
 
 ## Project Deliverables
-- Deliverable 1  
-- Deliverable 2  
-- Deliverable 3  
+
+![bg left:33% height:250](../../Assets/Icons/google-docs.png)
+
+- Documentation:
+  - All the meeting will have their respective minute
+  - Main project specification sheets
+  - Manual tests
 
 ---
+
+## Mobile app
+
+![bg right:33% height:350](../../Assets/Icons/mobile-development.png)
+
+- app where all users will be able to insert all their working hours
+
+- Based on a **React-Native** platform
+
+---
+
+## Data server
+
+![bg left:33% height:350](../../Assets/Icons/server.png)
+
+- Springboot-based application
+
+- respective SQL database
+
+- This server will mainly serve as an API for both client and administrator platforms
+
+---
+
+## Administrator platform
+
+![bg right:33% height:350](../../Assets/Icons/working.png)
+
+- A non-mobile application, also **react-native**
+
+- Goal of the app will be to show 
+
+---
+
 
 ## Scope
 **In Scope**
