@@ -13,6 +13,8 @@ section {
   line-height: 1.5;
   background-color: #0A192F;
   background-image: url("../../Assets/Main_logo.png"), url("../../Assets/simple-bg-2.jpg");
+  /* filter: blur(0px), blur(8px);
+  -webkit-filter: blur(0px), blur(8px); */
   background-repeat: no-repeat;
   background-position: bottom left;
   background-size: 150px, cover;
@@ -109,49 +111,73 @@ Presented by **LamCo Solutions**
 
 - A non-mobile application, also **react-native**
 
-- Goal of the app will be to show 
+- Goal of the app will be to show the user the amount of hours per user and other parameters
 
 ---
 
 
 ## Scope
 **In Scope**
-- [List items included]  
+- Build the mobile app with all the essential functionalities
+- Build the Data Server completely with all basic functionalities for both Admin and Normal users
+- Build a simple Admin page
+
+---
+## Scope
 
 **Out of Scope**
-- [List items excluded]  
+- Fully implement all functionalities for both Admin and User apps.
+- Data integration from Car GPS tracking applications such as (Name still to check)
+- Data Exportation to formal formats (such as XML) to further integrating the system to other business management tools
 
 ---
 
 ## Benefits and Costs
 **Benefits**  
-- [Efficiency gains, savings, improvements]  
+- In-life management of realized hours of all employees
+- No more the need to write all hours created in a paper-format
+- Easy control of project manual labor cost
+- Easy control of employees theoretical and real number of hours realized (only possible in version 2.0). 
+
+---
+## Benefits and costs
 
 **Costs**  
-- [Estimated resources, budget, time]  
+- The necessity of a testing server (run beta production system) and git repository
+- Labor cost
 
 ---
 
 ## Key Dates & Milestones
-- Kickoff: [date]  
-- Milestone 1: [date]  
-- Milestone 2: [date]  
-- Delivery / Go-Live: [date]  
+- Project start: **30/09**
+- Milestone 1 => Implement the main Spec of the system: **07/10**
+- Milestone 2 => Implement all C1->C4 levels of architecture of the system: **14/10**
+- Milestone 3 => Implement the first version of the Data Server system: **11/11**
+- Milestone 4 => Implement the first version of the mobile app: **08/12**
+- Milestone 5 => Implement the first version of the Admin app: **08/12**
+- Milestone 6 => Having all major test implemented an working: **08/12**
+- Delivery of the version: **15/12** 
 
 ---
 
 ## Key Risks
-- Risk 1 → Mitigation  
-- Risk 2 → Mitigation  
-- Risk 3 → Mitigation  
+- **Risk 1:** Companies will not be willing to change from their current to system to ours
+- **Risk 2:** Data imports/exports might show a bigger difficulty than expected
+- **Risk 3:** The project Scope being to big for the time that we have 
 
 ---
 
 ## Stakeholders & Team
-- **Sponsor:** [name]  
-- **Project Lead:** [name]  
-- **Team Members:** [names/roles]  
-- **Other Stakeholders:** [departments, partners]  
+
+- **Project Lead:** André OLIVEIRA MARTINS 
+
+- **Developer:** Tomás MARQUES DO POMAR
+
+- **Developer:** Leonardo SOUSA COIMBRA
+
+- **Business Analyst:** Elvin COCCO 
+
+- **QA Engineer:** Manon BARTHELEMY 
 
 ---
 
