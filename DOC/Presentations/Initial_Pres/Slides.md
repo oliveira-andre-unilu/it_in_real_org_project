@@ -8,13 +8,12 @@ class: invert
 @import 'default';
 
 section {
+  position: relative;
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   font-size: 28px;
   line-height: 1.5;
   background-color: #0A192F;
-  background-image: url("../../Assets/Main_logo.png"), url("../../Assets/simple-bg-2.jpg");
-  /* filter: blur(0px), blur(8px);
-  -webkit-filter: blur(0px), blur(8px); */
+  background-image: url("../../Assets/Main_logo.png"), url("../../Assets/time-bg-2.jpg");
   background-repeat: no-repeat;
   background-position: bottom left;
   background-size: 150px, cover;
@@ -23,6 +22,14 @@ section {
 h1, h2, h3 {
   font-weight: 700;
   color: #007BFF;
+  width: fit-content;
+  margin:auto;
+  margin-bottom: 50px;
+  background-color: rgba(0,0,0,0.5);
+  padding: 5px;
+  padding-left:20px;
+  padding-right:20px;
+  border-radius: 25px;
 }
 
 p, li {
@@ -39,16 +46,34 @@ code {
   padding: 0.2em 0.4em;
   border-radius: 4px;
 }
+
+
+ul:not(ul ul) {
+  display: inline-block;
+  background-color: rgba(0,0,0,0.5);
+  padding: 5px;
+  padding-left: 50px;
+  border-radius: 25px;
+}
+
+p:not(li p){
+  display: inline-block;
+  background-color: rgba(0,0,0,0.5);
+  padding: 5px;
+  border-radius: 25px;
+  padding-left:20px;
+  padding-right:20px;
+}
 </style>
 
 # Timelink
-Presented by **LamCo Solutions**
+Presented by **LamToCo Solutions**
 
 ---
 
-## Project summary
+## Project Summary
 
-- Easy way to for employees to mark their working hours.
+- Easy way for employees to mark their working hours.
 
 - Usage of an mobile app
 
@@ -59,15 +84,15 @@ Presented by **LamCo Solutions**
 ---
 
 
-## Project goals
+## Project Goals
 
 - Simple User interface for the mobile app
 
 - The mobile shall work offline 
 
-- The administrator page with several graphs that will demonstrate all the admin needs in a easy and direct way
+- The administrator page will have several graphs that will demonstrate his needs in a easy and direct way
 
-- All the other goals will be specified more specifically in the SPEC sheet
+- All the other goals will be specified more in detail in the SPEC sheet
 
 
 ---
@@ -83,29 +108,29 @@ Presented by **LamCo Solutions**
 
 ---
 
-## Mobile app
+## Mobile App
 
 ![bg right:33% height:350](../../Assets/Icons/mobile-development.png)
 
-- app where all users will be able to insert all their working hours
+- App where all users will be able to insert all their working hours
 
 - Based on a **React-Native** platform
 
 ---
 
-## Data server
+## Data Server
 
 ![bg left:33% height:350](../../Assets/Icons/server.png)
 
 - Springboot-based application
 
-- respective SQL database
+- Respective SQL database
 
-- This server will mainly serve as an API for both client and administrator platforms
+- This server will mainly be used as an API for both client and administrator platforms
 
 ---
 
-## Administrator platform
+## Administrator Platform
 
 ![bg right:33% height:350](../../Assets/Icons/working.png)
 
@@ -135,7 +160,7 @@ Presented by **LamCo Solutions**
 ## Benefits and Costs
 **Benefits**  
 - In-life management of realized hours of all employees
-- No more the need to write all hours created in a paper-format
+- No more need to write all hours created in a paper-format
 - Easy control of project manual labor cost
 - Easy control of employees theoretical and real number of hours realized (only possible in version 2.0). 
 
@@ -155,7 +180,7 @@ Presented by **LamCo Solutions**
 - Milestone 3 => Implement the first version of the Data Server system: **11/11**
 - Milestone 4 => Implement the first version of the mobile app: **08/12**
 - Milestone 5 => Implement the first version of the Admin app: **08/12**
-- Milestone 6 => Having all major test implemented an working: **08/12**
+- Milestone 6 => Having all major test implemented and working: **08/12**
 - Delivery of the version: **15/12** 
 
 ---
