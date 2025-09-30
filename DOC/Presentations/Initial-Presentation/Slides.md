@@ -67,7 +67,7 @@ p:not(li p){
 </style>
 
 # Timelink
-Presented by **LamToCo Solutions**
+Presented by **LAMTCo Solutions**
 
 ---
 
