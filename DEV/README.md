@@ -119,8 +119,6 @@ npx react-native run-android
 
 ## 6️⃣ Run Web Version (Optional)
 
-* If your project supports React Native Web:
-
 ```bash
 npm run web
 ```
