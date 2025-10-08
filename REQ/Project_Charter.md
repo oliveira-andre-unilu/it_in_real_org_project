@@ -1,4 +1,30 @@
+---
+title: "Timelink Software project"
+subtitle: "Project Charter"
+cover-page: true
+author: 
+  - "André Martins, Team leader"
+date: "October, 2025"
+abstract: |
+  This document outlines the technical implementation
+  of Timelink as defined for the Project charter template given to us.
+toc: true
+toc-depth: 3
+numbersections: true
+geometry: "margin=2.5cm"
+header-includes:
+  - \usepackage{fancyhdr}
+  - \pagestyle{fancy}
+  - \fancyhead[L]{\textit{Timelink}}
+  - \fancyhead[R]{\thepage}
+  - \fancyfoot[C]{\textit{Company Confidential - Do Not Distribute}}
+  - \usepackage{watermark}
+---
+
+\newpage
+
 *Version: 1.0*
+
 *Last Update: 27/09*
 
 # Project Charter
