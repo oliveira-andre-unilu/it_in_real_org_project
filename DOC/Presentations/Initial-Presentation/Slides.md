@@ -1,5 +1,6 @@
 ---
 marp: true
+html: true
 theme: uncover
 paginate: true
 class: invert
@@ -152,7 +153,7 @@ Presented by **LAMTCo Solutions**
 
 **Out of Scope**
 - Fully implement all functionalities for both Admin and User apps.
-- Data integration from Car GPS tracking applications such as (Name still to check)
+- Data integration from Car GPS tracking applications such as Winfleet
 - Data Exportation to formal formats (such as XML) to further integrating the system to other business management tools
 
 ---
@@ -174,9 +175,9 @@ Presented by **LAMTCo Solutions**
 ---
 
 ## Key Dates & Milestones
-- Project start: **30/09**
-- Milestone 1 => Implement the main Spec of the system: **07/10**
-- Milestone 2 => Implement all C1->C4 levels of architecture of the system: **14/10**
+- Project start: **09/09**
+- Milestone 1 => Implement the main Spec of the system: **14/10**
+- Milestone 2 => Implement all C1->C4 levels of architecture of the system: **21/10**
 - Milestone 3 => Implement the first version of the Data Server system: **11/11**
 - Milestone 4 => Implement the first version of the mobile app: **08/12**
 - Milestone 5 => Implement the first version of the Admin app: **08/12**
@@ -207,4 +208,17 @@ Presented by **LAMTCo Solutions**
 ---
 
 # Thank You
+
 Questions?
+
+---
+
+# Thank You!
+
+## We'd Love Your Feedback
+
+![QR Code align:center](https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://tally.so/r/nWxq7Q)
+
+#### Scan or visit: https://tally.so/r/nWxq7Q
+
+---
