@@ -1,4 +1,4 @@
-# Epic: [Epic Name]
+# Epic: User system
 
 **Epic ID:** EPIC-1
 **Status:** `Proposed` <!-- | `Prioritized` | `In Progress` | `Completed` | `Archived`   -->
@@ -12,17 +12,19 @@
 ## Epic Overview
 
 **Business Problem:**
+
 Currently managing working hours always requires each employee to have additional hardware (badge system, need of a computer, ...) or they still write all their working hours in a paper format.
 
 In order to solve this issue, he have decided to implement a mobile application software that would allow us all employees to use their personal phones in order to book all their working hours.
 
 **Business Value:**
-[STILL TO CONTINUE]
+
+[Still to be verified]
 
 **Success Metrics:**
-- [Metric 1: e.g., Reduce document generation time by 50%]
-- [Metric 2: e.g., Support 100 concurrent users]
-- [Metric 3: e.g., Achieve 99% conversion success rate]
+- Metric 1: Being able to add hours into the system by no more that 5 button actions
+- Metric 2: Support all platforms
+- Metric 3: [Still to continue]
 
 ## Scope
 
