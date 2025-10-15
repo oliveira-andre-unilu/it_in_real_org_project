@@ -17,7 +17,7 @@ header-includes:
   - \pagestyle{fancy}
   - \fancyhead[L]{\textit{Timelink}}
   - \fancyhead[R]{\thepage}
-  - \fancyfoot[C]{\textit{Company Confidential - Do Not Distribute}}
+  - \fancyfoot[C]{\textit{Presented by LAMTCo Solutions}}
   - \usepackage{watermark}
 ---
 
@@ -45,7 +45,7 @@ The users will also have a profile, allowing them to store all their current wor
 
 ### Usage of a central Data Server
 
-The second major feature willbe a server that will serve as a master data collection center. All updates from all mobile apps will also be saved in this server. In addition, the system will also provide all users all the information that they need (such as current working places available).
+The second major feature will be a server that will serve as a master data collection center. All updates from all mobile apps will also be saved in this server. In addition, the system will also provide all users all the information that they need (such as current working places available).
 
 As for the number of Data Servers that shall be put into productions, we have defined that each company shall have it's own Data Server. This will guarantee data protection at the core of the company. 
 
@@ -71,7 +71,7 @@ The main goals of this application are the following:
 
 ## Project deliverables
 
-During the implementation of this Sofware system, we will deliver several business related Documents as well as all the script related deliverables.
+During the implementation of this Software system, we will deliver several business related Documents as well as all the script related deliverables.
 
 ### Documentation
 
@@ -134,7 +134,7 @@ In order to avoid scope creep for this project we have decided to let some featu
 ### Out of scope 
 
 - Fully implement all functionalities for both Admin and User apps.
-- Data integration from Car GPS tracking applications such as (Name still to check)
+- Data integration from Car GPS tracking applications such as (Winfleet)
 - Data Exportation to formal formats (such as XML) to further integrating the system to other business management tools
 
 ## Benefits and costs
@@ -174,8 +174,6 @@ As for the moment, the risk analysis did not take a major place but we already h
 - **Risk 3:** The project Scope being to big for the time that we have
 
 ## Key Stakeholders, Team Structure, Roles & Responsibilities
-
-- **Stakeholders:** STILL TO BE VERIFIED
 
 - **Project Lead:** André OLIVEIRA MARTINS 
 
