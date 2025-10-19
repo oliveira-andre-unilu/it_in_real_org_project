@@ -19,7 +19,7 @@ In order to solve this issue, he have decided to implement a mobile application 
 
 **Business Value:**
 
-[Still to be verified]
+The software eliminates the need for additional hardware and digitalizes the entry of working hours, improving efficiency and avoiding trickery.
 
 **Success Metrics:**
 - Metric 1: Being able to add hours into the system by no more that 5 button actions
