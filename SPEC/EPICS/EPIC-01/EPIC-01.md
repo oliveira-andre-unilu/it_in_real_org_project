@@ -29,9 +29,9 @@ The software eliminates the need for additional hardware and digitalizes the ent
 ## Scope
 
 ### In Scope
-- [Feature/component 1]
-- [Feature/component 2]
-- [Specific user groups affected]
+- Build an intuitive, easy-to-use mobile application
+- Send localization and timings of the user to the data server
+- Make it attractive for employees
 
 ### Out of Scope
 - [What we are explicitly NOT doing in this epic]
