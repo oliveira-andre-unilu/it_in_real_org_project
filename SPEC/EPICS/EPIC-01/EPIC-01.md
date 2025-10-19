@@ -31,11 +31,11 @@ The software eliminates the need for additional hardware and digitalizes the ent
 ### In Scope
 - Build an intuitive, easy-to-use mobile application
 - Send localization and timings of the user to the data server
-- Make it attractive for employees
+- Make attractive design for employees
 
 ### Out of Scope
-- [What we are explicitly NOT doing in this epic]
-- [Features deferred to future epics]
+- Application integrated into company car software
+- Fully automated service (by entering a certain location with your device)
 
 ## User Personas
 - **[Persona Name]:** [Brief description and primary goals]
