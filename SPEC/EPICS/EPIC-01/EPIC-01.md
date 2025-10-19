@@ -38,8 +38,7 @@ The software eliminates the need for additional hardware and digitalizes the ent
 - Fully automated service (by entering a certain location with your device)
 
 ## User Personas
-- **[Persona Name]:** [Brief description and primary goals]
-- **[Persona Name]:** [Brief description and primary goals]
+- **Employee User:** Enters the start/end of their shift.
 
 ## User Stories
 | Story ID | Story Title | Status | Priority |
