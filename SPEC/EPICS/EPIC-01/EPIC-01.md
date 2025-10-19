@@ -43,7 +43,7 @@ The software eliminates the need for additional hardware and digitalizes the ent
 ## User Stories
 | Story ID | Story Title | Status | Priority |
 |----------|-------------|---------|----------|
-| [US-101] | [Story description] | `Backlog` | `High` |
+| [US-101] | As an employee, I want to enter my starting/ending shift (time) by clicking a single button. | `Backlog` | `High` |
 | [US-102] | [Story description] | `Backlog` | `Medium` |
 | [US-103] | [Story description] | `Backlog` | `Low` |
 
