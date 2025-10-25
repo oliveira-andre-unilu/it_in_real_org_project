@@ -3,7 +3,7 @@
 ## Epic: EPIC-01
 
 ### 03: Employee Shift Punch-out (End Shift)
-**Status:** <!-- `Backlog` | `Ready` | `In Progress`  | --> `Review` <!-- | `Done` -->
+**Status:** `Backlog` <!-- | `Ready` | `In Progress`  |  `Review`  | `Done` -->
 
 **As a(n)** Employee,  
 **I want to** end my shift by pressing a "End Shift" button in the application,  

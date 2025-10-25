@@ -3,7 +3,7 @@
 ## Epic: EPIC-01
 
 ### 04: Employee Reminders
-**Status:** <!-- `Backlog` | `Ready` | `In Progress`  | --> `Review` <!-- | `Done` -->
+**Status:** `Backlog` <!-- | `Ready` | `In Progress`  |  `Review`  | `Done` -->
 
 **As a(n)** Employee,  
 **I want to** receive a notification if I forget to start or end my shift,  
@@ -16,5 +16,5 @@
 **Technical Notes:**  
 - *N/A*
 
-**Estimate:** [Story Points]  
+**Estimate:** [Story Points]
 **Priority:** <!-- `High` | `Medium` | --> `Low`

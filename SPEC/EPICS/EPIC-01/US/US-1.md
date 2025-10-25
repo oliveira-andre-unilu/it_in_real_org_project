@@ -3,10 +3,10 @@
 ## Epic: EPIC-01
 
 ### 01: Employer Shift Monitoring
-**Status:** <!-- `Backlog` | `Ready` | `In Progress`  | --> `Review` <!-- | `Done` -->
+**Status:** `Backlog` <!-- | `Ready` | `In Progress`  |  `Review`  | `Done` -->
 
-**As a(n)** Employer,  
-**I want to** see a list of all employees and their logged hours,  
+**As a(n)** Employee,  
+**I want to** see a list of all my logged hours,  
 **So that** I can monitor attendance and verify shift compliance.
 
 **Acceptance Criteria:**

@@ -1,11 +1,12 @@
 ## Use Case: Employee Shift Punch-in (Start Shift)
 
-**Use Case ID:** UC-101  
+**Use Case ID:** UC-2
 **Version:** 1.0  
 **Created:** 19/10/2025  
 **Last Updated:** 19/10/2025  
 **Priority:** <!-- `Critical` | --> `High` <!-- | `Medium` | `Low` -->  
 **Status:** `Draft` <!-- | `Reviewed` | `Approved` | `Implemented` -->
+**Related US:** US-2 [link](../US/US-2.md)
 
 **Primary Actor:**
 - Employee (Application User)

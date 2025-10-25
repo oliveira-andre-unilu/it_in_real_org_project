@@ -3,7 +3,7 @@
 ## Epic: EPIC-01
 
 ### 02: Employee Shift Punch-in (Start Shift)
-**Status:** <!-- `Backlog` | `Ready` | `In Progress`  | --> `Review` <!-- | `Done` -->
+**Status:** `Backlog` <!-- | `Ready` | `In Progress`  |  `Review`  | `Done` -->
 
 **As a(n)** Employee,  
 **I want to** start my shift by pressing a "Start Shift" button in the application,  
