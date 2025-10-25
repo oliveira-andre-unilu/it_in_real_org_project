@@ -1,11 +1,12 @@
 # Use Case: Monitor Data Server Connection
 
-**Use Case ID:** UC-105 
+**Use Case ID:** UC-9 
 **Version:** 1.0
 **Created:** 16/10/2025
 **Last Updated:** 17/10/2025  
 **Priority:** `Low`
 **Status:** `Draft`
+**Related US:** US-9 [link](../US/US-9.md)
 
 **Primary Actor:** Admin
 **Secondary Actors:** Data Server

@@ -1,11 +1,12 @@
 # Use Case: Secure Admin Login
 
-**Use Case ID:** UC-101
+**Use Case ID:** UC-5
 **Version:** 1.0
 **Created:** 16/10/2025
 **Last Updated:** 17/10/2025
 **Priority:** `High`
 **Status:** `Draft`
+**Related US:** US-5 [link](../US/US-5.md)
 
 **Primary Actor:** Admin
 **Secondary Actors:** Authentication Service

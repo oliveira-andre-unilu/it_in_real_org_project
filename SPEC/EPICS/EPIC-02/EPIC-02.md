@@ -52,12 +52,14 @@ The Admin Platform helps companies save time and reduce errors by showing all in
 ## User Stories
 | Story ID | Story Title | Status | Priority |
 |----------|-------------|---------|----------|
-| US-101 | As an admin, I want to log in securely to the Admin Platform | `Backlog` | `High` |
-| US-102 | As an admin, I want to view employee working hours and working places | `Backlog` | `High` |
-| US-103 | As an admin, I want to see graphs of total hours worked per working place | `Backlog` | `Medium` |
-| US-104 | As an admin, I want to add and remove users from the system | `Backlog` | `Medium` |
-| US-105 | As an admin, I want to see connection status with the Data Server | `Backlog` | `Low` |
-
+| US-5 | As an admin, I want to log in securely to the Admin Platform | `Backlog` | `High` |
+| US-6 | As an admin, I want to view employee working hours and working places | `Backlog` | `High` |
+| US-7 | As an admin, I want to see graphs of total hours worked per working place | `Backlog` | `Medium` |
+| US-8 | As an admin, I want to add and remove users from the system | `Backlog` | `Medium` |
+| US-9 | As an admin, I want to see connection status with the Data Server | `Backlog` | `Low` |
+| US-10 | As an admin, I want to filter employee data by department or project, so that I can analyze work distribution more efficiently | `Backlog` | `Medium` |
+| US-11 | As an admin, I want to edit working places and assign employees to them, so that I can maintain an up-to-date organizational structure | `Backlog` | `High` |
+| US-12 | As an admin, I want to view an activity log of recent changes in the system, so that I can track who modified what and when | `Backlog` | `Medium` |
 ---
 
 ## Technical Considerations

@@ -1,11 +1,12 @@
 # Use Case: View Workload Charts by Location
 
-**Use Case ID:** UC-103
+**Use Case ID:** UC-7
 **Version:** 1.0
 **Created:** 16/10/2025
 **Last Updated:** 17/10/2025
 **Priority:** `Medium`
 **Status:** `Draft`
+**Related US:** US-7 [link](../US/US-7.md)
 
 **Primary Actor:** Admin
 **Secondary Actors:** Data Server

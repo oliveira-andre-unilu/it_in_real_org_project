@@ -1,11 +1,12 @@
 # Use Case: Manage Users (Add/Remove)
 
-**Use Case ID:** UC-104
+**Use Case ID:** UC-8
 **Version:** 1.0
 **Created:** 16/10/2025
 **Last Updated:** 17/10/2025
 **Priority:** `Medium`
 **Status:** `Draft`
+**Related US:** US-8 [link](../US/US-8.md)
 
 **Primary Actor:** Admin
 **Secondary Actors:** Authentication Service

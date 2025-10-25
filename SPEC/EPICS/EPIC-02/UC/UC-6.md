@@ -1,11 +1,12 @@
 # Use Case: View Employee Working Hours and Locations
 
-**Use Case ID:** UC-102
+**Use Case ID:** UC-6
 **Version:** 1.0
 **Created:** 16/10/2025
 **Last Updated:** 17/10/2025
 **Priority:** `High`
 **Status:** `Draft`
+**Related US:** US-6 [link](../US/US-6.md)
 
 **Primary Actor:** Admin
 **Secondary Actors:** Data Server
