@@ -19,7 +19,7 @@ In order to solve this issue, he have decided to implement a mobile application 
 
 **Business Value:**
 
-[Still to be verified]
+The software eliminates the need for additional hardware and digitalizes the entry of working hours, improving efficiency and avoiding trickery.
 
 **Success Metrics:**
 - Metric 1: Being able to add hours into the system by no more that 5 button actions
@@ -29,22 +29,21 @@ In order to solve this issue, he have decided to implement a mobile application 
 ## Scope
 
 ### In Scope
-- [Feature/component 1]
-- [Feature/component 2]
-- [Specific user groups affected]
+- Build an intuitive, easy-to-use mobile application
+- Send localization and timings of the user to the data server
+- Make attractive design for employees
 
 ### Out of Scope
-- [What we are explicitly NOT doing in this epic]
-- [Features deferred to future epics]
+- Application integrated into company car software
+- Fully automated service (by entering a certain location with your device)
 
 ## User Personas
-- **[Persona Name]:** [Brief description and primary goals]
-- **[Persona Name]:** [Brief description and primary goals]
+- **Employee User:** Enters the start/end of their shift.
 
 ## User Stories
 | Story ID | Story Title | Status | Priority |
 |----------|-------------|---------|----------|
-| [US-101] | [Story description] | `Backlog` | `High` |
+| [US-101] | As an employee, I want to enter my starting/ending shift (time) by clicking a single button. | `Backlog` | `High` |
 | [US-102] | [Story description] | `Backlog` | `Medium` |
 | [US-103] | [Story description] | `Backlog` | `Low` |
 
