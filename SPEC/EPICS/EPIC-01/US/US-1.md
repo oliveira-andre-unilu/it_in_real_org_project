@@ -17,5 +17,5 @@
 **Technical Notes:**
 - Graphical Diagrams could be generated at the end of each week.
 
-**Estimate:** [Story Points]  
+**Estimate:** 2-3 Story Points
 **Priority:** <!-- `High` | `Medium` | --> `Low` 

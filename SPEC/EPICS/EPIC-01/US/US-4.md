@@ -16,5 +16,5 @@
 **Technical Notes:**  
 - *N/A*
 
-**Estimate:** [Story Points]
+**Estimate:** 1 Story Points
 **Priority:** <!-- `High` | `Medium` | --> `Low`
