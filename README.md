@@ -1,4 +1,4 @@
-# IT in a real organization
+# IT in a real Organization
 
 Software project done during the fifth semester of the Bachelor program at the University of Luxembourg.
 
