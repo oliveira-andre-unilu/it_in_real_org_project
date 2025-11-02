@@ -1,3 +1,4 @@
+
 @startuml system_architecture
 
 actor "Employee\n(mobile)" as Employee
@@ -34,5 +35,3 @@ Auth --> API : 200 OK / 403\n(admin)
 API -> DB : CRUD operations
 DB --> API : query results
 ' API --> WebApp : query results
-
-@enduml
