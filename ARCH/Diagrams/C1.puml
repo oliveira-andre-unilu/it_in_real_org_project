@@ -1,0 +1,38 @@
+@startuml system_architecture
+
+actor "Employee\n(mobile)" as Employee
+actor "Admin / HR\n(web)" as Admin
+
+package "Client Apps" {
+    component "Mobile App\n(Clock Button)" as Mobile
+    component "Admin Web App\n(CRUD UI)" as WebApp
+}
+
+package "Backend Services" {
+    component "API Gateway\n(REST API)" as API
+    component "Auth Service\n(Token / SSO)" as Auth
+    component "Time Tracking Service\n(Validate & Persist)" as TimeService
+    database "TimeRecords DB\n(Employees, Departments, TimeEntries)" as DB
+}
+
+' employee clocks in/out
+Employee -> Mobile : Press Clock Button
+Mobile -> API : POST /clock {employeeId, timestamp, geolocation}
+API -> Auth : Authenticate / authorize token
+Auth --> API : 200 OK / 401
+API -> TimeService : CreateTimeEntry(payload, user)
+TimeService -> DB : INSERT TimeEntry
+DB --> TimeService : 201 Created
+TimeService --> API : 201 Created
+' API --> Mobile : 201 Created
+
+' Admin/HR operations via web app (CRUD)
+Admin -> WebApp : Login, Manage employees & time records
+WebApp -> API : CRUD /employees, /timeentries
+API -> Auth : Validate session & role\n(admin)
+Auth --> API : 200 OK / 403\n(admin)
+API -> DB : CRUD operations
+DB --> API : query results
+' API --> WebApp : query results
+
+@enduml
