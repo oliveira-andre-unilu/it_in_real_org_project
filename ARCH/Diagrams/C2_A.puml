@@ -1,4 +1,4 @@
-@startuml
+@startuml C2_architecture
 
 component DataBase_System #LightBlue{
     component SpringBootApplication{
