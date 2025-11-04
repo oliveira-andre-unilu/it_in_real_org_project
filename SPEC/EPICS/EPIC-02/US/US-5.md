@@ -20,5 +20,5 @@
 - Implement HTTPS for all connections
 - Include session timeout after inactivity
 
-**Estimate:** 4 Story Points
+**Estimate:** 3 Story Points
 **Priority:** `High`

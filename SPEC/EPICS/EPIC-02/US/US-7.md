@@ -18,5 +18,5 @@
 - Use a chart library (e.g. d3.js)
 - Ensure responsiveness for desktop and tablet views
 
-**Estimate:** 3 Story Points
+**Estimate:** 4-5 Story Points
 **Priority:** `Medium`
