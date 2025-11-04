@@ -1,4 +1,4 @@
-@startuml system_architecture
+@startuml system_architecture_2
 
 actor "Employee\n(mobile)" as Employee
 ' actor "Admin / HR\n(web)" as Admin

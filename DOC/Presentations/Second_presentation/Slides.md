@@ -75,6 +75,22 @@ p:not(li p){
   padding-left:20px;
   padding-right:20px;
 }
+
+.admonition {
+  border-left: 6px solid #2196f3;
+  background-color: #2e2e2eff;
+  padding: 1em;
+  border-radius: 8px;
+  margin: 1em 0;
+}
+.admonition.warning {
+  border-left-color: #ff9800;
+  background-color: #2e2e2eff;
+}
+.admonition.tip {
+  border-left-color: #4caf50;
+  background-color: #2e2e2eff;
+}
 </style>
 
 # Timelink - Specification
@@ -99,4 +115,46 @@ Presented by **LAMTCo Solutions**
 - C2 - Container level
 - C3 - Component
 - C4 - Code level
+
+---
+
+## C1 - System level
+
+![height:400 ](./Assets/C1_arch.svg)
+
+<!-- The project consists on three main deliverables
+- Database System -> The main brain of the system
+- Timelink mobile -> Simple app where all users shall insert their working hours
+- Timelink admin -> Administrator app for managers -->
+
+---
+
+## C2 - Container level
+
+![height:400](./Assets/C2_architecture.svg)
+<!-- Explain each component together with each communication protocol -->
+
+---
+## Tipical data workflows
+
+### Admin platform
+
+![image](./Assets/system_architecture.svg)
+
+---
+## Typical data workflows
+
+### Mobile platform
+
+![image](./Assets/system_architecture_2.svg)
+
+---
+
+![bg](../../Assets/city-bg2.jpg)
+
+# UI designs/mockups 
+
+---
+
+# Timelink admin
 
