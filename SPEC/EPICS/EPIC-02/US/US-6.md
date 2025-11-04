@@ -19,5 +19,5 @@
 - Fetch data via API from Data Server
 - Ensure data consistency for large datasets
 
-**Estimate:** 4 Story Points
+**Estimate:** 3-4 Story Points
 **Priority:** `High`

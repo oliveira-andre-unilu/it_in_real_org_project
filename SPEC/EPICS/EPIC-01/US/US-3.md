@@ -18,5 +18,5 @@
 **Technical Notes:**
 - Button sizes should be considerably large to take gloves and thicker fingers into consideration.
 
-**Estimate:** [Story Points]  
+**Estimate:** 2 Story Points  
 **Priority:** `High` <!-- | `Medium` | `Low` -->
