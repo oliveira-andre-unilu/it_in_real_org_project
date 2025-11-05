@@ -88,7 +88,7 @@ p:not(li p){
   background-color: #2e2e2eff;
 }
 .admonition.tip {
-  border-left-color: #4caf50;
+  border-left-color: #6F8D6A;
   background-color: #2e2e2eff;
 }
 </style>
@@ -163,7 +163,7 @@ Presented by **LAMTCo Solutions**
 
 # Timelink desktop
 
-![bg blur:2px](./Assets/mobile_phone.jpg)
+![bg blur:2px](./Assets/Linux.jpg)
 
 <div class="admonition">
   As an admin, I want to view employee working hours and their working locations, so that I can monitor attendance and manage work distribution.
@@ -263,9 +263,10 @@ Explain each component together with each communication protocol -->
 
 ![bg blur:2px](../../Assets/city-bg2.jpg)
 
-<!-- Tomas -->
-
 ## Timelink admin
+
+
+<!-- Tomas -->
 
 ---
 
@@ -371,11 +372,10 @@ Employee punch-out procedure
 
 ![bg](./Assets/Danger.jpg)
 
+<!-- Manon -->
 ---
 
 ![bg left:33% height:250](./Assets/Icons/warning.png)
-
-<!-- Manon -->
 
 # Identified risks
 
@@ -392,3 +392,36 @@ Employee punch-out procedure
 <!-- Manon
 - Regulatory non-compliance (GDPR); No compliant measures (hashing, session timeout); High, legal risk, reputation risk
 - Inconsistency between logs and actual actions;The logs do not accurately reflect the changes (delay or recording error).High -->
+
+---
+
+# Current state of the project
+
+![bg grayscale:0.5](./Assets/Last_bg.jpg)
+
+## What has been done
+
+*Milestone 1 and 2 accomplished*
+
+<div class="admonition tip">
+  <li> The project specification has been defined
+  <li> All the architecture has been defined at the container level
+  <li> Some major risks have been identified<br>
+</div>
+
+
+---
+
+# Current state of the project
+
+![bg grayscale:0.5](./Assets/Last_bg.jpg)
+
+## Our next steps
+
+*Start of Milestones 3,4 and 5*
+
+<div class="admonition">
+  <li> The development will start soon
+  <li> We plan to define the design at the class level together dynamically
+  <li> Start risk mitigation for the current identified risks
+</div>
