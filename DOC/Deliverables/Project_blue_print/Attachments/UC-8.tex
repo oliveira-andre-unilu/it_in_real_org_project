@@ -1,0 +1,99 @@
+\section{Use Case: Manage Users
+(Add/Remove)}\label{use-case-manage-users-addremove}
+
+\textbf{Use Case ID:} UC-8\\
+\textbf{Version:} 1.0\\
+\textbf{Created:} 16/10/2025 \textbf{Last Updated:} 17/10/2025\\
+\textbf{Priority:} \texttt{Medium}\\
+\textbf{Status:} \texttt{Draft} \textbf{Related US:} US-8
+\href{../US/US-8.md}{link}
+
+\textbf{Primary Actor:} Admin\\
+\textbf{Secondary Actors:} Authentication Service\\
+\textbf{Stakeholders:}\\
+- \textbf{Admin:} manages access and user roles\\
+- \textbf{IT/Security Team:} ensures controlled access\\
+- \textbf{Company Management:} maintains updated user records
+
+\textbf{Brief Description:}\\
+This use case describes how an admin adds or removes users to manage
+access and keep the system user list current.
+
+\textbf{Trigger:}\\
+Admin navigates to the ``User Management'' section.
+
+\textbf{Preconditions:}
+
+\begin{itemize}
+\tightlist
+\item
+  Admin is logged in\\
+\item
+  Admin has permission to manage users
+\end{itemize}
+
+\textbf{Postconditions:} - User list is updated and changes are
+reflected immediately
+
+\subsubsection{Main Success Scenario}\label{main-success-scenario}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1579}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3947}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4474}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Step
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actor Action
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+System Response
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Admin selects ``Add User'' or ``Remove User'' & System displays user
+form \\
+2 & Admin enters or selects user details & System validates inputs \\
+3 & Admin confirms action & System applies change and displays
+confirmation \\
+\end{longtable}
+
+\subsubsection{Extensions (Alternative
+Flows)}\label{extensions-alternative-flows}
+
+\textbf{3a. Invalid or Duplicate Entry}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Condition:} User data invalid or duplicate detected\\
+\item
+  \textbf{Action:} System shows error message\\
+\item
+  \textbf{Result:} Admin corrects input and retries
+\end{itemize}
+
+\subsubsection{Special Requirements}\label{special-requirements}
+
+\textbf{Performance:}\\
+- CRUD operations complete within 2 seconds
+
+\textbf{Security:}\\
+- Role-based access control\\
+- Input validation for user data
+
+\textbf{Reliability:}\\
+- Changes instantly applied in user list
+
+\textbf{Technical Constraints:}\\
+- CRUD endpoints integrated with Authentication Service
+
+\subsubsection{Open Issues}\label{open-issues}
+
+\begin{itemize}
+\tightlist
+\item
+  Define detailed role and permission levels
+\end{itemize}

@@ -1,0 +1,135 @@
+\subsection{Use Case: Employee Shift Punch-in (Start
+Shift)}\label{use-case-employee-shift-punch-in-start-shift}
+
+\textbf{Use Case ID:} UC-2 \textbf{Version:} 1.0\\
+\textbf{Created:} 19/10/2025\\
+\textbf{Last Updated:} 19/10/2025\\
+\textbf{Priority:} \texttt{High} \\
+\textbf{Status:} \texttt{Draft} \textbf{Related US:} US-2
+
+\textbf{Primary Actor:} - Employee (Application User)
+
+\textbf{Secondary Actors:} - Employer - Team Leader - Management
+
+\textbf{Stakeholders:} - Company
+
+\textbf{Brief Description:} This use case describes how an employee
+starts logging their working hours by using a ``Start Shift'' function
+in the mobile application.\\
+The process records the current timestamp and the GPS location (Car GPS
+in the future) of the user. This data is sent to the central server
+after the start of a shift, as soon as there is a stable internet
+connection (in case of connectivity issue), or after marking the end of
+the shift.\\
+This feature ensures accurate time and location tracking and minimizes
+manual input or reporting errors.
+
+\textbf{Trigger:} The user opens the mobile application and in no more
+than 3 taps, presses ``Start Shift'' button to begin recording their
+working hours.
+
+\textbf{Preconditions:} - The user must be already logged into their
+account in the application. - The application must have the appropriate
+permissions to access time and location data of the device and time
+servers (critical to prevent time manipulation). - The server or local
+storage must be available to record the shift start data.
+
+\textbf{Postconditions:} - The system successfully records the shift
+start timestamp and GPS coordinates. - The data is stored on the central
+(or queued locally for later synchronization). - The applications
+displays a confirmation that the shift has started.
+
+\subsubsection{Main Success Scenario}\label{main-success-scenario}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1622}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3784}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4595}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Step
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actor Action
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+System Response
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & User opens the mobile application. & The application loads the
+home/dashboard screen. \\
+2 (Optional) & User navigates to shifts of a specific site/location. &
+The application loads a screen with a ``Start Shift'' button for the
+specific site/location. \\
+3 & User taps the ``Start Shift'' button. & The system validates that no
+active shift exists for the user. \\
+4 & & The system records the current timestamp and GPS coordinates. \\
+5 & & The system stores the data in the local database and/or sends it
+to the central server. \\
+6 & & The application displays a confirmation message (example: ``Shift
+started at 08:32''). \\
+7 & User taps ``Ok'' on the confirmation message. & The application
+updates the UI to show the ongoing shift status (example: ``Shift
+started at 08:32 (Time worked: 02:45)''). \\
+\end{longtable}
+
+\subsubsection{Extensions (Alternative
+Flows)}\label{extensions-alternative-flows}
+
+\textbf{2a. No Internet Connection}
+
+\begin{itemize}
+  \item \textbf{Condition:} The application cannot reach the central server.
+  \item \textbf{Action:} The system stores the shift start data locally.
+  \item \textbf{Result:} Data will be automatically synced once the device reconnects to the internet. 
+\end{itemize}
+
+
+\textbf{3a. GPS unavailable}
+\begin{itemize}
+  \item \textbf{Condition:} The phone's GPS is disabled or unavailable.
+  \item \textbf{Action:} The system records the timestamp only and logs a ``Location Missing'' flag or return location as ``null''.
+  \item \textbf{Result:} The shift still starts successfully, butwith a warning message.
+\end{itemize}
+
+
+\textbf{4a. Duplicate Shift Attempt}\\
+\emph{NOTE: This should probably never occur but safety fallbacks should
+still be implemented!}
+\begin{itemize}
+  \item \textbf{Condition:} User tries to start another shift while one is already active.
+  \item \textbf{Action:} The system prevents the action and shows an error message (example: ``Shift already active'').
+  \item \textbf{Result:} The application handles the issue in an automated manner without creating duplicate entries.
+\end{itemize}
+
+\subsubsection{Special Requirements}\label{special-requirements}
+
+\textbf{Performance:}\\ - The system should record the shift start within
+\textbf{about 2 seconds} of user action. - The ``Start Shift'' button
+should be accessible within \textbf{3 taps or fewer} from the launch of
+the application.
+
+\textbf{Security:}\\ - User authentication via secure credentials or
+company SSO. - Shift data must be encrypted during transmission.
+
+\textbf{Reliability:}\\ - System should handle temporary network outages
+by caching data locally. - The application should automatically retry
+synchronization when connection is restored.
+
+\textbf{Technical Constraints:}\\ - Mobile app must be compatible with
+Android at launch (iOS can be released at a later stage). - Integration
+of GPS should keep vehicle tracking system in mind.
+
+\subsubsection{Open Issues}\label{open-issues}
+
+\begin{itemize}
+\tightlist
+\item
+  Should location tracking be mandatory or optional due to privacy
+  concerns?
+\item
+  How will unsuccessful shift start be handled when the user performs
+  the actions correctly but there is a failure in the system? (Avoid
+  creating issues to employees)
+\end{itemize}

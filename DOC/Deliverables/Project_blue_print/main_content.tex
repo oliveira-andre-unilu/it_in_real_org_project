@@ -1,0 +1,370 @@
+% ------------------------------------------------
+% PROFESSIONAL PROJECT BLUEPRINT TEMPLATE
+% ------------------------------------------------
+\documentclass[12pt,a4paper]{report}
+
+% -------------------------------
+% PACKAGES
+% -------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{tocloft}
+\usepackage{xcolor}
+\usepackage{tikz}            % For the colored background on title page
+\usepackage{lipsum}          % Sample text (remove later)
+
+% -------------------------------
+% COLORS
+% -------------------------------
+\definecolor{myblue}{HTML}{0B3D91}   % Deep corporate blue
+\definecolor{lightgray}{HTML}{F5F5F5}
+\definecolor{darkgray}{HTML}{2E2E2E}
+
+% -------------------------------
+% LINK STYLES
+% -------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=myblue,
+    urlcolor=myblue,
+    citecolor=myblue
+}
+
+% -------------------------------
+% HEADER & FOOTER
+% -------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{Project Blueprint}}
+\fancyhead[R]{\leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% -------------------------------
+% SECTION STYLE
+% -------------------------------
+\titleformat{\chapter}[hang]{\bfseries\Huge\color{myblue}}{\thechapter\quad}{0pt}{}
+\titleformat{\section}[hang]{\bfseries\Large\color{myblue}}{\thesection\quad}{0pt}{}
+\titleformat{\subsection}[hang]{\bfseries\large\color{myblue}}{\thesubsection\quad}{0pt}{}
+
+% -------------------------------
+% PANDOC COMMANDS
+% -------------------------------
+\input{pandoc-compat.tex}
+
+% -------------------------------
+% TITLE PAGE (CUSTOM DESIGN)
+% -------------------------------
+\newcommand{\makemytitle}{
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture,overlay]
+        % Background rectangle (change 'myblue' to 'darkgray' for a gray version)
+        \fill[darkgray] (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}
+
+    \vspace*{3cm}
+    \begin{center}
+        \includegraphics[width=0.25\textwidth]{../../Assets/Main_logo.png} \\[2cm] % Replace with your logo file
+
+        {\Huge\bfseries\color{white} Project Blueprint}\\[0.5cm]
+        {\Large\color{white} IT in a real organization}\\[2cm]
+
+        {\large\color{white} André Martins, Manon, Elvin, Leonardo Coimbra and Tomás Coimbra}\\[0.2cm]
+        {\color{white} Lamtco Solutions}\\[0.2cm]
+        {\color{white}\href{mailto:0230991223@uni.lu}{0230991223@uni.lu}}\\[2cm]
+
+        {\large\color{white}\today}
+    \end{center}
+\end{titlepage}
+}
+
+% -------------------------------
+% DOCUMENT START
+% -------------------------------
+\begin{document}
+
+% Custom Cover Page
+\makemytitle
+\thispagestyle{empty}
+\clearpage
+
+% Table of Contents
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+
+% Main Content
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+
+In this document you will find the main definition of have this project. You will find the Specification definition as well as the main system design.
+There will also be a section dedicated to the current system's risks.
+
+\chapter{Specification}
+
+The Specification has been defined in three different levels: \textbf{Epics, User stories and use cases}. You will now find in the following pages the project specification in the tree levels.
+
+\section{Epics}
+
+\input{Attachments/EPIC-01.tex}
+{
+    \let\section\subsection
+    \let\subsection\subsubsection
+    \let\subsubsection\paragraph
+
+    \input{Attachments/EPIC-02.tex}
+}
+
+\section{User Stories}
+
+{
+    \let\section\subsection
+    \let\subsection\subsubsection
+    \let\subsubsection\paragraph
+
+    \input{Attachments/US-1.tex}
+    \input{Attachments/US-2.tex}
+    \input{Attachments/US-3.tex}
+    \input{Attachments/US-4.tex}
+    \input{Attachments/US-5.tex}
+    \input{Attachments/US-6.tex}
+    \input{Attachments/US-7.tex}
+    \input{Attachments/US-8.tex}
+    \input{Attachments/US-9.tex}
+    \input{Attachments/US-10.tex}
+    \input{Attachments/US-11.tex}
+    \input{Attachments/US-12.tex}
+}
+
+\section{Use Cases}
+
+\input{Attachments/UC-1.tex}
+\input{Attachments/UC-2.tex}
+\input{Attachments/UC-3.tex}
+\input{Attachments/UC-4.tex}
+
+{
+    \let\section\subsection
+    \let\subsection\subsubsection
+    \let\subsubsection\paragraph
+
+    
+    \input{Attachments/UC-5.tex}
+    \input{Attachments/UC-6.tex}
+    \input{Attachments/UC-7.tex}
+    \input{Attachments/UC-8.tex}
+    \input{Attachments/UC-9.tex}
+    \input{Attachments/UC-10.tex}
+    \input{Attachments/UC-11.tex}
+    \input{Attachments/UC-12.tex}
+}
+
+\section{Technologies used}
+
+Under these rather small paragraphs you shall find all the current technologies that have been defined under the context of this project. The chosen technologies for this project are the following:
+
+\begin{itemize}
+    \item Data Server
+    \begin{itemize}
+        \item \texttt{Base:} SpringBoot application
+        \item \texttt{Programming language:} Java
+        \item \texttt{User interaction:} PHPMyAdmin framework
+    \end{itemize}
+    \item Timelink mobile/admin
+    \begin{itemize}
+        \item \texttt{Base:} React native framework + necessary libraries for UI/design
+        \item \texttt{Programming language:} React
+        \item \texttt{User interaction:} implemented front-end
+    \end{itemize}
+\end{itemize}
+
+
+\chapter{System Design}
+
+We have decided to define the project architecture and design in four different levels, also called \textbf{C1, C2, C3, C4}.\\
+
+Currently we have defined the first 2 levels of architecture. In order to define them we have used the PlantUML tool that allows to create several types of diagram in a code based environment.
+
+Below, you will be able to take a look at both levels of architecture.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=0.75\linewidth]{./Pictures/C1_arch.png}
+    \caption{C1 architecture level}
+\end{figure}
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=0.75\linewidth]{./Pictures/C2_architecture.png}
+    \caption{C2 architecture level}
+\end{figure}
+
+\section{Data/Network flows}
+
+Additionally, we have also started the main communication flows for both systems, you can find sown below two data flows, one for each application.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=1\linewidth]{Pictures/system_architecture.png}
+    \caption{Admin app main data flow}
+\end{figure}
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=1\linewidth]{Pictures/system_architecture_2.png}
+    \caption{Mobile app main data flow}
+\end{figure}
+
+\section{UI designs}
+
+Our team has also created some UI designs that will be used as a basis when implementing the UI of our apps.
+
+\subsection{Timelink mobile}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{../../../SPEC/EPICS/EPIC-01/VIS/UC-US 01 - Shift Monitoring/01.jpg}
+    \caption{UI related to UC-01}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{../../../SPEC/EPICS/EPIC-01/VIS/UC-US 02 - Employe Shift Punch-in (Start Shift)/01.jpg}
+    \includegraphics[width=0.25\linewidth]{../../../SPEC/EPICS/EPIC-01/VIS/UC-US 02 - Employe Shift Punch-in (Start Shift)/02.jpg}
+    \includegraphics[width=0.25\linewidth]{../../../SPEC/EPICS/EPIC-01/VIS/UC-US 02 - Employe Shift Punch-in (Start Shift)/03.jpg}
+    \caption{UI's related to UC-02}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{../../../SPEC/EPICS/EPIC-01/VIS/UC-US 03 - Employe Shift Punch-out (End Shift)/01.jpg}
+    \includegraphics[width=0.25\linewidth]{../../../SPEC/EPICS/EPIC-01/VIS/UC-US 03 - Employe Shift Punch-out (End Shift)/02.jpg}
+    \caption{UI's related to UC-03}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{../../../SPEC/EPICS/EPIC-01/VIS/UC-US 04 - Employe Reminder/01.jpg}
+    \includegraphics[width=0.25\linewidth]{../../../SPEC/EPICS/EPIC-01/VIS/UC-US 04 - Employe Reminder/02.jpg}
+    \includegraphics[width=0.25\linewidth]{../../../SPEC/EPICS/EPIC-01/VIS/UC-US 04 - Employe Reminder/03.jpg}
+    \caption{UI's related to UC-04}
+\end{figure}
+
+\subsection{Timelink admin}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{./Pictures/UC-5_UC-9-1.png}
+    \includegraphics[width=0.25\linewidth]{./Pictures/UC-5_UC-9-2.png}
+    \includegraphics[width=0.25\linewidth]{./Pictures/UC-5_UC-9-3.png}
+    \caption{UI's related to UC-05 and UC-09}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{./Pictures/UC-6_UC-8_UC-10-1.png}
+    \includegraphics[width=0.25\linewidth]{./Pictures/UC-6_UC-8_UC-10-2.png}
+    \caption{UI's related to UC-06 and UC-08}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{./Pictures/UC-7.png}
+    \caption{UI related to UC-07}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{./Pictures/UC-11-1.png}
+    \includegraphics[width=0.25\linewidth]{./Pictures/UC-11-2.png}
+    \caption{UI's related to UC-11}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.25\linewidth]{Pictures/UC-12.png}
+    \caption{UI related to UC-12}
+\end{figure}
+
+
+\chapter{Data Models}
+\textbf{STILL TO DO}
+
+\lipsum[1]
+
+\chapter{User roles}
+
+Currently, since our main focus for developing during the university's timeline will be to develop the mobile app (Timelink mobile), the main permissions that this user shall have are the following:
+
+\begin{itemize}
+    \item General Employee user
+    \item System owner/Admin (Someone who has access to the Data server)
+\end{itemize}
+
+\section{General Employee user}
+
+The context of this user is someone who only will be interacting with the app via the Mobile app, here are the following permissions the user shall have:
+
+\begin{itemize}
+    \item Creating new working hours under his name
+    \item Change existing working hours under his name
+    \item Delete existing working hours under his name
+    \item Have access to his working hours in a visualization format
+    \item Have access to his profile and change his personal preferences
+\end{itemize}
+
+One more detailed version will be created once the development start allowing us to identify several important points that will need to be resolved.
+
+\section{System owner}
+
+This user will have access to the data-server. The main interaction will be under a \texttt{PHPMyAdmin} platform (current work-around until Timelink admin will be deployed). The user shall have all the same the permissions that a General employee has but shall be able to do it for all users.
+Additionally, the user shall also be able to do the following:
+
+\begin{itemize}
+    \item Create new users
+    \item Delete/modify existing users
+\end{itemize}
+
+\chapter{Status report}
+
+In this section of the document you shall find all the current information related to the the current status of the system.
+
+\section{Current Achievements}
+
+Currently, we have completely achieved both \texttt{Milestone 1} and \texttt{Milestone 2}.
+More specifically, both specifications as well as the main design of system have been defined
+
+\section{Current project plan}
+
+After creating all the project specifications and starting to adding all the tasks in the project Backlog, I've quickly came to a conclusion that the current Scope will be to much for the current timeline that we have left.
+
+To compensate this issue I've taken the decision to take the application \texttt{Timelink admin} out of development since this would possibly remove all the scope creep that we are currently suffering.
+
+Taken this information into account, the current tasks are the following:
+
+\begin{itemize}
+    \item Development of the Data Server
+    \item Development of the Mobile app
+    \item Planning and execution of all mobile apps
+\end{itemize}
+
+These current tasks will start as soon as possible and will be divided under the respective people. Since the Business analyst and the PM will not have a lot to do during the time left, they will try to help the others as much as possible.
+
+\section{Financial's}
+
+
+
+\end{document}
+
+

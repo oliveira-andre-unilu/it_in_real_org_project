@@ -1,0 +1,205 @@
+\section{Epic: Timelink Admin
+Platform}\label{epic-timelink-admin-platform}
+
+\textbf{Epic ID:} EPIC-002 \textbf{Status:} \texttt{Proposed}
+\textbf{Priority:} \texttt{High} \textbf{Theme:} Helping managers and
+CEO's manage the working hours of their employees
+
+\textbf{Created:} 15/10/2025 \textbf{Last Updated:} 16/10/2025
+\textbf{Target Release:} 08/12/2025
+
+% \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Epic Overview}\label{epic-overview}
+
+\textbf{Business Problem:} Currently all managers do quite struggle to
+manage and monitor the working hours of their workers and working places
+respectively. It is really easy to make lose the amount of labor that
+has been relaised in a working place or individual in live and in an
+easy way.
+
+\textbf{Business Value:} The Admin Platform helps companies save time
+and reduce errors by showing all information in one clear system. It
+makes it easier to see all the data represented in several graphical
+representations.
+
+\textbf{Success Metrics:} - Reduce manual work for administrators by at
+least 60\% - 100\% synchronization between Admin Platform and Data
+Server - Reach 95\% user satisfaction in the first release - System
+uptime above 99.9\% during testing
+
+% \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Scope}\label{scope}
+
+\subsubsection{In Scope}\label{in-scope}
+
+\begin{itemize}
+\tightlist
+\item
+  Build a web-based Admin Platform using React Native
+\item
+  Connect the Admin Platform to the main Data Server (Spring Boot / SQL)
+\item
+  Create login and role-based access (admin users only)
+\item
+  Add dashboards with tables and graphs for all the employee data
+\item
+  Allow basic CRUD functions (create, read, update, delete) for all
+  employee data
+\end{itemize}
+
+\subsubsection{Out of Scope}\label{out-of-scope}
+
+\begin{itemize}
+\tightlist
+\item
+  Full integration with external systems (like GPS tracking)
+\item
+  Data export in XML or other formats
+\item
+  Mobile version for admin users (web only for now)
+\end{itemize}
+
+% \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{User Personas}\label{user-personas}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Admin User:} Works in HR or management. Needs to see and
+  manage all employee data, hours, and working places quickly.
+\item
+  \textbf{Company Manager:} Supervises multiple workplaces and wants to
+  be able to easily review statistics and reports.
+\end{itemize}
+
+% \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{User Stories}\label{user-stories}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2381}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3095}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2143}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2381}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Story ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Story Title
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Status
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Priority
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+US-5 & As an admin, I want to log in securely to the Admin Platform &
+\texttt{Backlog} & \texttt{High} \\
+US-6 & As an admin, I want to view employee working hours and working
+places & \texttt{Backlog} & \texttt{High} \\
+US-7 & As an admin, I want to see graphs of total hours worked per
+working place & \texttt{Backlog} & \texttt{Medium} \\
+US-8 & As an admin, I want to add and remove users from the system &
+\texttt{Backlog} & \texttt{Medium} \\
+US-9 & As an admin, I want to see connection status with the Data Server
+& \texttt{Backlog} & \texttt{Low} \\
+US-10 & As an admin, I want to filter employee data by department or
+project, so that I can analyze work distribution more efficiently &
+\texttt{Backlog} & \texttt{Medium} \\
+US-11 & As an admin, I want to edit working places and assign employees
+to them, so that I can maintain an up-to-date organizational structure &
+\texttt{Backlog} & \texttt{High} \\
+US-12 & As an admin, I want to view an activity log of recent changes in
+the system, so that I can track who modified what and when &
+\texttt{Backlog} & \texttt{Medium} \\
+\end{longtable}
+
+% \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Technical Considerations}\label{technical-considerations}
+
+\textbf{Architecture Impact:} - The Admin Platform will communicate
+directly with the Data Server using a REST Controller. - Requires a new
+web frontend built with React Native for Web. - Backend data comes from
+the existing Spring Boot server with SQL database.
+
+\textbf{Dependencies:} - Data Server must be ready before Admin Platform
+API integration.
+
+\textbf{Risks \& Mitigations:} - \textbf{Risk 1:} Admin Platform may
+load slowly with big data sets -- \emph{Mitigation:} Optimize queries. -
+\textbf{Risk 2:} Inconsistent data between server and UI --
+\emph{Mitigation:} Add sync checks and server-side validation.
+
+\textbf{Non-Functional Requirements:}\\
+- \textbf{Performance:} Pages should load in under 2 seconds. -
+\textbf{Security:} Only authorized admin users can log in. -
+\textbf{Scalability:} Should support up to 100 admin users per company.
+- \textbf{Reliability:} 99.9\% uptime expected in testing phase.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+% \subsection{Definition of Ready}\label{definition-of-ready}
+
+% \begin{itemize}
+% \tightlist
+% \item[$\boxtimes$]
+%   Business value clearly defined
+% \item[$\boxtimes$]
+%   Success metrics established
+% \item[$\boxtimes$]
+%   High-level scope approved
+% \item[$\boxtimes$]
+%   User stories identified and estimated
+% \item[$\square$]
+%   Technical dependencies resolved
+% \item[$\square$]
+%   UX/design completed (not started yet)
+% \end{itemize}
+
+% \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+% \subsection{Definition of Done}\label{definition-of-done}
+
+% \begin{itemize}
+% \tightlist
+% \item[$\square$]
+%   All user stories completed and accepted
+% \item[$\square$]
+%   Success metrics validated
+% \item[$\square$]
+%   Documentation updated
+% \item[$\square$]
+%   Integration tests passing
+% \item[$\square$]
+%   Performance requirements met
+% \item[$\square$]
+%   Deployed to production
+% \item[$\square$]
+%   Business stakeholders signed off
+% \end{itemize}
+
+% \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+% \subsection{Open Questions}\label{open-questions}
+
+% \begin{itemize}
+% \tightlist
+% \item
+%   Is multi-language support required for version 1?
+% \end{itemize}
+
+% \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+% \subsection{Related Artifacts}\label{related-artifacts}
+
+% \begin{itemize}
+% \tightlist
+% \item
+%   {[}Links to wireframes, technical designs, research, etc.{]}
+% \end{itemize}

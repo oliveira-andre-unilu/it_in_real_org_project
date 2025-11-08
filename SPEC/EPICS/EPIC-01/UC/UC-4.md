@@ -3,9 +3,9 @@
 **Use Case ID:** UC-4
 **Version:** 1.0  
 **Created:** 19/10/2025  
-**Last Updated:** 19/10/2025  
+**Last Updated:** 19/10/2025    
 **Priority:** <!-- `Critical` | `High` | `Medium` | --> `Low`   
-**Status:** `Draft` <!-- | `Reviewed` | `Approved` | `Implemented` -->
+**Status:** `Draft` <!-- | `Reviewed` | `Approved` | `Implemented` -->  
 **Related US:** US-4 [link](../US/US-4.md)
 
 **Primary Actor:**

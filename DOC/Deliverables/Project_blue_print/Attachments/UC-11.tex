@@ -1,0 +1,114 @@
+\section{Use Case: Edit working places and assign employee to
+them}\label{use-case-edit-working-places-and-assign-employee-to-them}
+
+\textbf{Use Case ID:} UC-11\\
+\textbf{Version:} 1.0\\
+\textbf{Created:} 18/10/2025 \textbf{Last Updated:} 18/10/2025\\
+\textbf{Priority:} \texttt{High}\\
+\textbf{Status:} \texttt{Draft} \textbf{Related US:} US-11
+\href{../US/US-11.md}{link}
+
+\textbf{Primary Actor:} Admin\\
+\textbf{Secondary Actors:} Data Server\\
+\textbf{Stakeholders:}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Admin:} needs to keep employee assignments and working places
+  up to date\\
+\item
+  \textbf{HR Department:} relies on accurate working place data for
+  reports\\
+\item
+  \textbf{Company Management:} need updated employee locations for
+  supervision and resource management
+\end{itemize}
+
+\textbf{Brief Description:}\\
+This use case describes how an admin creates, edits, or deletes working
+places and assigns or reassigns employees to those places. The goal is
+to maintain an accurate and current organizational structure visible on
+the dashboard and in reports.
+
+\textbf{Trigger:}\\
+The admin selects the ``Manage Working Places'' option from the
+navigation menu.
+
+\textbf{Preconditions:}
+
+\begin{itemize}
+\tightlist
+\item
+  Admin is authenticated and logged into the admin platform.\\
+\item
+  Data server is online and synchronized.\\
+\item
+  Admin has sufficient permissions to modify employee and working place
+  data.
+\end{itemize}
+
+\textbf{Postconditions:} - Working place and employee assignment data
+are updated successfully in the system. - Updated information is
+reflected in dashboards and reports immediately.
+
+\subsubsection{Main Success Scenario}\label{main-success-scenario}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1579}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3947}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4474}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Step
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actor Action
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+System Response
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Admin navigates to the ``Working Places'' management page & System
+displays the list of all current working places with assigned
+employees \\
+2 & Admin clicks ``Add New'' or selects a working place to edit & System
+opens a form for adding, renaming, or deleting a working place \\
+3 & Admin enters or modifies the working place details & System
+validates the input \\
+4 & Admin confirms changes & SSystem saves the working place data and
+updates the list \\
+5 & Admin assigns or reassigns employees to a working place & System
+updates employee records \\
+6 & Admin saves assignments & Dashboard and reports reflect updated
+structure in real-time \\
+\end{longtable}
+
+\subsubsection{Extensions (Alternative
+Flows)}\label{extensions-alternative-flows}
+
+\textbf{2a. Invalid or duplicate working place name}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Condition:} Admin enters invalid or duplicate working place
+  name\\
+\item
+  \textbf{Action:} System displays an error message and prevents
+  saving\\
+\item
+  \textbf{Result:} Admin should enter another name
+\end{itemize}
+
+\subsubsection{Special Requirements}\label{special-requirements}
+
+\textbf{Performance:}\\
+- Updates should be reflected on the dashboard within ? seconds.
+
+\textbf{Security:}\\
+- Only admin users with edit permissions can modify working place data.
+
+\textbf{Technical Constraints:}\\
+- Real-time update

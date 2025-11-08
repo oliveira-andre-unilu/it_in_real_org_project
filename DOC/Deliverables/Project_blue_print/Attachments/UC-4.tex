@@ -1,0 +1,122 @@
+\subsection{Use Case: Employee
+Reminder}\label{use-case-employee-reminder}
+
+\textbf{Use Case ID:} UC-4 \textbf{Version:} 1.0\\
+\textbf{Created:} 19/10/2025\\
+\textbf{Last Updated:} 19/10/2025\\
+\textbf{Priority:} \texttt{Low}\\
+\textbf{Status:} \texttt{Draft} \textbf{Related US:} US-4
+\href{../US/US-4.md}{link}
+
+\textbf{Primary Actor:} - Employee (Application User)
+
+\textbf{Secondary Actors:} - Employer - Team Leader - Management
+
+\textbf{Stakeholders:} - Company
+
+\textbf{Brief Description:} This use case describes how the mobile app
+automatically reminds an employee to start or end their shift if they
+have forgotten to do so.\\
+At scheduled times before or after the expected shift start and end
+times, the system checks for missing punch-in our punch-out entries and
+triggers a notification to prompt the user to take action.\\
+This helps maintain accurate work-hour tracking and reduces
+administrative corrections.
+
+\textbf{Trigger:} User manually configures one or more reminder times in
+the application settings.
+
+\textbf{Preconditions:} - The user must be already logged into their
+account in the application. - The application must have the appropriate
+permissions to access system time. - Push notifications must be enabled
+for the application. - There must be at least one shift available to
+associate with the reminder.
+
+\textbf{Postconditions:} - User receives a notification at the
+configured times before or after the expected shift start or end times.
+- User can open the application directly from the notification to start
+or end the shift (Suggestion: If possible implement a ``Start Shift''
+and ``End Shift'' option directly to the notification. This avoids user
+even opening the application.).
+
+\subsubsection{Main Success Scenario}\label{main-success-scenario}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1622}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3784}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4595}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Step
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actor Action
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+System Response
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & User configures a reminder for his shift (e.g., 5 min before shift
+starts). & The application saves this reminder into its configuration
+files. \\
+2 & & The application sends a push notification at defined time (e.g.,
+``Your shift starts in 5 minutes''). \\
+3 & User opens the notification on their device. & The notification
+provides direct action buttons (e.g., ``Start Shift'' or ``Open
+App''). \\
+4a & User taps the notification. & The application opens directly to
+``Start Shift'' or ``End Shift'' button screen. \\
+or & & \\
+4b & User uses direct notification buttons to start or end shift. &
+System updates shift status (records data) and notification
+disappears \\
+\end{longtable}
+
+\subsubsection{Extensions (Alternative
+Flows)}\label{extensions-alternative-flows}
+
+\textbf{2a. Notifications Disabled by User}\\ - \textbf{Condition:} The
+user has disabled notifications on their device (or specifically for
+this application).\\ - \textbf{Action:} The application logs that
+reminders cannot be sent.\\ - \textbf{Result:} No notification is
+displayed.
+
+\textbf{3a. Shift Already Started or Ended}\\
+\emph{NOTE: In case reminders are set for after shift actions.}\\ -
+\textbf{Condition:} The user already took the required action before the
+reminder time.\\ - \textbf{Action:} The system cancels or suppresses the
+reminder.\\ - \textbf{Result:} No notification sent.
+
+\textbf{4a. Device Off or Do Not Disturb Mode On}\\ - \textbf{Condition:}
+The user's device is off or in ``Do Not Disturb'' mode.\\ -
+\textbf{Action:} The notification is queued and sent once conditions
+allow.\\ - \textbf{Result:} Employee receives the notification later, with
+correct timestamp.
+
+\subsubsection{Special Requirements}\label{special-requirements}
+
+\textbf{Performance:}\\ - Notifications must be delivered on time or at
+the very least \textbf{within 30 seconds of expected time}.
+
+\textbf{Security:}\\ - Notification must not display sensitive data (only
+generic text such as ``Shift Start Reminder'').
+
+\textbf{Reliability:}\\ - Reminder service should retry failed deliveries
+up to 3 times.\\ - Missed notifications (notification not sent to user)
+must be logged for later review.
+
+\textbf{Technical Constraints:}\\ - Requires knowledge handling background
+scheduling API (Android WorkManager or iOS BackgroundTasks)
+
+\subsubsection{Open Issues}\label{open-issues}
+
+\begin{itemize}
+\tightlist
+\item
+  Should employer be able to create a reminder which cannot be turned
+  off?
+\item
+  Should the application include recurring reminders (alert user that
+  shift should have already started or ended)?
+\end{itemize}

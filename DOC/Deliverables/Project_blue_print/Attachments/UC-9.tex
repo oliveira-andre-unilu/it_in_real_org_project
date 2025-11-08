@@ -1,0 +1,95 @@
+\section{Use Case: Monitor Data Server
+Connection}\label{use-case-monitor-data-server-connection}
+
+\textbf{Use Case ID:} UC-9\\
+\textbf{Version:} 1.0\\
+\textbf{Created:} 16/10/2025 \textbf{Last Updated:} 17/10/2025\\
+\textbf{Priority:} \texttt{Low} \textbf{Status:} \texttt{Draft}
+\textbf{Related US:} US-9 \href{../US/US-9.md}{link}
+
+\textbf{Primary Actor:} Admin\\
+\textbf{Secondary Actors:} Data Server\\
+\textbf{Stakeholders:}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Admin:} needs visibility on data availability\\
+\item
+  \textbf{IT Team:} monitors server uptime and connectivity\\
+\item
+  \textbf{Company Management:} depends on data accuracy and availability
+\end{itemize}
+
+\textbf{Brief Description:}\\
+This use case describes how an admin monitors the real-time connection
+status to the Data Server to ensure the system is up-to-date.
+
+\textbf{Trigger:}\\
+Admin checks the connection status indicator or system shows a warning.
+
+\textbf{Preconditions:}
+
+\begin{itemize}
+\tightlist
+\item
+  Admin is logged in\\
+\item
+  Connection check mechanism is active
+\end{itemize}
+
+\textbf{Postconditions:} - Connection status (green/red) displayed and
+updated in real time
+
+\subsubsection{Main Success Scenario}\label{main-success-scenario}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1579}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3947}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4474}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Step
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actor Action
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+System Response
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Admin opens dashboard & System shows Data Server connection
+status \\
+2 & Connection changes & System automatically updates the indicator \\
+\end{longtable}
+
+\subsubsection{Extensions (Alternative
+Flows)}\label{extensions-alternative-flows}
+
+\textbf{2a. Data Server Unreachable}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Condition:} Ping to server fails\\
+\item
+  \textbf{Action:} System shows warning message and marks status red
+\item
+  \textbf{Result:} Admin is informed and may contact IT support
+\end{itemize}
+
+\subsubsection{Special Requirements}\label{special-requirements}
+
+\textbf{Performance:}\\
+- Status check performed every 10 seconds
+
+\textbf{Security:}\\
+- All communication over HTTPS
+
+\textbf{Reliability:}\\
+- System availability \textgreater= 99.5\%\\
+- Good handling of temporary disconnections
+
+\textbf{Technical Constraints:}\\
+- Ping mechanism for connectivity - Real-time status updates

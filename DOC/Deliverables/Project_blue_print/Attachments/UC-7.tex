@@ -1,0 +1,112 @@
+\section{Use Case: View Workload Charts by
+Location}\label{use-case-view-workload-charts-by-location}
+
+\textbf{Use Case ID:} UC-7\\
+\textbf{Version:} 1.0\\
+\textbf{Created:} 16/10/2025 \textbf{Last Updated:} 17/10/2025\\
+\textbf{Priority:} \texttt{Medium}\\
+\textbf{Status:} \texttt{Draft} \textbf{Related US:} US-7
+\href{../US/US-7.md}{link}
+
+\textbf{Primary Actor:} Admin\\
+\textbf{Secondary Actors:} Data Server\\
+\textbf{Stakeholders:}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Admin:} analyzes workload distribution visually\\
+\item
+  \textbf{Company Management:} requires visual insights for
+  decision-making\\
+\item
+  \textbf{IT Team:} maintains data consistency and responsiveness
+\end{itemize}
+
+\textbf{Brief Description:}\\
+This use case describes how an admin views visual charts (bar/pie) of
+total hours worked per location for better workload analysis.
+
+\textbf{Trigger:}\\
+Admin selects the ``View Charts'' section.
+
+\textbf{Preconditions:}
+
+\begin{itemize}
+\tightlist
+\item
+  Admin is logged in\\
+\item
+  Employee work data is available
+\end{itemize}
+
+\textbf{Postconditions:}
+
+\begin{itemize}
+\tightlist
+\item
+  Charts display total working hours per location\\
+\item
+  Charts update dynamically when filters change
+\end{itemize}
+
+\subsubsection{Main Success Scenario}\label{main-success-scenario}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1579}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3947}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4474}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Step
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actor Action
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+System Response
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Admin navigates to ``View Charts'' & System generates visual charts
+for total hours per location \\
+2 & Admin applies filters & Charts update dynamically \\
+\end{longtable}
+
+\subsubsection{Extensions (Alternative
+Flows)}\label{extensions-alternative-flows}
+
+\textbf{2a. No Data for Chart}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Condition:} No matching data for filter\\
+\item
+  \textbf{Action:} System shows ``No data available'' message\\
+\item
+  \textbf{Result:} Admin may adjust filters
+\end{itemize}
+
+\subsubsection{Special Requirements}\label{special-requirements}
+
+\textbf{Performance:}\\
+- Chart rendering \textless{} 2 seconds
+
+\textbf{Security:}\\
+- Data retrieved securely via API
+
+\textbf{Reliability:}\\
+- Charts reflect real-time data updates
+
+\textbf{Technical Constraints:}\\
+- Charts implemented with d3.js or equivalent\\
+- Responsive design for desktop and tablet
+
+\subsubsection{Open Issues}\label{open-issues}
+
+\begin{itemize}
+\tightlist
+\item
+  Determine chart types (bar, pie, line)
+\end{itemize}

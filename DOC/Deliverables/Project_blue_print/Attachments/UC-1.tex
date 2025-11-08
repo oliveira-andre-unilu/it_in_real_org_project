@@ -1,0 +1,97 @@
+\subsection{Use Case: Monitor Employee
+Shifts}\label{use-case-monitor-employee-shifts}
+
+\textbf{Use Case ID:} UC-1 \textbf{Version:} 1.0\\
+\textbf{Created:} 18/10/2025\\
+\textbf{Last Updated:} 25/10/2025\\
+\textbf{Priority:} \texttt{Low}\\
+\textbf{Status:} \texttt{Draft} \textbf{Related US:} US-1
+
+\textbf{Primary Actor:} Employee \textbf{Secondary Actors:} Employee\\
+\textbf{Stakeholders:} Company
+
+\textbf{Brief Description:} Monitoring user shifts in an easy and
+comprehensive way.
+
+\textbf{Trigger:} User (employee) trigger the review your work button.
+
+\textbf{Preconditions:} - The application is turned on and connected to
+the respective user
+
+\textbf{Postconditions:} - Employee's working hours are displayed -
+Employee's information is displayed (name, id, employee\_since, etc.)
+
+\subsubsection{Main Success Scenario}\label{main-success-scenario}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1622}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3784}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4595}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Step
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actor Action
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+System Response
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Employee clicks on the ``Review work button'' & Trigger the system
+to the respective page \\
+2 & Employee selects time that the time period & Trigger the system to
+generate all the visualizations during the selected time \\
+\end{longtable}
+
+\subsubsection{Extensions (Alternative Flows)}\label{extensions-alternative-flows}
+
+\textbf{2a. User does not select a time period}
+
+\begin{itemize}
+  \item \textbf{Condition:} User choses to not select any prefered time period
+  \item \textbf{Action:} Triggers the system to automatically review the last month 
+  \item \textbf{Result:} Reviews his last month's work
+\end{itemize}
+
+\textbf{3a. User does not have any hours of work executed in the respective time}
+
+\begin{itemize}
+  \item \textbf{Condition:} User choses a time period where he hasn't executed any hours of work
+  \item \textbf{Action:} The system prompts a message saying that there are no hours executed in the selected time period
+  \item \textbf{Result:} No visualizations will be shown
+\end{itemize}
+
+
+% \subsubsection{Special Requirements}\label{special-requirements}
+
+% \textbf{Performance:} - {[}Response time requirements{]} - {[}Throughput
+% requirements{]}
+
+% \textbf{Security:} - {[}Authentication/authorization needs{]} - {[}Data
+% protection requirements{]}
+
+% \textbf{Reliability:} - {[}Availability requirements{]} - {[}Error
+% recovery procedures{]}
+
+% \textbf{Technical Constraints:} - {[}Integration requirements with
+% Gitea, Marp, LaTeX, etc.{]}
+
+% \subsubsection{Open Issues}\label{open-issues}
+
+% \begin{itemize}
+% \tightlist
+% \item
+%   {[}Unresolved questions{]}
+% \item
+%   {[}Decisions pending{]}
+% \end{itemize}
+
+% \subsubsection{Related Artifacts}\label{related-artifacts}
+
+% \begin{itemize}
+% \tightlist
+% \item
+%   {[}Links to user stories, diagrams, etc.{]}
+% \end{itemize}
