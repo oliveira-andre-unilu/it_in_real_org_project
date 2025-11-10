@@ -25,31 +25,31 @@ reputation risk & We can either accept this risk because our project
 will not be public, or we can try to add compliant measures (hahsing) \\
 Data Privacy & A user see sensible data, but he doesn't have the rights
 to see these. & High, legal risk and reputation risk & We need to decide
-which type of user can see what type of informations and then implement
+which type of user can see what type of information and then implement
 these. Or accept this risk. \\
-Incorrect data, not-updated, missing & Th represented data (shifts,
+Incorrect data, not-updated, missing & The represented data (shifts,
 working hours, employees assigned to a working place, working place
 details, etc\ldots) are not synchronized correctly because of a bug, a
-failure, & High & ????? We accept it? \\
+failure, & High & We accept it for the moment \\
 Insufficient log retention (for activity log UC-12) & Logs expire too
 soon or are not archived & Low & Apply the right parameters (choose the
 right time to keep activity logs) \\
 Modification conflict & Two administrators modify the same data at the
 same time.Overwriting of modifications, inconsistency between
-assignments. & High & When developement, think of concurrent
-modification to prevent this risk \\
+assignments. & High & When development, think of concurrent modification
+to prevent this risk \\
 No validation prior to major modification (add, remove, edit a user or a
 working place) & No confirmation before modification or deletion.Risk of
 irreversible human error. & High & Implement a validation system, a
 message (``Are you sure you want to\ldots'') \\
 Poor management of duplicates & Users, project, working places, etc..
-are created multiple times & Medium & When developement, think of
+are created multiple times & Medium & When development, think of
 managing duplicates to prevent this risk \\
 Authentication service unavailable & Admin can no longer access their
 account, critical operations blocked. & High, service interruption &
 Accept this risk. \\
-Unautorized access, security failure & A compromised admin account, or a
-password leak that allow access to the system. & High, GDPR sanctions,
+Unauthorized access, security failure & A compromised admin account, or
+a password leak that allow access to the system. & High, GDPR sanctions,
 data breaches, manipulation of sensitive information & Use security
 measures (multi-factor authentication, strong password, etc\ldots) \\
 \end{longtable}
