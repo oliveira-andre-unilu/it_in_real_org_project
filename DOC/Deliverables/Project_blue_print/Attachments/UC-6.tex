@@ -1,0 +1,116 @@
+\section{Use Case: View Employee Working Hours and
+Locations}\label{use-case-view-employee-working-hours-and-locations}
+
+\textbf{Use Case ID:} UC-6\\
+\textbf{Version:} 1.0\\
+\textbf{Created:} 16/10/2025\\
+\textbf{Last Updated:} 17/10/2025\\
+\textbf{Priority:} \texttt{High}\\
+\textbf{Status:} \texttt{Draft}\\
+\textbf{Related US:} US-6
+
+\textbf{Primary Actor:} Admin\\
+\textbf{Secondary Actors:} Data Server\\
+\textbf{Stakeholders:}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Admin:} monitors attendance and work distribution\\
+\item
+  \textbf{Company Management:} requires up-to-date employee data
+\item
+  \textbf{IT Team:} ensures data integrity and system performance
+\end{itemize}
+
+\textbf{Brief Description:}\\
+This use case describes how an admin views employee working hours and
+locations to monitor attendance and manage workload distribution.
+
+\textbf{Trigger:}\\
+Admin selects the ``Employee Overview'' section.
+
+\textbf{Preconditions:}
+
+\begin{itemize}
+\tightlist
+\item
+  Admin is authenticated\\
+\item
+  Data Server connection is active
+\end{itemize}
+
+\textbf{Postconditions:}
+
+\begin{itemize}
+\tightlist
+\item
+  Employee working hours and locations are displayed accurately
+\item
+  Filters adjust the displayed data dynamically
+\end{itemize}
+
+\subsubsection{Main Success Scenario}\label{main-success-scenario}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1579}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3947}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4474}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Step
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actor Action
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+System Response
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Admin selects ``Employee Overview'' & System displays employee list
+with hours and locations \\
+2 & Admin applies filters (by date or employee) & System updates the
+data dynamically \\
+3 & Admin reviews updated results & Displayed data matches selected
+filters \\
+\end{longtable}
+
+\subsubsection{Extensions (Alternative
+Flows)}\label{extensions-alternative-flows}
+
+\textbf{2a. No Data for Filter}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Condition:} No results for selected filters\\
+\item
+  \textbf{Action:} System shows ``No data available'' message\\
+\item
+  \textbf{Result:} Admin can reset filters
+\end{itemize}
+
+\subsubsection{Special Requirements}\label{special-requirements}
+
+\textbf{Performance:}\\
+- Data retrieval within 2 seconds\\
+- Filter update within 1 second
+
+\textbf{Security:}\\
+- Data transmitted securely over HTTPS
+
+\textbf{Reliability:}\\
+- System availability 99.5\% - Automatic error handling for missing data
+
+\textbf{Technical Constraints:}\\
+- Integration with Data Server API\\
+- Support for large datasets
+
+\subsubsection{Open Issues}\label{open-issues}
+
+\begin{itemize}
+\tightlist
+\item
+  Define page size for large employee lists
+\end{itemize}
