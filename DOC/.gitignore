@@ -1,0 +1,80 @@
+# ---------------------------------------------------------
+# Git Ignore for LaTeX Projects (VSCode / Local Builds)
+# ---------------------------------------------------------
+
+# ------------------------------
+# Core LaTeX build artifacts
+# ------------------------------
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+*.run.xml
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+*.xdv
+
+# ------------------------------
+# Temporary / auto-generated files
+# ------------------------------
+*.bak
+*.backup
+*.tmp
+*.temp
+*~
+*.swp
+*.synctex(busy)
+*.synctex.gz(busy)
+
+# ------------------------------
+# Intermediate or cache folders
+# ------------------------------
+latex.out/
+out/
+build/
+_cache/
+tmp/
+__latexindent_temp/
+*.latexmk
+
+# ------------------------------
+# VSCode-specific
+# ------------------------------
+.vscode/
+*.code-workspace
+
+# ------------------------------
+# OS / Editor junk
+# ------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ------------------------------
+# Pandoc-generated temporary files
+# ------------------------------
+*.md.tex
+*.tex~*
+*.pandoc
+*.converted.tex
+
+# ------------------------------
+# Logs and error reports
+# ------------------------------
+*.synctex
+*.log.*
+*.blg
+*.bcf

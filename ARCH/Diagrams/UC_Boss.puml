@@ -1,0 +1,40 @@
+@startuml system_architecture
+
+' actor "Employee\n(mobile)" as Employee
+actor "Admin / HR\n(web)" as Admin
+
+package "Client Apps" #536878{
+    ' component "Mobile App\n(Clock Button)" as Mobile
+    component "Admin Web App\n(CRUD UI)" as WebApp
+}
+
+package "Backend Services" #LightBlue{
+    component SpringBootApplication{
+        component "API Gateway\n(REST API)" as API
+        component "Auth Service\n(Token / SSO)" as Auth
+        ' component "Time Tracking Service\n(Validate & Persist)" as TimeService
+    }
+    database "TimeRecords DB\n(Employees, Departments, TimeEntries)" as DB
+}
+
+' employee clocks in/out
+' Employee -> Mobile : **1.**Press Clock Button
+' Mobile -> API : **2.**POST /clock {employeeId, timestamp, geolocation}
+' API -right-> Auth : **3.**Authenticate / authorize token
+' Auth -left-> API : **4.**200 OK / 401
+' API -down-> TimeService : **5.**CreateTimeEntry\n(payload, user)
+' TimeService -right-> DB : **6.**INSERT TimeEntry
+' DB --> TimeService : **7.**201 Created
+' TimeService -up-> API : **8.**201 Created
+' API -left-> Mobile : **9.**201 Created
+
+' Admin/HR operations via web app (CRUD)
+Admin -right-> WebApp : **1.**Login,\nManage employees,\n time records
+WebApp -right-> API : **2.**CRUD /employees, /time entries
+API -right-> Auth : **3.**Validate session & role\n(admin)
+Auth -left-> API : **4.**200 OK / 403\n(admin)
+API -down-> DB : **5.**CRUD operations
+DB -up-> API : **6.**query results
+API -left-> WebApp : **7.**query results
+
+@enduml

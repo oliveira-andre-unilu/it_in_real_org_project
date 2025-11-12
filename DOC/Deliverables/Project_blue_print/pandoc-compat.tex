@@ -1,0 +1,38 @@
+% ------------------------------------------------
+% Pandoc LaTeX Compatibility Definitions
+% ------------------------------------------------
+% This file defines helper macros and package imports
+% commonly used by Pandoc-generated LaTeX files.
+
+% ---------- Required Packages ----------
+\usepackage{longtable}    % For multi-page tables
+\usepackage{booktabs}     % For \toprule, \midrule, \bottomrule
+\usepackage{array}        % Better table column handling
+\usepackage{calc}         % For table width calculations
+\usepackage{etoolbox}     % For \AtBeginEnvironment, etc.
+\usepackage{amssymb}      % For symbols like \square
+
+% ---------- Pandoc Helper Commands ----------
+% Used in Pandoc-generated itemize lists
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% For inline subscripts created from Markdown (e.g., ~text~)
+\providecommand{\textsubscript}[1]{\ensuremath{_{\text{#1}}}}
+
+% For passthrough raw LaTeX (rare but harmless)
+\providecommand{\passthrough}[1]{#1}
+
+% ---------- Optional: Style Tweak ----------
+% Add spacing above/below longtables for readability
+\AtBeginEnvironment{longtable}{\setlength{\LTpre}{0.5em}\setlength{\LTpost}{0.5em}}
+
+% ---------- Optional: Square Checkbox Symbol ----------
+% If your Markdown uses "[$\square$]" for checklists
+% Already available from amssymb, so no extra definition needed.
+
+% ---------- Notes ----------
+% This file ensures Pandoc .tex snippets work smoothly
+% when included into your main LaTeX project.
+% Include it in your preamble:
+%   \input{pandoc-compat.tex}

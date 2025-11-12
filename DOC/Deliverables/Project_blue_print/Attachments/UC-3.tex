@@ -1,0 +1,138 @@
+\subsection{Use Case: Employee Shift Punch-in (Start
+Shift)}\label{use-case-employee-shift-punch-in-start-shift}
+
+\textbf{Use Case ID:} UC-3\\
+\textbf{Version:} 1.0\\
+\textbf{Created:} 19/10/2025\\
+\textbf{Last Updated:} 19/10/2025\\
+\textbf{Priority:} \texttt{High} \\
+\textbf{Status:} \texttt{Draft} \\
+\textbf{Related US:} US-3
+
+\textbf{Primary Actor:} - Employee (Application User)
+
+\textbf{Secondary Actors:} - Employer - Team Leader - Management
+
+\textbf{Stakeholders:} - Company
+
+\textbf{Brief Description:} This use case describes how an employee
+stops logging their working hours by using a ``End Shift'' function in
+the mobile application.\\
+The process records the current timestamp and the GPS location (Car GPS
+in the future) of the user. This data is sent to the central server
+after the end of a shift or as soon as there is a stable internet
+connection (in case of connectivity issue).\\
+This feature ensures accurate time and location tracking and minimizes
+manual input or reporting errors.
+
+\textbf{Trigger:} The user opens the mobile application and in no more
+than 3 taps, presses ``End Shift'' button to stop recording their
+working hours.
+
+\textbf{Preconditions:} - The user must be already logged into their
+account in the application. - The application must have the appropriate
+permissions to access time and location data of the device and time
+servers (critical to prevent time manipulation). - The server or local
+storage must be available to record the shift end data.
+
+\textbf{Postconditions:} - The system successfully records the shift end
+timestamp and GPS coordinates. - The data is stored on the central (or
+queued locally for later synchronization). - The applications displays a
+confirmation that the shift has ended. - The total hours worked are
+calculated (slightly rounded up) and displayed to the user. - The shift
+entry is marked as completed in the database.
+
+\subsubsection{Main Success Scenario}\label{main-success-scenario}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1622}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3784}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4595}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Step
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actor Action
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+System Response
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & User opens the mobile application. & The application loads the
+home/dashboard screen. \\
+2 (Optional) & User navigates to shifts of a specific site/location. &
+The application loads a screen with a ``End Shift'' button for the
+specific site/location. \\
+3 & User taps the ``End Shift'' button. & The system validates that an
+active shift exists for the user. \\
+4 & & The system records the current timestamp and GPS coordinates. \\
+5 & & The system stores the data in the local database and/or sends it
+to the central server. \\
+6 & & The application displays a confirmation message (example: ``Shift
+ended at 15:28. Total hours worked: 7 h 56 min''). \\
+7 & User taps ``Ok'' on the confirmation message. & The application
+updates the UI to show ``Start Shift'' once again. \\
+\end{longtable}
+
+\subsubsection{Extensions (Alternative
+Flows)}\label{extensions-alternative-flows}
+
+\textbf{2a. No Internet Connection}\\ - \textbf{Condition:} The
+application cannot reach the central server.\\ - \textbf{Action:} The
+system stores the shift end data locally.\\ - \textbf{Result:} Data will
+be automatically synced once the device reconnects to the internet.
+
+\textbf{3a. User Cancels Confirmation}\\ - \textbf{Condition:} User
+presses ``Cancel'' in the confirmation dialog.\\ - \textbf{Action:} The
+system aborts the operation.\\ - \textbf{Result:} The shift remains active
+and the recorded shift end data is wiped.
+
+\textbf{4a. GPS unavailable}\\ - \textbf{Condition:} The phone's GPS is
+disabled or unavailable.\\ - \textbf{Action:} The system records the
+timestamp only and logs a ``Location Missing'' flag or return location
+as ``null''.\\ - \textbf{Result:} The shift still ends successfully, but
+with a warning message.
+
+\textbf{5a. No Active Shift Found}\\
+\emph{NOTE: This should probably never occur but safety fallbacks should
+still be implemented!}\\ - \textbf{Condition:} User attempts to end a
+shift when none is active.\\ - \textbf{Action:} The application displays
+an error (example: ``No active shift to end'').\\ - \textbf{Result:}
+Action terminates without recording any data.
+
+\subsubsection{Special Requirements}\label{special-requirements}
+
+\textbf{Performance:}\\ - End-of-shift confirmation and processing should
+complete \textbf{within 3 seconds}.\\ - The ``End Shift'' button should be
+accessible within \textbf{3 taps or fewer} from the launch of the
+application.
+
+\textbf{Security:}\\ - User authentication via secure credentials or
+company SSO. - Shift data must be encrypted during transmission.
+
+\textbf{Reliability:}\\ - System should handle temporary network outages
+by caching data locally.\\ - The application should automatically retry
+synchronization when connection is restored.
+
+\textbf{Technical Constraints:}\\ - Mobile app must be compatible with
+Android at launch (iOS can be released at a later stage).\\ - Integration
+of GPS should keep vehicle tracking system in mind.
+
+\subsubsection{Open Issues}\label{open-issues}
+
+\begin{itemize}
+\tightlist
+\item
+  Should location tracking be mandatory or optional due to privacy
+  concerns?
+\item
+  How will unsuccessful shift end be handled when the user performs the
+  actions correctly but there is a failure in the system? (Suggestion:
+  Have a fixed amount of hours for the shift of each employee (usually 8
+  hours). Once 8 hours have passed, end shift automatically.)
+\item
+  Should the confirmation dialog include additional notes or comments
+  (e.g., ``Reason for early departure'')?
+\end{itemize}

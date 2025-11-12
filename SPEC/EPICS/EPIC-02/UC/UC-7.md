@@ -1,32 +1,35 @@
 # Use Case: View Workload Charts by Location
 
-**Use Case ID:** UC-7
-**Version:** 1.0
-**Created:** 16/10/2025
-**Last Updated:** 17/10/2025
-**Priority:** `Medium`
-**Status:** `Draft`
-**Related US:** US-7 [link](../US/US-7.md)
+**Use Case ID:** UC-7   
+**Version:** 1.0    
+**Created:** 16/10/2025 
+**Last Updated:** 17/10/2025    
+**Priority:** `Medium`  
+**Status:** `Draft` 
+**Related US:** US-7 [link](../US/US-7.md)  
 
-**Primary Actor:** Admin
-**Secondary Actors:** Data Server
-**Stakeholders:**
-- **Admin:** analyzes workload distribution visually
-- **Company Management:** requires visual insights for decision-making
-- **IT Team:** maintains data consistency and responsiveness
+**Primary Actor:** Admin    
+**Secondary Actors:** Data Server   
+**Stakeholders:**   
 
-**Brief Description:**
+- **Admin:** analyzes workload distribution visually    
+- **Company Management:** requires visual insights for decision-making  
+- **IT Team:** maintains data consistency and responsiveness    
+
+**Brief Description:**  
 This use case describes how an admin views visual charts (bar/pie) of total hours worked per location for better workload analysis.
 
-**Trigger:**
+**Trigger:**    
 Admin selects the “View Charts” section.
 
-**Preconditions:**
-- Admin is logged in
+**Preconditions:**  
+
+- Admin is logged in    
 - Employee work data is available
 
-**Postconditions:**
-- Charts display total working hours per location
+**Postconditions:** 
+
+- Charts display total working hours per location   
 - Charts update dynamically when filters change
 
 ### Main Success Scenario
@@ -38,27 +41,26 @@ Admin selects the “View Charts” section.
 
 ### Extensions (Alternative Flows)
 
-**2a. No Data for Chart**
-- **Condition:** No matching data for filter
-- **Action:** System shows “No data available” message
-- **Result:** Admin may adjust filters
+**2a. No Data for Chart**   
 
-### Special Requirements
-**Performance:**
+- **Condition:** No matching data for filter    
+- **Action:** System shows “No data available” message  
+- **Result:** Admin may adjust filters  
+
+### Special Requirements    
+
+**Performance:**    
 - Chart rendering < 2 seconds
 
-**Security:**
+**Security:**   
 - Data retrieved securely via API
 
-**Reliability:**
+**Reliability:**    
 - Charts reflect real-time data updates
 
-**Technical Constraints:**
-- Charts implemented with d3.js or equivalent
-- Responsive design for desktop and tablet
+**Technical Constraints:**  
+- Charts implemented with d3.js or equivalent   
+- Responsive design for desktop and tablet  
 
-### Open Issues
+### Open Issues 
 - Determine chart types (bar, pie, line)  
-
-### Related Artifacts
-- US-103

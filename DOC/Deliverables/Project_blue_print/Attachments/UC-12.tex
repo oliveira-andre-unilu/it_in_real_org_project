@@ -1,0 +1,107 @@
+\section{Use Case: View system activity
+log}\label{use-case-view-system-activity-log}
+
+\textbf{Use Case ID:} UC-12\\
+\textbf{Version:} 1.0\\
+\textbf{Created:} 18/10/2025\\
+\textbf{Last Updated:} 18/10/2025\\
+\textbf{Priority:} \texttt{Medium}\\
+\textbf{Status:} \texttt{Draft}\\
+\textbf{Related US:} US-12\\
+
+\textbf{Primary Actor:} Admin\\
+\textbf{Secondary Actors:} Data Server\\
+\textbf{Stakeholders:}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Admin:} needs visibility on recent actions to track
+  modifications in the system\\
+\item
+  \textbf{IT/Security Team:} requires a full record of admin activities
+  for compliance\\
+\item
+  \textbf{Company Management:} wants accountability and traceability for
+  data integrity
+\end{itemize}
+
+\textbf{Brief Description:}\\
+This use case describes how an admin accesses and reviews a detailed
+activity log of all recent administrative actions (add, edit, delete).
+The log provides transparency and accountability by displaying who
+performed each action, what was changed, and when it occurred.
+
+\textbf{Trigger:}\\
+The admin selects the ``Activity Log'' tab from the Admin Platform menu.
+
+\textbf{Preconditions:}
+
+\begin{itemize}
+\tightlist
+\item
+  Admin is authenticated and logged into the Admin Platform.\\
+\item
+  Activity data exists in the database
+\end{itemize}
+
+\textbf{Postconditions:}
+
+\begin{itemize}
+\tightlist
+\item
+  Admin can view the list of recent changes made in the system.
+\item
+  The activity log is accurate and complete.
+\end{itemize}
+
+\subsubsection{Main Success Scenario}\label{main-success-scenario}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1579}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3947}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4474}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Step
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actor Action
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+System Response
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Admin navigates to the ``Activity Log'' section & System retrieves
+and displays recent admin actions \\
+2 & Admin clicks on a specific log entry for more details & System
+displays detailed information \\
+\end{longtable}
+
+\subsubsection{Extensions (Alternative
+Flows)}\label{extensions-alternative-flows}
+
+\textbf{2a. No activity logs available}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Condition:} there are no activity logs
+\item
+  \textbf{Action:} System displays message (``No recent activity
+  recorded.'')\\
+\item
+  \textbf{Result:} Admin may retry later
+\end{itemize}
+
+% \subsubsection{Special Requirements}\label{special-requirements}
+
+% \textbf{Performance:}\\
+% - Logs must load within ? seconds
+
+% \textbf{Security:}\\
+% - Only admin users can view the activity log
+
+% \textbf{Data Retention:} - Logs must be stored for a minimum of ?
+% days/hours.

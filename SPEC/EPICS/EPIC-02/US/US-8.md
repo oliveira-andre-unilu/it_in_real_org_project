@@ -20,5 +20,5 @@
 - Validate inputs and handle duplicate user entries
 - Ensure role-based access control
 
-**Estimate:** 4 Story Points
+**Estimate:** 1 Story Points
 **Priority:** `Medium`
