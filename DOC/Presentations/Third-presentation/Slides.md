@@ -127,23 +127,12 @@ Presented by **LAMTCo Solutions**
 
 
 ---
-![bg](../../Assets/third_presentation/pexels-photo-555709.jpeg)
-
-# Manual Test cases
-
-
----
 
 ![bg](../../Assets/third_presentation/pexels-photo-555709.jpeg)
 
 # Manual Test cases
 
 - Most of the manual test cases have been implemented for the current scope
-
----
-![bg](../../Assets/third_presentation/pexels-photo-555709.jpeg)
-
-# Some examples
 
 ---
 
@@ -176,7 +165,12 @@ Presented by **LAMTCo Solutions**
 
 ---
 
-...
+
+## And there are many more
+
+![bg right:33%](../Second-Presentation/Assets/Exhausted_man.jpg)
+
+- There are around 12 Manual tests for the current project scope 
 
 ---
 
