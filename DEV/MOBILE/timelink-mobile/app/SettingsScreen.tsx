@@ -31,7 +31,7 @@ const SettingsScreen = ({ navigation }) => {
             {/* Toggle Theme Button */}
             <TouchableOpacity style={styles.button} onPress={toggleTheme}>
                 <Text style={styles.buttonText}>
-                    Switch to {isDark ? "Light" : "Dark"} Mode
+                    Switch to {isDark ? "Light" : "Dark"} Mode (WIP)
                 </Text>
             </TouchableOpacity>
 

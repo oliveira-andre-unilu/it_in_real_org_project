@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
     View,
     Text,
@@ -13,6 +13,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // @ts-ignore
 const LoginScreen = ({ navigation }) => {
+    const inputEmailRef = useRef(null);
+    const inputPasswordRef = useRef(null);
+
     // Handles back swipe gesture
     // Code from: https://reactnavigation.org/docs/preventing-going-back/
     React.useEffect(() => {
@@ -70,22 +73,28 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.title}>Login</Text>
 
             <TextInput
+                ref={inputEmailRef}
                 style={styles.input}
                 placeholder="Email"
                 keyboardType="email-address"
                 onChangeText={setEmail}
                 value={email}
+                onSubmitEditing={() => inputPasswordRef.current?.focus()}
+                blurOnSubmit={false}
             />
 
             <TextInput
+                ref={inputPasswordRef}
                 style={styles.input}
                 placeholder="Password"
                 secureTextEntry
                 onChangeText={setPassword}
                 value={password}
+                onSubmitEditing={handleLogin}
             />
 
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <TouchableOpacity   style={styles.button} 
+                                onPress={handleLogin}>
                 <Text style={styles.buttonText}>Log In</Text>
             </TouchableOpacity>
         </SafeAreaView>
