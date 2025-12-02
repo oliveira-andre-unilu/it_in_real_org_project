@@ -1,12 +1,32 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './index';
+import Dashboard from './DashboardScreen';
+import LoginScreen from './LoginScreen';
+import AuthLoadingScreen from './AuthLoadingScreen';
+import SettingsScreen from './SettingsScreen';
 
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
     return (
-        <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Navigator initialRouteName="AuthLoading">
+            <Stack.Screen name="AuthLoading" component={AuthLoadingScreen} />
+
+            <Stack.Screen   name="Login" 
+                            component={LoginScreen} 
+                            options={{
+                                headerShown: false,
+                                headerLeft: () => null, // hides back arrow
+                                gestureEnabled: false, // disables swipe to go back
+                            }} />
+
+            <Stack.Screen   name="Dashboard" 
+                            component={Dashboard}
+                            options={{
+                                headerLeft: () => null, // hides back arrow
+                                gestureEnabled: false, // disables swipe to go back
+                            }} />
+
+            <Stack.Screen name="Settings" component={SettingsScreen} />
         </Stack.Navigator>
     );
 }

@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-na
 import Icon from 'react-native-vector-icons/Ionicons';
 
 // @ts-ignore
-const HomeScreen = ({ navigation }) => {
+const Dashboard = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             {/* App Logo */}
@@ -26,10 +26,10 @@ const HomeScreen = ({ navigation }) => {
 
             {/* Bottom Navigation */}
             <View style={styles.navbar}>
-                <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
+                {/* <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
                     <Icon name="home-outline" size={28} color="#333" />
                     <Text style={styles.navText}>Home</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Dashboard')}>
                     <Icon name="speedometer-outline" size={28} color="#333" />
@@ -98,4 +98,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HomeScreen;
+export default Dashboard;
