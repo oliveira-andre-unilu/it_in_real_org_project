@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lu.lamtco.timelink.dto.CustomerDTO;
+import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
+import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.services.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +22,12 @@ import java.util.List;
 @Tag(name = "Customers", description = "Operations for managing customers")
 public class CustomerController {
 
-    private final CustomerRepository repository;
+//    private final CustomerRepository repository;
 
     private final CustomerService service;
 
-    public CustomerController(CustomerRepository repository, CustomerService service) {
-        this.repository = repository;
+    public CustomerController(CustomerService service) {
+    //    this.repository = repository;
         this.service = service;
     }
 
@@ -37,7 +39,7 @@ public class CustomerController {
     })
     @GetMapping
     public List<Customer> getAll() {
-        return repository.findAll();
+        return service.findAllCustomers();
     }
 
     @Operation(summary = "Create a new customer", description = "Add a new customer to the system")
@@ -45,11 +47,20 @@ public class CustomerController {
             @ApiResponse(responseCode = "200", description = "Customer successfully created",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Customer.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid input")
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "422", description = "Unprocessable entity")
     })
     @PostMapping
     public ResponseEntity<Customer> create(@RequestBody CustomerDTO newCustomer) {
-        Customer result = service.createCustomer(newCustomer);
+        //CHECKS: Data verification
+
+        Customer result;
+
+        try{
+            result = service.createCustomer(newCustomer);
+        } catch (NonConformRequestedDataException e) {
+            return ResponseEntity.unprocessableEntity().build();
+        }
 
         if(result == null) {
             return ResponseEntity.badRequest().build();
@@ -67,9 +78,17 @@ public class CustomerController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getById(@PathVariable Long id) {
-        return repository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Customer result = service.findCustomerById(id);
+        if(result == null) {
+            return ResponseEntity.notFound().build();
+        }else{
+            return ResponseEntity.ok(result);
+        }
+
+        // Old code
+        //        return repository.findById(id)
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Update customer by ID", description = "Update the details of an existing customer")
@@ -78,20 +97,40 @@ public class CustomerController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Customer.class))),
             @ApiResponse(responseCode = "404", description = "Customer not found"),
-            @ApiResponse(responseCode = "400", description = "Invalid input")
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "422", description = "Unprocessable input entity")
     })
     @PutMapping("/{id}")
     public ResponseEntity<Customer> update(@PathVariable Long id, @RequestBody CustomerDTO updated) {
-        return repository.findById(id)
-                .map(c -> {
-                    c.setCompanyName(updated.getCompanyName());
-                    c.setTaxNumber(updated.getTaxNumber());
-                    c.setEmail(updated.getEmail());
-                    c.setTel(updated.getTel());
-                    c.setFax(updated.getFax());
-                    return ResponseEntity.ok(repository.save(c));
-                })
-                .orElse(ResponseEntity.notFound().build());
+        //CHECKS: Data verification
+
+        Customer result;
+
+        try {
+            result = service.updateCustomer(id, updated);
+        } catch (NonConformRequestedDataException e) {
+            return ResponseEntity.unprocessableEntity().build();
+        } catch (UnexistingEntityException e) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if(result == null) {
+            return ResponseEntity.internalServerError().build();
+        }else{
+            return ResponseEntity.ok(result);
+        }
+
+        // Old code
+        //        return repository.findById(id)
+//                .map(c -> {
+//                    c.setCompanyName(updated.getCompanyName());
+//                    c.setTaxNumber(updated.getTaxNumber());
+//                    c.setEmail(updated.getEmail());
+//                    c.setTel(updated.getTel());
+//                    c.setFax(updated.getFax());
+//                    return ResponseEntity.ok(repository.save(c));
+//                })
+//                .orElse(ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Delete customer by ID", description = "Remove a customer from the system by their ID")
@@ -100,12 +139,21 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Customer not found")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id) {
-        return repository.findById(id)
-                .map(c -> {
-                    repository.delete(c);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+        boolean result;
+        try {
+            result = service.deleteCustomer(id);
+        } catch (UnexistingEntityException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(result);
+
+        // Old code
+//        return repository.findById(id)
+//                .map(c -> {
+//                    repository.delete(c);
+//                    return ResponseEntity.noContent().build();
+//                })
+//                .orElse(ResponseEntity.notFound().build());
     }
 }
