@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lu.lamtco.timelink.dto.ProjectDTO;
+import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.services.ProjectService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +49,12 @@ public class ProjectController {
     })
     @PostMapping
     public ResponseEntity<Project> create(@RequestBody ProjectDTO newProject) {
-        Project result = service.createProject(newProject);
+        Project result = null;
+        try {
+            result = service.createProject(newProject);
+        } catch (UnexistingEntityException e) {
+            return ResponseEntity.notFound().build();
+        }
         if(result == null) {
             return ResponseEntity.badRequest().build();
         }else{
@@ -65,9 +71,17 @@ public class ProjectController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<Project> getById(@PathVariable Long id) {
-        return repository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Project project;
+        try{
+            project = service.getProject(id);
+        } catch (UnexistingEntityException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(project);
+        //Old code
+//        return repository.findById(id)
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Update project by ID", description = "Update the details of an existing project")
@@ -81,6 +95,7 @@ public class ProjectController {
     @PutMapping("/{id}")
     public ResponseEntity<Project> update(@PathVariable Long id, @RequestBody ProjectDTO updated) {
 
+        //CHECKS: Data verification
         Project response = service.updateProject(updated, id);
 
         if(response == null) {
@@ -106,12 +121,20 @@ public class ProjectController {
             @ApiResponse(responseCode = "404", description = "Project not found")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id) {
-        return repository.findById(id)
-                .map(p -> {
-                    repository.delete(p);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+        boolean result = false;
+        try{
+            result = service.deleteProject(id);
+        } catch (UnexistingEntityException e) {
+            ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(result);
+        //Old code
+//        return repository.findById(id)
+//                .map(p -> {
+//                    repository.delete(p);
+//                    return ResponseEntity.noContent().build();
+//                })
+//                .orElse(ResponseEntity.notFound().build());
     }
 }
