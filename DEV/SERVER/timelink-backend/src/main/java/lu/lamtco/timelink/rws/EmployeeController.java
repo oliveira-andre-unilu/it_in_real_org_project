@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lu.lamtco.timelink.dto.EmployeeDTO;
+import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
+import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.services.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +41,7 @@ public class EmployeeController {
     })
     @GetMapping
     public List<Employee> getAll() {
-        return repository.findAll();
+        return employeeService.getAllEmployees();
     }
 
     @Operation(summary = "Create a new employee", description = "Add a new employee to the system")
@@ -51,7 +53,13 @@ public class EmployeeController {
     })
     @PostMapping
     public ResponseEntity<Employee> create(@RequestBody EmployeeDTO newEmployee) {
-        Employee created = employeeService.createEmployee(newEmployee);
+        //CHECKS: Data verification
+        Employee created;
+        try {
+            created = employeeService.createEmployee(newEmployee);
+        } catch (NonConformRequestedDataException e) {
+            return ResponseEntity.badRequest().build();
+        }
         if(created == null) {
             return ResponseEntity.badRequest().build();
         }else{
@@ -68,9 +76,17 @@ public class EmployeeController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<Employee> getById(@PathVariable Long id) {
-        return repository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Employee employee;
+        try {
+            employee = employeeService.getEmployeeById(id);
+        } catch (UnexistingEntityException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(employee);
+        //Old code
+//        return repository.findById(id)
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Update employee by ID", description = "Update the details of an existing employee")
@@ -83,17 +99,28 @@ public class EmployeeController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<Employee> update(@PathVariable Long id, @RequestBody EmployeeDTO updated) {
-        return repository.findById(id)
-                .map(e -> {
-                    e.setName(updated.getName());
-                    e.setSurname(updated.getSurName());
-                    e.setEmail(updated.getEmail());
-                    e.setPassword(updated.getPassword());
-                    e.setRole(updated.getRole());
-                    e.setHourlyRate(updated.getHourlyRate());
-                    return ResponseEntity.ok(repository.save(e));
-                })
-                .orElse(ResponseEntity.notFound().build());
+        Employee employee;
+        try{
+           employee = employeeService.updateEmployee(id, updated);
+        } catch (NonConformRequestedDataException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (UnexistingEntityException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(employee);
+
+        // Old code
+//        return repository.findById(id)
+//                .map(e -> {
+//                    e.setName(updated.getName());
+//                    e.setSurname(updated.getSurName());
+//                    e.setEmail(updated.getEmail());
+//                    e.setPassword(updated.getPassword());
+//                    e.setRole(updated.getRole());
+//                    e.setHourlyRate(updated.getHourlyRate());
+//                    return ResponseEntity.ok(repository.save(e));
+//                })
+//                .orElse(ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Delete employee by ID", description = "Remove an employee from the system by their ID")
@@ -102,12 +129,20 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "Employee not found")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id) {
-        return repository.findById(id)
-                .map(e -> {
-                    repository.delete(e);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+        boolean deleted;
+        try{
+            deleted = employeeService.deleteEmployee(id);
+        } catch (UnexistingEntityException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(deleted);
+        // Old code
+//        return repository.findById(id)
+//                .map(e -> {
+//                    repository.delete(e);
+//                    return ResponseEntity.noContent().build();
+//                })
+//                .orElse(ResponseEntity.notFound().build());
     }
 }
