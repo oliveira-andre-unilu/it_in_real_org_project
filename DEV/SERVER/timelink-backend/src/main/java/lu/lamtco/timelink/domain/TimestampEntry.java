@@ -1,5 +1,7 @@
 package lu.lamtco.timelink.domain;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -32,11 +34,13 @@ public class TimestampEntry {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     @Schema(description = "Employee associated with this timestamp entry")
+    @JsonIgnore
     private Employee employee;
 
     @ManyToOne
     @JoinColumn(name = "project_id")
     @Schema(description = "Project associated with this timestamp entry")
+    @JsonIgnore
     private Project project;
 
     @Enumerated(EnumType.STRING)

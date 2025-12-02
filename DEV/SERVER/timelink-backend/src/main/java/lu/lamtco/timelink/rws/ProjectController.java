@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lu.lamtco.timelink.dto.ProjectDTO;
+import lu.lamtco.timelink.services.ProjectService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lu.lamtco.timelink.domain.Project;
@@ -19,9 +21,11 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectRepository repository;
+    private final ProjectService service;
 
-    public ProjectController(ProjectRepository repository) {
+    public ProjectController(ProjectRepository repository, ProjectService service) {
         this.repository = repository;
+        this.service = service;
     }
 
     @Operation(summary = "Get all projects", description = "Retrieve a list of all projects in the system")
@@ -43,8 +47,13 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PostMapping
-    public Project create(@RequestBody Project project) {
-        return repository.save(project);
+    public ResponseEntity<Project> create(@RequestBody ProjectDTO newProject) {
+        Project result = service.createProject(newProject);
+        if(result == null) {
+            return ResponseEntity.badRequest().build();
+        }else{
+            return ResponseEntity.ok(result);
+        }
     }
 
     @Operation(summary = "Get project by ID", description = "Retrieve a single project by its unique ID")
@@ -70,16 +79,25 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<Project> update(@PathVariable Long id, @RequestBody Project updated) {
-        return repository.findById(id)
-                .map(p -> {
-                    p.setName(updated.getName());
-                    p.setNumber(updated.getNumber());
-                    p.setLocation(updated.getLocation());
-                    p.setCustomer(updated.getCustomer());
-                    return ResponseEntity.ok(repository.save(p));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Project> update(@PathVariable Long id, @RequestBody ProjectDTO updated) {
+
+        Project response = service.updateProject(updated, id);
+
+        if(response == null) {
+            return ResponseEntity.notFound().build();
+        }else{
+            return ResponseEntity.ok(response);
+        }
+
+//        return repository.findById(id)
+//                .map(p -> {
+//                    p.setName(updated.getName());
+//                    p.setNumber(updated.getNumber());
+//                    p.setLocation(updated.getLocation());
+//                    p.setCustomer(updated.getCustomer());
+//                    return ResponseEntity.ok(repository.save(p));
+//                })
+//                .orElse(ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Delete project by ID", description = "Remove a project from the system by its ID")

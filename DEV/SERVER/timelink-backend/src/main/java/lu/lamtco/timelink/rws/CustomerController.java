@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lu.lamtco.timelink.dto.CustomerDTO;
+import lu.lamtco.timelink.services.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lu.lamtco.timelink.domain.Customer;
@@ -20,8 +22,11 @@ public class CustomerController {
 
     private final CustomerRepository repository;
 
-    public CustomerController(CustomerRepository repository) {
+    private final CustomerService service;
+
+    public CustomerController(CustomerRepository repository, CustomerService service) {
         this.repository = repository;
+        this.service = service;
     }
 
     @Operation(summary = "Get all customers", description = "Retrieve a list of all customers in the system")
@@ -43,8 +48,14 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PostMapping
-    public Customer create(@RequestBody Customer customer) {
-        return repository.save(customer);
+    public ResponseEntity<Customer> create(@RequestBody CustomerDTO newCustomer) {
+        Customer result = service.createCustomer(newCustomer);
+
+        if(result == null) {
+            return ResponseEntity.badRequest().build();
+        }else{
+            return ResponseEntity.ok(result);
+        }
     }
 
     @Operation(summary = "Get customer by ID", description = "Retrieve a single customer by their unique ID")
@@ -70,7 +81,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> update(@PathVariable Long id, @RequestBody Customer updated) {
+    public ResponseEntity<Customer> update(@PathVariable Long id, @RequestBody CustomerDTO updated) {
         return repository.findById(id)
                 .map(c -> {
                     c.setCompanyName(updated.getCompanyName());

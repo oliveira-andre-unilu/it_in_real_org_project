@@ -6,6 +6,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lu.lamtco.timelink.dto.EmployeeDTO;
+import lu.lamtco.timelink.services.EmployeeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lu.lamtco.timelink.domain.Employee;
@@ -20,8 +23,12 @@ public class EmployeeController {
 
     private final EmployeeRepository repository;
 
-    public EmployeeController(EmployeeRepository repository) {
+    private final EmployeeService employeeService;
+
+
+    public EmployeeController(EmployeeRepository repository, EmployeeService employeeService) {
         this.repository = repository;
+        this.employeeService = employeeService;
     }
 
     @Operation(summary = "Get all employees", description = "Retrieve a list of all employees in the system")
@@ -43,8 +50,13 @@ public class EmployeeController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PostMapping
-    public Employee create(@RequestBody Employee employee) {
-        return repository.save(employee);
+    public ResponseEntity<Employee> create(@RequestBody EmployeeDTO newEmployee) {
+        Employee created = employeeService.createEmployee(newEmployee);
+        if(created == null) {
+            return ResponseEntity.badRequest().build();
+        }else{
+            return ResponseEntity.ok(created);
+        }
     }
 
     @Operation(summary = "Get employee by ID", description = "Retrieve a single employee by their unique ID")
@@ -70,11 +82,11 @@ public class EmployeeController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> update(@PathVariable Long id, @RequestBody Employee updated) {
+    public ResponseEntity<Employee> update(@PathVariable Long id, @RequestBody EmployeeDTO updated) {
         return repository.findById(id)
                 .map(e -> {
                     e.setName(updated.getName());
-                    e.setSurname(updated.getSurname());
+                    e.setSurname(updated.getSurName());
                     e.setEmail(updated.getEmail());
                     e.setPassword(updated.getPassword());
                     e.setRole(updated.getRole());
