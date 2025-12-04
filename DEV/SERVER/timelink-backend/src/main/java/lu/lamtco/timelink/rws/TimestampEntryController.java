@@ -22,11 +22,9 @@ import java.util.List;
 @Tag(name = "Timestamps", description = "Operations for managing timestamp entries")
 public class TimestampEntryController {
 
-    private final TimestampEntryRepository repository;
     private final TimestampEntryService service;
 
-    public TimestampEntryController(TimestampEntryRepository repository, TimestampEntryService service) {
-        this.repository = repository;
+    public TimestampEntryController(TimestampEntryService service) {
         this.service = service;
     }
 

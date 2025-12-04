@@ -7,7 +7,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lu.lamtco.timelink.dto.CustomerDTO;
+import lu.lamtco.timelink.exeptions.InvalidAuthentication;
 import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
+import lu.lamtco.timelink.exeptions.UnauthorizedActionException;
 import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.services.CustomerService;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,10 @@ import lu.lamtco.timelink.persister.CustomerRepository;
 
 import java.util.List;
 
+/**
+ * Main implementation done
+ *
+ */
 @RestController
 @RequestMapping("/api/customers")
 @Tag(name = "Customers", description = "Operations for managing customers")
@@ -38,8 +44,16 @@ public class CustomerController {
                             schema = @Schema(implementation = Customer.class)))
     })
     @GetMapping
-    public List<Customer> getAll() {
-        return service.findAllCustomers();
+    public ResponseEntity<List<Customer>> getAll(@RequestHeader String jwtToken) {
+        List<Customer> result;
+        try{
+            result = service.findAllCustomers(jwtToken);
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
+        }
+        return ResponseEntity.ok(result);
     }
 
     @Operation(summary = "Create a new customer", description = "Add a new customer to the system")
@@ -51,15 +65,17 @@ public class CustomerController {
             @ApiResponse(responseCode = "422", description = "Unprocessable entity")
     })
     @PostMapping
-    public ResponseEntity<Customer> create(@RequestBody CustomerDTO newCustomer) {
-        //CHECKS: Data verification
-
+    public ResponseEntity<Customer> create(@RequestHeader String jwtToken, @RequestBody CustomerDTO newCustomer) {
         Customer result;
 
         try{
-            result = service.createCustomer(newCustomer);
+            result = service.createCustomer(newCustomer, jwtToken);
         } catch (NonConformRequestedDataException e) {
             return ResponseEntity.unprocessableEntity().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
 
         if(result == null) {
@@ -77,8 +93,15 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Customer not found")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getById(@PathVariable Long id) {
-        Customer result = service.findCustomerById(id);
+    public ResponseEntity<Customer> getById(@RequestHeader String jwtToken, @PathVariable Long id) {
+        Customer result;
+        try{
+            result  = service.findCustomerById(jwtToken, id);
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
+        }
         if(result == null) {
             return ResponseEntity.notFound().build();
         }else{
@@ -101,17 +124,20 @@ public class CustomerController {
             @ApiResponse(responseCode = "422", description = "Unprocessable input entity")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> update(@PathVariable Long id, @RequestBody CustomerDTO updated) {
-        //CHECKS: Data verification
+    public ResponseEntity<Customer> update(@RequestHeader String jwtToken, @PathVariable Long id, @RequestBody CustomerDTO updated) {
 
         Customer result;
 
         try {
-            result = service.updateCustomer(id, updated);
+            result = service.updateCustomer(jwtToken, id, updated);
         } catch (NonConformRequestedDataException e) {
             return ResponseEntity.unprocessableEntity().build();
         } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
 
         if(result == null) {
@@ -139,12 +165,16 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Customer not found")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+    public ResponseEntity<Boolean> delete(@RequestHeader String jwtToken, @PathVariable Long id) {
         boolean result;
         try {
-            result = service.deleteCustomer(id);
+            result = service.deleteCustomer(jwtToken, id);
         } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
         return ResponseEntity.ok(result);
 

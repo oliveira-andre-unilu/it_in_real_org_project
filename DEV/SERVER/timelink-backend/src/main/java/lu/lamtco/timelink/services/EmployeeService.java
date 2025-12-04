@@ -5,6 +5,7 @@ import lu.lamtco.timelink.dto.EmployeeDTO;
 import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
 import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.persister.EmployeeRepository;
+import lu.lamtco.timelink.security.AuthService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +17,11 @@ import java.util.Optional;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private AuthService authService;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, AuthService authService) {
         this.employeeRepository = employeeRepository;
+        this.authService = authService;
     }
 
     //Methods used in the rws
@@ -32,7 +35,8 @@ public class EmployeeService {
         employee.setName(dto.getName());
         employee.setSurname(dto.getSurName());
         employee.setEmail(dto.getEmail());
-        employee.setPassword(dto.getPassword());
+        String hashedPassword = authService.hashPassword(dto.getPassword());
+        employee.setPassword(hashedPassword);
         employee.setRole(dto.getRole());
         employee.setHourlyRate(dto.getHourlyRate());
 
@@ -49,6 +53,19 @@ public class EmployeeService {
             return employee.get();
         }else{
             throw new UnexistingEntityException("Employee with id " + id + " not found");
+        }
+    }
+
+    public Employee getEmployeeByEmail(String email) throws NonConformRequestedDataException, UnexistingEntityException {
+        Optional<Employee> employee;
+        if(!this.verifyEmail(email)){
+            throw new NonConformRequestedDataException("The requested email is not conform");
+        }
+        employee = employeeRepository.findByEmail(email);
+        if(employee.isPresent()){
+            return employee.get();
+        }else{
+            throw new UnexistingEntityException("The username does not exist!!!");
         }
     }
 
@@ -69,7 +86,8 @@ public class EmployeeService {
             employee.setSurname(dto.getSurName());
         }
         if(dto.getPassword() != null){
-            employee.setPassword(dto.getPassword());
+            String hashedPassword = authService.hashPassword(dto.getPassword());
+            employee.setPassword(hashedPassword);
         }
         if(dto.getRole() != null){
             employee.setRole(dto.getRole());

@@ -1,10 +1,15 @@
 package lu.lamtco.timelink.services;
 
 import lu.lamtco.timelink.domain.Customer;
+import lu.lamtco.timelink.domain.Role;
 import lu.lamtco.timelink.dto.CustomerDTO;
+import lu.lamtco.timelink.exeptions.InvalidAuthentication;
 import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
+import lu.lamtco.timelink.exeptions.UnauthorizedActionException;
 import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.persister.CustomerRepository;
+import lu.lamtco.timelink.security.AuthService;
+import lu.lamtco.timelink.security.UserAuthData;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,15 +21,19 @@ import java.util.Optional;
 public class CustomerService {
 
     private CustomerRepository customerRepository;
+    private AuthService authService;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, AuthService authService) {
         this.customerRepository = customerRepository;
+        this.authService = authService;
     }
 
 
     //Methods used in the rws
     @Transactional
-    public Customer createCustomer(CustomerDTO newCustomer) throws NonConformRequestedDataException {
+    public Customer createCustomer(CustomerDTO newCustomer, String jwtToken) throws NonConformRequestedDataException, InvalidAuthentication, UnauthorizedActionException {
+        this.verifyAdminAccess(jwtToken);
+
         if(this.isCostumerEntryConform(newCustomer)) {
             throw new NonConformRequestedDataException("The requested data was not conform to the requirements");
         }
@@ -38,7 +47,9 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public List<Customer> findAllCustomers() {
+    public List<Customer> findAllCustomers(String jwtToken) throws InvalidAuthentication, UnauthorizedActionException {
+        authService.getAuthData(jwtToken);
+
         try{
             return customerRepository.findAll();
         } catch (Exception e) {
@@ -46,7 +57,8 @@ public class CustomerService {
         }
     }
 
-    public Customer findCustomerById(long id) {
+    public Customer findCustomerById(String jwtToken, long id) throws InvalidAuthentication, UnauthorizedActionException {
+        authService.getAuthData(jwtToken);
         Optional<Customer> customer = customerRepository.findById(id);
         if(customer.isPresent()) {
             return customer.get();
@@ -56,10 +68,11 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer updateCustomer(long id, CustomerDTO newCustomer) throws NonConformRequestedDataException , UnexistingEntityException {
+    public Customer updateCustomer(String jwtToken, long id, CustomerDTO newCustomer) throws NonConformRequestedDataException, UnexistingEntityException, InvalidAuthentication, UnauthorizedActionException {
+        this.verifyAdminAccess(jwtToken);
 
         //Verifying parameters
-        Customer customer = this.findCustomerById(id);
+        Customer customer = this.findCustomerById(jwtToken, id); //verification done at this stage
         if(customer == null) {
             throw new UnexistingEntityException("Customer with id " + id + " not found");
         }
@@ -92,8 +105,10 @@ public class CustomerService {
     }
 
     @Transactional
-    public boolean deleteCustomer(long id) throws UnexistingEntityException {
-        Customer customer = this.findCustomerById(id);
+    public boolean deleteCustomer(String jwtToken, long id) throws UnexistingEntityException, InvalidAuthentication, UnauthorizedActionException {
+        this.verifyAdminAccess(jwtToken);
+
+        Customer customer = this.findCustomerById(jwtToken, id); //verification done at this stage
         if(customer == null) {
             throw new UnexistingEntityException("The requested Custumer does not existi!");
         }
@@ -131,5 +146,12 @@ public class CustomerService {
             return false;
         }
         return true;
+    }
+
+    private void verifyAdminAccess(String jwtToken) throws UnauthorizedActionException, InvalidAuthentication {
+        UserAuthData authData = authService.getAuthData(jwtToken);
+        if(authData.role()!= Role.ADMIN){
+            throw new UnauthorizedActionException();
+        }
     }
 }
