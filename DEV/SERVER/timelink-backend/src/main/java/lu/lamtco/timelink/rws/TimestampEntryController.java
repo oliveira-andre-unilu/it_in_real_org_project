@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lu.lamtco.timelink.dto.TimeStampEntryDTO;
+import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
+import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.services.TimestampEntryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +38,7 @@ public class TimestampEntryController {
     })
     @GetMapping
     public List<TimestampEntry> getAll() {
-        return repository.findAll();
+        return service.getAllTimeStamps();
     }
 
     @Operation(summary = "Create a new timestamp entry", description = "Add a new timestamp entry to the system")
@@ -48,12 +50,15 @@ public class TimestampEntryController {
     })
     @PostMapping
     public ResponseEntity<TimestampEntry> create(@RequestBody TimeStampEntryDTO newEntry) {
-        TimestampEntry result = service.createTimeStamp(newEntry);
-        if(result == null) {
+        TimestampEntry result;
+        try{
+            result = service.createTimeStamp(newEntry);
+        } catch (NonConformRequestedDataException e) {
             return ResponseEntity.badRequest().build();
-        }else{
-            return ResponseEntity.ok(result);
+        } catch (UnexistingEntityException e) {
+            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(result);
     }
 
     @Operation(summary = "Get timestamp entry by ID", description = "Retrieve a single timestamp entry by its unique ID")
