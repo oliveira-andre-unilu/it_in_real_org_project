@@ -70,6 +70,7 @@ public class ProjectService {
         }
     }
 
+    @Transactional
     public boolean deleteProject(Long projectId) throws UnexistingEntityException {
         Optional<Project> relatedProject = this.projectRepository.findById(projectId);
         if(relatedProject.isPresent()) {

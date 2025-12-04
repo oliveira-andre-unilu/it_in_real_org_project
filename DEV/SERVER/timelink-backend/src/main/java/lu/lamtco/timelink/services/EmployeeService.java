@@ -52,6 +52,7 @@ public class EmployeeService {
         }
     }
 
+    @Transactional
     public Employee updateEmployee(long id, EmployeeDTO dto) throws NonConformRequestedDataException , UnexistingEntityException {
         Employee employee = getEmployeeById(id);
 
@@ -79,6 +80,7 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    @Transactional
     public boolean deleteEmployee(long id) throws UnexistingEntityException {
         Employee employee = getEmployeeById(id);
         employeeRepository.delete(employee);

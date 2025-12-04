@@ -55,6 +55,7 @@ public class CustomerService {
         }
     }
 
+    @Transactional
     public Customer updateCustomer(long id, CustomerDTO newCustomer) throws NonConformRequestedDataException , UnexistingEntityException {
 
         //Verifying parameters
@@ -90,6 +91,7 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
+    @Transactional
     public boolean deleteCustomer(long id) throws UnexistingEntityException {
         Customer customer = this.findCustomerById(id);
         if(customer == null) {

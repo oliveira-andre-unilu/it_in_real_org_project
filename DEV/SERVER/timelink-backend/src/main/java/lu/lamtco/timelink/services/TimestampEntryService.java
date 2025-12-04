@@ -59,7 +59,7 @@ public class TimestampEntryService {
     }
 
     @Transactional
-    public TimestampEntry updateTimeStamp(TimeStampEntryDTO newTimeStamp, Long timestampId) {
+    public TimestampEntry updateTimeStamp(TimeStampEntryDTO newTimeStamp, Long timestampId) throws NonConformRequestedDataException, UnexistingEntityException {
         //Looking for all the needed information
         Optional<Project> project = projectRepository.findById(newTimeStamp.getProjectId());
         Optional<Employee> employee = employeeRepository.findById(newTimeStamp.getEmployeeId());
@@ -69,7 +69,9 @@ public class TimestampEntryService {
             Project finalProject = project.get();
             Employee finalEmployee = employee.get();
             TimestampEntry finalTimestampEntry = timestampEntry.get();
-
+            if(this.verifyTimeStamp(newTimeStamp)){
+                throw new NonConformRequestedDataException("The requested TimeStamp is not conform!!!");
+            }
             finalTimestampEntry.setProject(finalProject);
             finalTimestampEntry.setEmployee(finalEmployee);
             finalTimestampEntry.setStartingTime(newTimeStamp.getStartTime());
@@ -79,7 +81,21 @@ public class TimestampEntryService {
             finalTimestampEntry.setTag(newTimeStamp.getTag());
             return timestampEntryRepository.save(finalTimestampEntry);
         }else{
-            return null;
+            throw new UnexistingEntityException("One of the selected entites does not have a valid id");
+        }
+    }
+
+    @Transactional
+    public boolean deleteTimeStamp(Long timestampId) throws NonConformRequestedDataException, UnexistingEntityException {
+        if(timestampId == null || timestampId < 0) {
+            throw new NonConformRequestedDataException("The requested TimeStamp does not have a valid id");
+        }
+        Optional<TimestampEntry> timestampEntry = timestampEntryRepository.findById(timestampId);
+        if(timestampEntry.isPresent()) {
+            timestampEntryRepository.delete(timestampEntry.get());
+            return true;
+        }else{
+            throw new UnexistingEntityException("The requested TimeStamp does not exist");
         }
     }
 

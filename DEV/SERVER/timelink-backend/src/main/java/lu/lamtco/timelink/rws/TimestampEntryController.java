@@ -70,9 +70,15 @@ public class TimestampEntryController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<TimestampEntry> getById(@PathVariable Long id) {
-        return repository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        TimestampEntry result;
+        try{
+            result =  service.getTimeStampById(id);
+        } catch (NonConformRequestedDataException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (UnexistingEntityException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(result);
     }
 
     @Operation(summary = "Update timestamp entry by ID", description = "Update an existing timestamp entry")
@@ -85,12 +91,16 @@ public class TimestampEntryController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<TimestampEntry> update(@PathVariable Long id, @RequestBody TimeStampEntryDTO updated) {
-        TimestampEntry result = service.updateTimeStamp(updated, id);
-        if(result == null) {
+        TimestampEntry result;
+        try{
+            result = service.updateTimeStamp(updated, id);
+        } catch (NonConformRequestedDataException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
-        }else{
-            return ResponseEntity.ok(result);
         }
+
+        return ResponseEntity.ok(result);
 
         /*return repository.findById(id)
                 .map(e -> {
@@ -113,11 +123,21 @@ public class TimestampEntryController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id) {
-        return repository.findById(id)
-                .map(e -> {
-                    repository.delete(e);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+        boolean result;
+        try{
+            result = service.deleteTimeStamp(id);
+        } catch (NonConformRequestedDataException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (UnexistingEntityException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(result);
+        //Old code
+//        return repository.findById(id)
+//                .map(e -> {
+//                    repository.delete(e);
+//                    return ResponseEntity.noContent().build();
+//                })
+//                .orElse(ResponseEntity.notFound().build());
     }
 }
