@@ -26,26 +26,32 @@ public class JWTUtils {
         return Jwts.builder()
                 .subject(username)
                 .claim("userId", userId)
-                .claim("role", role)
+                .claim("role", role.name())      // store as string
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(getSigningKey())
                 .compact();
     }
 
+
     public UserAuthData decodeToken(String token) throws InvalidAuthentication {
         try {
             Claims claims = Jwts.parser()
+                    .verifyWith(getSigningKey())      // REQUIRED!
                     .build()
                     .parseSignedClaims(token)
                     .getPayload();
+
             String userName = claims.getSubject();
             long userId = claims.get("userId", Long.class);
-            Role role = claims.get("role", Role.class);
+            Role role = Role.valueOf(claims.get("role", String.class));
+
             return new UserAuthData(userName, userId, role);
+
         } catch (JwtException | IllegalArgumentException e) {
             throw new InvalidAuthentication("Invalid token!!!");
         }
     }
+
 
     public boolean validateToken(String token) {
         try {

@@ -38,4 +38,17 @@ public class Customer {
     @JsonIgnore
     @Schema(hidden = true)
     private List<Project> projects = new ArrayList<>();
+
+    public Customer() {
+        super();
+    }
+
+    public Customer(String companyName, String taxNumber, String email, String tel, String fax) {
+        super();
+        this.companyName = companyName;
+        this.taxNumber = taxNumber;
+        this.email = email;
+        this.tel = tel;
+        this.fax = fax;
+    }
 }

@@ -40,4 +40,18 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     @Schema(hidden = true)
     private List<TimestampEntry> timestamps = new ArrayList<>();
+
+    public Employee() {
+        super();
+    }
+
+    public Employee(String name, String surname, String email, String password, Role role, Double hourlyRate) {
+        super();
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.hourlyRate = hourlyRate;
+    }
 }

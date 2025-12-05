@@ -15,12 +15,10 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     private final EmployeeRepository employeeRepository;
-    private final EmployeeService employeeService;
     private final JWTUtils jwtUtils;
 
-    public AuthService(EmployeeRepository employeeRepository, JWTUtils jwtUtils, EmployeeService employeeService) {
+    public AuthService(EmployeeRepository employeeRepository, JWTUtils jwtUtils) {
         this.employeeRepository = employeeRepository;
-        this.employeeService = employeeService;
         this.jwtUtils = jwtUtils;
     }
 
@@ -35,9 +33,12 @@ public class AuthService {
 
 
     public String signInAndGetToken(String email, String password) throws NonConformRequestedDataException, UnexistingEntityException, InvalidAuthentication {
-        Employee employee = employeeService.getEmployeeByEmail(email);
+        Employee employee = employeeRepository.findByEmail(email).orElse(null);
         //Checking if email/password are the same
-        if(!checkPassword(password, employee.getPassword())){
+        if(employee == null) {
+            throw new InvalidAuthentication("Unexciting user");
+        }
+        if(!checkPassword(password, employee.getPassword())) {
             throw new InvalidAuthentication("Invalid user or password");
         }
         return jwtUtils.generateToken(employee.getEmail(), employee.getId(), employee.getRole());

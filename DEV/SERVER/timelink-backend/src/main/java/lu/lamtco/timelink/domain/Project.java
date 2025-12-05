@@ -35,4 +35,16 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     @Schema(hidden = true)
     private List<TimestampEntry> timestamps = new ArrayList<>();
+
+    public Project() {
+        super();
+    }
+
+    public Project(String name, String number, Customer customer, String location) {
+        super();
+        this.name = name;
+        this.number = number;
+        this.customer = customer;
+        this.location = location;
+    }
 }
