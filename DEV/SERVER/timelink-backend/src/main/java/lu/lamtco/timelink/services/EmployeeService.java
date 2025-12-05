@@ -2,10 +2,13 @@ package lu.lamtco.timelink.services;
 
 import lu.lamtco.timelink.domain.Employee;
 import lu.lamtco.timelink.dto.EmployeeDTO;
+import lu.lamtco.timelink.exeptions.InvalidAuthentication;
 import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
+import lu.lamtco.timelink.exeptions.UnauthorizedActionException;
 import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.persister.EmployeeRepository;
 import lu.lamtco.timelink.security.AuthService;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +20,7 @@ import java.util.Optional;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private AuthService authService;
+    private final AuthService authService;
 
     public EmployeeService(EmployeeRepository employeeRepository, AuthService authService) {
         this.employeeRepository = employeeRepository;
@@ -27,7 +30,9 @@ public class EmployeeService {
     //Methods used in the rws
 
     @Transactional
-    public Employee createEmployee(EmployeeDTO dto) throws NonConformRequestedDataException {
+    public Employee createEmployee(String jwtToken, EmployeeDTO dto) throws NonConformRequestedDataException, InvalidAuthentication, UnauthorizedActionException {
+        authService.verifyAdminAccess(jwtToken);
+
         if(!this.verifyEmployeeDetails(dto)){
             throw new NonConformRequestedDataException("The requested email does already exist or is not conform");
         }
@@ -47,10 +52,25 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee getEmployeeById(long id) throws UnexistingEntityException {
+    public Employee getEmployeeById(String jwtToken, long id) throws UnexistingEntityException, InvalidAuthentication, UnauthorizedActionException {
+
+        //Firt verify if it is an admin user
+        boolean isNotAdmin=false;
+        try{
+            authService.verifyAdminAccess(jwtToken);
+        }catch(UnauthorizedActionException e){
+            //If user is not Admin verify self identity
+            isNotAdmin=true;
+        }
+
         Optional<Employee> employee = employeeRepository.findById(id);
         if(employee.isPresent()){
-            return employee.get();
+            //Verify self identity if needed
+            Employee result = employee.get();
+            if(isNotAdmin){
+                authService.verifySelfIdentityAccess(jwtToken, result.getId(), result.getEmail());
+            }
+            return result;
         }else{
             throw new UnexistingEntityException("Employee with id " + id + " not found");
         }
@@ -70,8 +90,8 @@ public class EmployeeService {
     }
 
     @Transactional
-    public Employee updateEmployee(long id, EmployeeDTO dto) throws NonConformRequestedDataException , UnexistingEntityException {
-        Employee employee = getEmployeeById(id);
+    public Employee updateEmployee(String jwtToken, long id, EmployeeDTO dto) throws NonConformRequestedDataException, UnexistingEntityException, InvalidAuthentication, UnauthorizedActionException {
+        Employee employee = getEmployeeById(jwtToken, id); //Verification done at this stage
 
         if(dto.getEmail() != null){
             if(!verifyEmail(dto.getEmail())){
@@ -99,8 +119,8 @@ public class EmployeeService {
     }
 
     @Transactional
-    public boolean deleteEmployee(long id) throws UnexistingEntityException {
-        Employee employee = getEmployeeById(id);
+    public boolean deleteEmployee(String jwtToken, long id) throws UnexistingEntityException, InvalidAuthentication, UnauthorizedActionException {
+        Employee employee = getEmployeeById(jwtToken, id); //Verification done at this stage
         employeeRepository.delete(employee);
         return true;
     }

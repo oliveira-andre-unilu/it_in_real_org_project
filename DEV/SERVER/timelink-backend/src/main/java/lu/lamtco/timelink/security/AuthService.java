@@ -1,8 +1,10 @@
 package lu.lamtco.timelink.security;
 
 import lu.lamtco.timelink.domain.Employee;
+import lu.lamtco.timelink.domain.Role;
 import lu.lamtco.timelink.exeptions.InvalidAuthentication;
 import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
+import lu.lamtco.timelink.exeptions.UnauthorizedActionException;
 import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.persister.EmployeeRepository;
 import lu.lamtco.timelink.services.EmployeeService;
@@ -51,5 +53,23 @@ public class AuthService {
 
     private boolean checkPassword(String password, String hashedPassword) {
         return BCrypt.checkpw(password, hashedPassword);
+    }
+
+    //Additional helper functions
+    public boolean verifyAdminAccess(String webToken) throws InvalidAuthentication, UnauthorizedActionException {
+        UserAuthData authData = this.getAuthData(webToken);
+        if(authData.role()!= Role.ADMIN){
+            throw new UnauthorizedActionException();
+        }
+        return true;
+    }
+
+    public boolean verifySelfIdentityAccess(String webToken, Long id, String userName) throws InvalidAuthentication, UnauthorizedActionException {
+        UserAuthData authData = this.getAuthData(webToken);
+        if(authData.userName().equals(userName) && authData.id() == id){
+            return true;
+        }else{
+            throw new UnauthorizedActionException();
+        }
     }
 }

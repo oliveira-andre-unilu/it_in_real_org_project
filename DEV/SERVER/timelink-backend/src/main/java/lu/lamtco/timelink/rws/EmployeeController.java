@@ -7,7 +7,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lu.lamtco.timelink.dto.EmployeeDTO;
+import lu.lamtco.timelink.exeptions.InvalidAuthentication;
 import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
+import lu.lamtco.timelink.exeptions.UnauthorizedActionException;
 import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.services.EmployeeService;
 import org.springframework.http.HttpStatus;
@@ -23,13 +25,13 @@ import java.util.List;
 @Tag(name = "Employees", description = "Operations for managing employees")
 public class EmployeeController {
 
-    private final EmployeeRepository repository;
+//    private final EmployeeRepository repository;
 
     private final EmployeeService employeeService;
 
 
-    public EmployeeController(EmployeeRepository repository, EmployeeService employeeService) {
-        this.repository = repository;
+    public EmployeeController(/*EmployeeRepository repository,*/ EmployeeService employeeService) {
+    //    this.repository = repository;
         this.employeeService = employeeService;
     }
 
@@ -52,13 +54,17 @@ public class EmployeeController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PostMapping
-    public ResponseEntity<Employee> create(@RequestBody EmployeeDTO newEmployee) {
+    public ResponseEntity<Employee> create(@RequestHeader String jwtToken, @RequestBody EmployeeDTO newEmployee) {
         //CHECKS: Data verification
         Employee created;
         try {
-            created = employeeService.createEmployee(newEmployee);
+            created = employeeService.createEmployee(jwtToken,newEmployee);
         } catch (NonConformRequestedDataException e) {
             return ResponseEntity.badRequest().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
         if(created == null) {
             return ResponseEntity.badRequest().build();
@@ -75,12 +81,16 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "Employee not found")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getById(@PathVariable Long id) {
+    public ResponseEntity<Employee> getById(@RequestHeader String jwtToken, @PathVariable Long id) {
         Employee employee;
         try {
-            employee = employeeService.getEmployeeById(id);
+            employee = employeeService.getEmployeeById(jwtToken, id);
         } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
         return ResponseEntity.ok(employee);
         //Old code
@@ -98,14 +108,18 @@ public class EmployeeController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> update(@PathVariable Long id, @RequestBody EmployeeDTO updated) {
+    public ResponseEntity<Employee> update(@RequestHeader String jwtToken, @PathVariable Long id, @RequestBody EmployeeDTO updated) {
         Employee employee;
         try{
-           employee = employeeService.updateEmployee(id, updated);
+           employee = employeeService.updateEmployee(jwtToken, id, updated);
         } catch (NonConformRequestedDataException e) {
             return ResponseEntity.badRequest().build();
         } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
         return ResponseEntity.ok(employee);
 
@@ -129,12 +143,16 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "Employee not found")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+    public ResponseEntity<Boolean> delete(@RequestHeader String jwtToken, @PathVariable Long id) {
         boolean deleted;
         try{
-            deleted = employeeService.deleteEmployee(id);
+            deleted = employeeService.deleteEmployee(jwtToken, id);
         } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
         return ResponseEntity.ok(deleted);
         // Old code

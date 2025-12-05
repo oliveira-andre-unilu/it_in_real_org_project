@@ -7,7 +7,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lu.lamtco.timelink.dto.TimeStampEntryDTO;
+import lu.lamtco.timelink.exeptions.InvalidAuthentication;
 import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
+import lu.lamtco.timelink.exeptions.UnauthorizedActionException;
 import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.services.TimestampEntryService;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +37,12 @@ public class TimestampEntryController {
                             schema = @Schema(implementation = TimestampEntry.class)))
     })
     @GetMapping
-    public List<TimestampEntry> getAll() {
-        return service.getAllTimeStamps();
+    public ResponseEntity<List<TimestampEntry>> getAll(@RequestHeader String jwtToken) {
+        try {
+            return ResponseEntity.ok(service.getAllTimeStamps(jwtToken));
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        }
     }
 
     @Operation(summary = "Create a new timestamp entry", description = "Add a new timestamp entry to the system")
@@ -47,15 +53,20 @@ public class TimestampEntryController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PostMapping
-    public ResponseEntity<TimestampEntry> create(@RequestBody TimeStampEntryDTO newEntry) {
+    public ResponseEntity<TimestampEntry> create(@RequestHeader String jwtToken, @RequestBody TimeStampEntryDTO newEntry) {
         TimestampEntry result;
         try{
-            result = service.createTimeStamp(newEntry);
+            result = service.createTimeStamp(jwtToken, newEntry);
         } catch (NonConformRequestedDataException e) {
             return ResponseEntity.badRequest().build();
         } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
+
         return ResponseEntity.ok(result);
     }
 
@@ -67,14 +78,18 @@ public class TimestampEntryController {
             @ApiResponse(responseCode = "404", description = "Timestamp entry not found")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<TimestampEntry> getById(@PathVariable Long id) {
+    public ResponseEntity<TimestampEntry> getById(@RequestHeader String jwtToken, @PathVariable Long id) {
         TimestampEntry result;
         try{
-            result =  service.getTimeStampById(id);
+            result =  service.getTimeStampById(jwtToken, id);
         } catch (NonConformRequestedDataException e) {
             return ResponseEntity.badRequest().build();
         } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
         return ResponseEntity.ok(result);
     }
@@ -88,14 +103,18 @@ public class TimestampEntryController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<TimestampEntry> update(@PathVariable Long id, @RequestBody TimeStampEntryDTO updated) {
+    public ResponseEntity<TimestampEntry> update(@RequestHeader String jwtToken, @PathVariable Long id, @RequestBody TimeStampEntryDTO updated) {
         TimestampEntry result;
         try{
-            result = service.updateTimeStamp(updated, id);
+            result = service.updateTimeStamp(jwtToken, updated, id);
         } catch (NonConformRequestedDataException e) {
             return ResponseEntity.badRequest().build();
         } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
 
         return ResponseEntity.ok(result);
@@ -120,14 +139,18 @@ public class TimestampEntryController {
             @ApiResponse(responseCode = "404", description = "Timestamp entry not found")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id) {
+    public ResponseEntity<Object> delete(@RequestHeader String jwtToken, @PathVariable Long id) {
         boolean result;
         try{
-            result = service.deleteTimeStamp(id);
+            result = service.deleteTimeStamp(jwtToken, id);
         } catch (NonConformRequestedDataException e) {
             return ResponseEntity.badRequest().build();
         } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
         return ResponseEntity.ok(result);
         //Old code

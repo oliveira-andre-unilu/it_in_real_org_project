@@ -3,27 +3,36 @@ package lu.lamtco.timelink.services;
 import lu.lamtco.timelink.domain.Customer;
 import lu.lamtco.timelink.domain.Project;
 import lu.lamtco.timelink.dto.ProjectDTO;
+import lu.lamtco.timelink.exeptions.InvalidAuthentication;
+import lu.lamtco.timelink.exeptions.UnauthorizedActionException;
 import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.persister.CustomerRepository;
 import lu.lamtco.timelink.persister.ProjectRepository;
+import lu.lamtco.timelink.security.AuthService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProjectService {
 
-    private ProjectRepository projectRepository;
-    private CustomerRepository customerRepository;
+    private final ProjectRepository projectRepository;
+    private final CustomerRepository customerRepository;
+    private final AuthService authService;
 
-    public ProjectService(ProjectRepository projectRepository, CustomerRepository customerRepository) {
+    public ProjectService(ProjectRepository projectRepository, CustomerRepository customerRepository, AuthService authService) {
         this.projectRepository = projectRepository;
         this.customerRepository = customerRepository;
+        this.authService = authService;
     }
 
     @Transactional
-    public Project createProject(ProjectDTO newProject) throws UnexistingEntityException {
+    public Project createProject(String jwtToken,ProjectDTO newProject) throws UnexistingEntityException, InvalidAuthentication, UnauthorizedActionException {
+        //Verifying admin access
+        authService.verifyAdminAccess(jwtToken);
+
         //Finding the related customer
         Optional<Customer> relatedCustomer = this.customerRepository.findById(newProject.getCostumerId());
 
@@ -44,24 +53,42 @@ public class ProjectService {
     }
 
     @Transactional
-    public Project updateProject(ProjectDTO newProject, Long projectId) {
-        Optional<Customer> relatedCustomer = this.customerRepository.findById(newProject.getCostumerId());
+    public Project updateProject(String jwtToken, ProjectDTO newProject, Long projectId) throws InvalidAuthentication, UnauthorizedActionException, UnexistingEntityException {
+        //Verify admin access
+        authService.verifyAdminAccess(jwtToken);
+
         Optional<Project> relatedProject = this.projectRepository.findById(projectId);
 
-        if(relatedCustomer.isPresent() && relatedProject.isPresent()) {
-            Customer customer = relatedCustomer.get();
+        if(relatedProject.isPresent()) {
             Project project = relatedProject.get();
-            project.setCustomer(customer);
-            project.setName(newProject.getName());
-            project.setNumber(newProject.getNumber());
-            project.setLocation(newProject.getLocation());
+            if(project.getCustomer()!=null){
+                Optional<Customer> relatedCustomer = this.customerRepository.findById(newProject.getCostumerId());
+                if(relatedCustomer.isPresent()) {
+                    Customer customer = relatedCustomer.get();
+                    project.setCustomer(customer);
+                }else{
+                    throw new UnexistingEntityException("The related costumer does not exist!!!");
+                }
+            }
+            if(project.getName()!=null){
+                project.setName(newProject.getName());
+            }
+            if(project.getNumber()!=null){
+                project.setNumber(newProject.getNumber());
+            }
+            if(project.getLocation()!=null){
+                project.setLocation(newProject.getLocation());
+            }
             return projectRepository.save(project);
         }else{
-            return null;
+            throw new UnexistingEntityException("The requested project does not exist!!!");
         }
     }
 
-    public Project getProject(Long projectId) throws UnexistingEntityException {
+    public Project getProject(String jwtToken, Long projectId) throws UnexistingEntityException, InvalidAuthentication {
+        //Simple authentication made
+        authService.getAuthData(jwtToken);
+
         Optional<Project> relatedProject = this.projectRepository.findById(projectId);
         if(relatedProject.isPresent()) {
             return relatedProject.get();
@@ -71,7 +98,10 @@ public class ProjectService {
     }
 
     @Transactional
-    public boolean deleteProject(Long projectId) throws UnexistingEntityException {
+    public boolean deleteProject(String jwtToken, Long projectId) throws UnexistingEntityException, InvalidAuthentication, UnauthorizedActionException {
+        //Verify admin access
+        authService.verifyAdminAccess(jwtToken);
+
         Optional<Project> relatedProject = this.projectRepository.findById(projectId);
         if(relatedProject.isPresent()) {
             this.projectRepository.delete(relatedProject.get());
@@ -79,6 +109,11 @@ public class ProjectService {
         }else{
             throw new UnexistingEntityException("The requested project does not exist");
         }
+    }
+
+    public List<Project> getAllProjects(String jwtToken) throws InvalidAuthentication {
+        authService.getAuthData(jwtToken);
+        return projectRepository.findAll();
     }
 
     //Helper methods

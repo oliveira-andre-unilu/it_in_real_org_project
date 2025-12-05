@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lu.lamtco.timelink.dto.ProjectDTO;
+import lu.lamtco.timelink.exeptions.InvalidAuthentication;
+import lu.lamtco.timelink.exeptions.UnauthorizedActionException;
 import lu.lamtco.timelink.exeptions.UnexistingEntityException;
 import lu.lamtco.timelink.services.ProjectService;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +23,11 @@ import java.util.List;
 @Tag(name = "Projects", description = "Operations for managing projects")
 public class ProjectController {
 
-    private final ProjectRepository repository;
+//    private final ProjectRepository repository;
     private final ProjectService service;
 
-    public ProjectController(ProjectRepository repository, ProjectService service) {
-        this.repository = repository;
+    public ProjectController(/*ProjectRepository repository,*/ ProjectService service) {
+//        this.repository = repository;
         this.service = service;
     }
 
@@ -36,8 +38,14 @@ public class ProjectController {
                             schema = @Schema(implementation = Project.class)))
     })
     @GetMapping
-    public List<Project> getAll() {
-        return repository.findAll();
+    public ResponseEntity<List<Project>> getAll(@RequestHeader String jwtToken) {
+        List<Project> projects;
+        try{
+            projects = service.getAllProjects(jwtToken);
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        }
+        return ResponseEntity.ok(projects);
     }
 
     @Operation(summary = "Create a new project", description = "Add a new project to the system")
@@ -48,12 +56,16 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PostMapping
-    public ResponseEntity<Project> create(@RequestBody ProjectDTO newProject) {
+    public ResponseEntity<Project> create(@RequestHeader String jwtToken, @RequestBody ProjectDTO newProject) {
         Project result = null;
         try {
-            result = service.createProject(newProject);
+            result = service.createProject(jwtToken,newProject);
         } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
         if(result == null) {
             return ResponseEntity.badRequest().build();
@@ -70,13 +82,16 @@ public class ProjectController {
             @ApiResponse(responseCode = "404", description = "Project not found")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getById(@PathVariable Long id) {
+    public ResponseEntity<Project> getById(@RequestHeader String jwtToken, @PathVariable Long id) {
         Project project;
         try{
-            project = service.getProject(id);
+            project = service.getProject(jwtToken, id);
         } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
         }
+
         return ResponseEntity.ok(project);
         //Old code
 //        return repository.findById(id)
@@ -93,16 +108,20 @@ public class ProjectController {
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<Project> update(@PathVariable Long id, @RequestBody ProjectDTO updated) {
+    public ResponseEntity<Project> update(@RequestHeader String jwtToken, @PathVariable Long id, @RequestBody ProjectDTO updated) {
 
         //CHECKS: Data verification
-        Project response = service.updateProject(updated, id);
-
-        if(response == null) {
+        Project response = null;
+        try {
+            response = service.updateProject(jwtToken, updated, id);
+        } catch (UnexistingEntityException e) {
             return ResponseEntity.notFound().build();
-        }else{
-            return ResponseEntity.ok(response);
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
+        return ResponseEntity.ok(response);
 
 //        return repository.findById(id)
 //                .map(p -> {
@@ -121,12 +140,16 @@ public class ProjectController {
             @ApiResponse(responseCode = "404", description = "Project not found")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+    public ResponseEntity<Boolean> delete(@RequestHeader String jwtToken, @PathVariable Long id) {
         boolean result = false;
         try{
-            result = service.deleteProject(id);
+            result = service.deleteProject(jwtToken, id);
         } catch (UnexistingEntityException e) {
             ResponseEntity.badRequest().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
+        } catch (UnauthorizedActionException e) {
+            return ResponseEntity.status(401).build();
         }
         return ResponseEntity.ok(result);
         //Old code
