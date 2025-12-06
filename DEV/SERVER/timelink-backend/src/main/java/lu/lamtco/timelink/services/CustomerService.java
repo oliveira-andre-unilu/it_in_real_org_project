@@ -80,7 +80,7 @@ public class CustomerService {
         if(newCustomer.getCompanyName()!=null) {
             customer.setCompanyName(newCustomer.getCompanyName());
         }
-        if(newCustomer.getTaxNumber()!=null) {
+        if(newCustomer.getTaxNumber()!=null && verifyTaxNumber(newCustomer.getTaxNumber())) {
             customer.setTaxNumber(newCustomer.getTaxNumber());
         }
         if(newCustomer.getEmail()!=null) {
@@ -120,7 +120,8 @@ public class CustomerService {
     // Helper functions
     private boolean isCostumerEntryConform(CustomerDTO customerDTO) {
         //Verifying all other data conformity
-        return this.verifyEmail(customerDTO.getEmail()) && this.verifyPhoneNumber(customerDTO.getTel()) && this.verifyPhoneNumber(customerDTO.getFax());
+        return this.verifyEmail(customerDTO.getEmail()) && this.verifyPhoneNumber(customerDTO.getTel()) && this.verifyPhoneNumber(customerDTO.getFax())
+                && verifyPhoneNumber(customerDTO.getTaxNumber());
     }
 
     private boolean verifyEmail(String email) {
@@ -146,6 +147,11 @@ public class CustomerService {
             return false;
         }
         return true;
+    }
+
+    private boolean verifyTaxNumber(String taxNumber) {
+        Optional<Customer> existingCustomer = customerRepository.findByTaxNumber(taxNumber);
+        return existingCustomer.isEmpty();
     }
 
     private void verifyAdminAccess(String jwtToken) throws UnauthorizedActionException, InvalidAuthentication {
