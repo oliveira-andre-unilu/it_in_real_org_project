@@ -5,19 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-/**
- * Repository interface for performing CRUD operations on {@link Customer} entities.
- * Extends {@link JpaRepository} to provide standard data access methods.
- *
- * @version 0.1
- */
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-
-    /**
-     * Finds a customer by their email address.
-     *
-     * @param email the email of the customer to find
-     * @return an {@link Optional} containing the {@link Customer} if found, or empty if not found
-     */
-    Optional<Customer> findByEmail(String email);
+    public Optional<Customer> findByEmail(String email);
 }
