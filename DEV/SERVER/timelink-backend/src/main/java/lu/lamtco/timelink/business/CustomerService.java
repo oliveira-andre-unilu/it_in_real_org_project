@@ -1,4 +1,4 @@
-package lu.lamtco.timelink.services;
+package lu.lamtco.timelink.business;
 
 import lu.lamtco.timelink.domain.Customer;
 import lu.lamtco.timelink.domain.Role;

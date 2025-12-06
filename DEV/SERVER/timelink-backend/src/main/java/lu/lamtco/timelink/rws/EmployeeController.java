@@ -11,7 +11,7 @@ import lu.lamtco.timelink.exeptions.InvalidAuthentication;
 import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
 import lu.lamtco.timelink.exeptions.UnauthorizedActionException;
 import lu.lamtco.timelink.exeptions.UnexistingEntityException;
-import lu.lamtco.timelink.services.EmployeeService;
+import lu.lamtco.timelink.business.EmployeeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lu.lamtco.timelink.domain.Employee;

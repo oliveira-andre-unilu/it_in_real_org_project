@@ -11,7 +11,7 @@ import lu.lamtco.timelink.exeptions.InvalidAuthentication;
 import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
 import lu.lamtco.timelink.exeptions.UnauthorizedActionException;
 import lu.lamtco.timelink.exeptions.UnexistingEntityException;
-import lu.lamtco.timelink.services.TimestampEntryService;
+import lu.lamtco.timelink.business.TimestampEntryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lu.lamtco.timelink.domain.TimestampEntry;

@@ -10,7 +10,7 @@ import lu.lamtco.timelink.dto.ProjectDTO;
 import lu.lamtco.timelink.exeptions.InvalidAuthentication;
 import lu.lamtco.timelink.exeptions.UnauthorizedActionException;
 import lu.lamtco.timelink.exeptions.UnexistingEntityException;
-import lu.lamtco.timelink.services.ProjectService;
+import lu.lamtco.timelink.business.ProjectService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lu.lamtco.timelink.domain.Project;
