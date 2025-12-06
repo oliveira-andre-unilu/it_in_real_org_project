@@ -15,6 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service responsible for managing projects and their relationship to customers.
+ * Handles creation, updates, retrieval and deletion with proper authentication
+ * and authorization checks.
+ */
 @Service
 public class ProjectService {
 
@@ -28,15 +33,23 @@ public class ProjectService {
         this.authService = authService;
     }
 
+    /**
+     * Creates a new project linked to a customer. Only admins may perform this action.
+     *
+     * @param jwtToken   The JWT used to authenticate the request.
+     * @param newProject DTO containing the project details.
+     * @return The created Project entity.
+     * @throws UnexistingEntityException   If the customer does not exist or the project already exists.
+     * @throws InvalidAuthentication       If the JWT is invalid.
+     * @throws UnauthorizedActionException If the user is not an admin.
+     */
     @Transactional
-    public Project createProject(String jwtToken,ProjectDTO newProject) throws UnexistingEntityException, InvalidAuthentication, UnauthorizedActionException {
-        //Verifying admin access
+    public Project createProject(String jwtToken, ProjectDTO newProject) throws UnexistingEntityException, InvalidAuthentication, UnauthorizedActionException {
         authService.verifyAdminAccess(jwtToken);
 
-        //Finding the related customer
         Optional<Customer> relatedCustomer = this.customerRepository.findById(newProject.getCostumerId());
 
-        if(relatedCustomer.isPresent()) {
+        if (relatedCustomer.isPresent()) {
 
             this.verifyEntriesFrom(newProject);
 
@@ -47,85 +60,121 @@ public class ProjectService {
             project.setNumber(newProject.getNumber());
             project.setLocation(newProject.getLocation());
             return projectRepository.save(project);
-        }else{
+        } else {
             throw new UnexistingEntityException("The related costumer does not exist!!!");
         }
     }
 
+    /**
+     * Updates an existing project. Only admins may perform this action.
+     *
+     * @param jwtToken   The JWT used to authenticate the request.
+     * @param newProject DTO with updated project values.
+     * @param projectId  ID of the project to update.
+     * @return The updated Project entity.
+     * @throws InvalidAuthentication       If the JWT is invalid.
+     * @throws UnauthorizedActionException If the user is not an admin.
+     * @throws UnexistingEntityException   If the project or customer does not exist.
+     */
     @Transactional
     public Project updateProject(String jwtToken, ProjectDTO newProject, Long projectId) throws InvalidAuthentication, UnauthorizedActionException, UnexistingEntityException {
-        //Verify admin access
         authService.verifyAdminAccess(jwtToken);
 
         Optional<Project> relatedProject = this.projectRepository.findById(projectId);
 
-        if(relatedProject.isPresent()) {
+        if (relatedProject.isPresent()) {
             Project project = relatedProject.get();
-            if(project.getCustomer()!=null){
+            if (project.getCustomer() != null) {
                 Optional<Customer> relatedCustomer = this.customerRepository.findById(newProject.getCostumerId());
-                if(relatedCustomer.isPresent()) {
+                if (relatedCustomer.isPresent()) {
                     Customer customer = relatedCustomer.get();
                     project.setCustomer(customer);
-                }else{
+                } else {
                     throw new UnexistingEntityException("The related costumer does not exist!!!");
                 }
             }
-            if(project.getName()!=null){
+            if (project.getName() != null) {
                 project.setName(newProject.getName());
             }
-            if(project.getNumber()!=null){
+            if (project.getNumber() != null) {
                 project.setNumber(newProject.getNumber());
             }
-            if(project.getLocation()!=null){
+            if (project.getLocation() != null) {
                 project.setLocation(newProject.getLocation());
             }
             return projectRepository.save(project);
-        }else{
+        } else {
             throw new UnexistingEntityException("The requested project does not exist!!!");
         }
     }
 
+    /**
+     * Retrieves a project by its ID. Any authenticated user may access this.
+     *
+     * @param jwtToken  The JWT used for authentication.
+     * @param projectId The project ID.
+     * @return The requested Project entity.
+     * @throws UnexistingEntityException If the project does not exist.
+     * @throws InvalidAuthentication     If authentication fails.
+     */
     public Project getProject(String jwtToken, Long projectId) throws UnexistingEntityException, InvalidAuthentication {
-        //Simple authentication made
         authService.getAuthData(jwtToken);
 
         Optional<Project> relatedProject = this.projectRepository.findById(projectId);
-        if(relatedProject.isPresent()) {
+        if (relatedProject.isPresent()) {
             return relatedProject.get();
-        }else{
+        } else {
             throw new UnexistingEntityException("The requested project does not exist");
         }
     }
 
+    /**
+     * Deletes a project by its ID. Only admins may perform this action.
+     *
+     * @param jwtToken  The JWT used to authenticate the request.
+     * @param projectId The ID of the project to delete.
+     * @return true if the project was deleted.
+     * @throws UnexistingEntityException   If the project does not exist.
+     * @throws InvalidAuthentication       If the JWT is invalid.
+     * @throws UnauthorizedActionException If the user is not an admin.
+     */
     @Transactional
     public boolean deleteProject(String jwtToken, Long projectId) throws UnexistingEntityException, InvalidAuthentication, UnauthorizedActionException {
-        //Verify admin access
         authService.verifyAdminAccess(jwtToken);
 
         Optional<Project> relatedProject = this.projectRepository.findById(projectId);
-        if(relatedProject.isPresent()) {
+        if (relatedProject.isPresent()) {
             this.projectRepository.delete(relatedProject.get());
             return true;
-        }else{
+        } else {
             throw new UnexistingEntityException("The requested project does not exist");
         }
     }
 
+    /**
+     * Returns all projects. Any authenticated user may access this.
+     *
+     * @param jwtToken The JWT used for authentication.
+     * @return A list of all projects.
+     * @throws InvalidAuthentication If authentication fails.
+     */
     public List<Project> getAllProjects(String jwtToken) throws InvalidAuthentication {
         authService.getAuthData(jwtToken);
         return projectRepository.findAll();
     }
 
-    //Helper methods
-
+    /**
+     * Helper method that verifies whether a project already exists based on its number.
+     *
+     * @param projectDTO The project DTO to validate.
+     * @return true if validation succeeds.
+     * @throws UnexistingEntityException If a project with the same number already exists.
+     */
     private boolean verifyEntriesFrom(ProjectDTO projectDTO) throws UnexistingEntityException {
-        //Verifying if project does not already exist
         Optional<Project> isProjectExisting = projectRepository.findByNumber(projectDTO.getNumber());
-        if(isProjectExisting.isPresent()) {
+        if (isProjectExisting.isPresent()) {
             throw new UnexistingEntityException("Project already exists");
         }
         return true;
     }
-
-
 }
