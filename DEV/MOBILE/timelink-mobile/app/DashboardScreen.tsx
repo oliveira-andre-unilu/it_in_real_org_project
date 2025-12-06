@@ -20,6 +20,19 @@ const Dashboard = ({ navigation }) => {
     const [selectedProjectId, setSelectedProjectId] = useState<any | null>(null); // Not sure using any here is a good idea
     const [userLocation, setUserLocation] = useState<any | null>(null); // Not sure using any here is a good idea
     const [currentShift, setCurrentShift] = useState<any | null>(null); // Not sure using any here is a good idea
+    const [timeTick, setTimeTick] = useState(0);
+
+
+    // ----------------------------------
+    // Updates TimeTick
+    // ----------------------------------
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTimeTick(t => t + 1); // forces re-render
+        }, 60000); // every 60 seconds
+
+        return () => clearInterval(interval);
+    }, []);
 
 
     // ----------------------------------
@@ -243,6 +256,9 @@ const Dashboard = ({ navigation }) => {
                                 Start: {new Date(currentShift.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} ({getTimeAgo(currentShift.startTime)})
                             </Text>
 
+                            {/* Use timeTick to trigger re-render */}
+                            {timeTick > -1 && null}
+
                             {/* <Text style={styles.runningSubText}>
                                 ({getTimeAgo(currentShift.startTime)})
                             </Text> */}
@@ -302,7 +318,7 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20,
     },
