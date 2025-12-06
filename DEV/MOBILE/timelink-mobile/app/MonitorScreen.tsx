@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
     View,
@@ -6,43 +6,20 @@ import {
     TouchableOpacity,
     StyleSheet,
     SafeAreaView,
-    Alert
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // @ts-ignore
-const SettingsScreen = ({ navigation }) => {
-    const [isDark, setIsDark] = useState(false);
+const MonitorScreen = ({ navigation }) => {
 
-    const toggleTheme = () => {
-        setIsDark(!isDark);
-        Alert.alert("Theme changed", `Theme switched to ${!isDark ? "Dark" : "Light"} Mode`);
-    };
-
-    const handleLogout = async () => {
-        await AsyncStorage.removeItem('authToken');
-        navigation.replace('Login');
-    };
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>Settings</Text>
+            <Text style={styles.title}>Monitor Shifts</Text>
 
             {/* Main Content */}
             <View style={styles.content}>
-                {/* Toggle Theme Button */}
-                <TouchableOpacity style={styles.button} onPress={toggleTheme}>
-                    <Text style={styles.buttonText}>
-                        Switch to {isDark ? "Light" : "Dark"} Mode (WIP)
-                    </Text>
-                </TouchableOpacity>
-
-                {/* Logout Button */}
-                <TouchableOpacity
-                    style={[styles.button, { backgroundColor: '#d9534f' }]}
-                    onPress={handleLogout}>
-                    <Text style={styles.buttonText}>Log Out</Text>
-                </TouchableOpacity>
+                
             </View>
 
             {/* Bottom Navigation */}
@@ -70,8 +47,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        justifyContent: 'center',
-        paddingHorizontal: 30,
+        // justifyContent: 'center',
+        // paddingHorizontal: 30,
     },
     title: {
         fontSize: 32,
@@ -84,26 +61,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 10,
-        padding: 12,
-        marginVertical: 10,
-        fontSize: 16,
-    },
-    button: {
-        marginTop: 20,
-        backgroundColor: '#9e9e9eff',
-        padding: 15,
-        borderRadius: 10,
-    },
-    buttonText: {
-        color: '#fff',
-        textAlign: 'center',
-        fontWeight: '600',
-        fontSize: 16,
     },
     navbar: {
         flexDirection: 'row',
@@ -123,4 +80,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SettingsScreen;
+export default MonitorScreen;

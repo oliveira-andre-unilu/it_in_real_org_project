@@ -3,6 +3,7 @@ import Dashboard from './DashboardScreen';
 import LoginScreen from './LoginScreen';
 import AuthLoadingScreen from './AuthLoadingScreen';
 import SettingsScreen from './SettingsScreen';
+import MonitorScreen from './MonitorScreen';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,8 @@ export default function AppNavigator() {
                             }} />
 
             <Stack.Screen name="Settings" component={SettingsScreen} />
+
+            <Stack.Screen name="Monitor" component={MonitorScreen} />
         </Stack.Navigator>
     );
 }

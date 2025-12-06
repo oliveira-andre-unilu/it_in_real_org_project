@@ -1,6 +1,12 @@
 import { Image } from 'expo-image';
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    SafeAreaView
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 // @ts-ignore
@@ -26,10 +32,10 @@ const Dashboard = ({ navigation }) => {
 
             {/* Bottom Navigation */}
             <View style={styles.navbar}>
-                {/* <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
-                    <Icon name="home-outline" size={28} color="#333" />
-                    <Text style={styles.navText}>Home</Text>
-                </TouchableOpacity> */}
+                <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Monitor')}>
+                    <Icon name="stats-chart-sharp" size={28} color="#333" />
+                    <Text style={styles.navText}>Monitor</Text>
+                </TouchableOpacity>
 
                 <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Dashboard')}>
                     <Icon name="speedometer-outline" size={28} color="#333" />
