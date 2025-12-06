@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * Defines the roles an employee can have in the system.
  * STAFF: Regular employee with standard permissions.
  * ADMIN: Employee with administrative privileges.
+ *
+ * @version 0.1
  */
 @Schema(description = "Employee role")
 public enum Role {

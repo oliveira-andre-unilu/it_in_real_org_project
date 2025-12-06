@@ -11,6 +11,8 @@ import java.util.List;
 /**
  * Represents an employee entity in the system.
  * An employee is a user who can log timestamps and be assigned to projects.
+ *
+ * @version 0.1
  */
 @Entity
 @Getter

@@ -8,6 +8,8 @@ import java.util.List;
 /**
  * Repository interface for performing CRUD operations on {@link TimestampEntry} entities.
  * Extends {@link JpaRepository} to provide standard data access methods.
+ *
+ * @version 0.1
  */
 public interface TimestampEntryRepository extends JpaRepository<TimestampEntry, Long> {
 

@@ -8,6 +8,8 @@ import java.util.Optional;
 /**
  * Repository interface for performing CRUD operations on {@link Customer} entities.
  * Extends {@link JpaRepository} to provide standard data access methods.
+ *
+ * @version 0.1
  */
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 

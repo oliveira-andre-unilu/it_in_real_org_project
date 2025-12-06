@@ -6,6 +6,8 @@ import lombok.Setter;
 /**
  * Data Transfer Object for transferring project data
  * between client and server without exposing the entity directly.
+ *
+ * @version 0.1
  */
 @Getter
 @Setter

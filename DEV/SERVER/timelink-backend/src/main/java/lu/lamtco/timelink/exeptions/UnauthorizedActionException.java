@@ -3,6 +3,8 @@ package lu.lamtco.timelink.exeptions;
 /**
  * Exception thrown when a user tries to perform an action for which they do not have sufficient permissions.
  * This typically occurs when role-based access control or ownership checks fail.
+ *
+ * @version 0.1
  */
 public class UnauthorizedActionException extends Exception {
 

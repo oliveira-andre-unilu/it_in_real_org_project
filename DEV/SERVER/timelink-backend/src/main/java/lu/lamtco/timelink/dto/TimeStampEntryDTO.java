@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 /**
  * Data Transfer Object for transferring timestamp entry data
  * between client and server without exposing the entity directly.
+ *
+ * @version 0.1
  */
 @Getter
 @Setter

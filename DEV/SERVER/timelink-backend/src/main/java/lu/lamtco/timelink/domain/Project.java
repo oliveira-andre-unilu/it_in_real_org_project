@@ -11,6 +11,8 @@ import java.util.List;
 /**
  * Represents a project entity linked to a customer.
  * A project can have multiple timestamp entries and belongs to a single customer.
+ *
+ * @version 0.1
  */
 @Entity
 @Getter

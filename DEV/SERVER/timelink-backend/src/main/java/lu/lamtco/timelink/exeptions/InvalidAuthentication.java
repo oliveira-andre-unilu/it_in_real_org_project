@@ -3,6 +3,8 @@ package lu.lamtco.timelink.exeptions;
 /**
  * Exception thrown when authentication of a user fails.
  * This can occur when provided credentials are invalid or a JWT token is incorrect or expired.
+ *
+ * @version 0.1
  */
 public class InvalidAuthentication extends Exception {
 

@@ -18,6 +18,12 @@ import lu.lamtco.timelink.domain.TimestampEntry;
 
 import java.util.List;
 
+/**
+ * REST controller for managing timestamp entries.
+ * Provides endpoints to create, read, update, and delete timestamp entries.
+ *
+ * @version 0.1
+ */
 @RestController
 @RequestMapping("/api/timestamps")
 @Tag(name = "Timestamps", description = "Operations for managing timestamp entries")
@@ -25,10 +31,19 @@ public class TimestampEntryController {
 
     private final TimestampEntryService service;
 
+    /**
+     * Constructor for TimestampEntryController.
+     * @param service Service layer handling timestamp entry logic
+     */
     public TimestampEntryController(TimestampEntryService service) {
         this.service = service;
     }
 
+    /**
+     * Retrieves all timestamp entries.
+     * @param jwtToken JWT token for authentication
+     * @return List of all timestamp entries or 498 if JWT token is invalid
+     */
     @Operation(summary = "Get all timestamp entries", description = "Retrieve a list of all timestamp entries")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved list",
@@ -45,6 +60,12 @@ public class TimestampEntryController {
         }
     }
 
+    /**
+     * Creates a new timestamp entry.
+     * @param jwtToken JWT token for authentication
+     * @param newEntry TimestampEntryDTO containing details of the new entry
+     * @return Created TimestampEntry or relevant error response
+     */
     @Operation(summary = "Create a new timestamp entry", description = "Add a new timestamp entry to the system")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Timestamp entry successfully created",
@@ -71,6 +92,12 @@ public class TimestampEntryController {
         }
     }
 
+    /**
+     * Retrieves a timestamp entry by ID.
+     * @param jwtToken JWT token for authentication
+     * @param id ID of the timestamp entry
+     * @return TimestampEntry if found, or relevant error response
+     */
     @Operation(summary = "Get timestamp entry by ID", description = "Retrieve a single timestamp entry by its unique ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Timestamp entry found",
@@ -96,6 +123,13 @@ public class TimestampEntryController {
         }
     }
 
+    /**
+     * Updates an existing timestamp entry.
+     * @param jwtToken JWT token for authentication
+     * @param id ID of the timestamp entry to update
+     * @param updated DTO containing updated entry data
+     * @return Updated TimestampEntry or relevant error response
+     */
     @Operation(summary = "Update timestamp entry by ID", description = "Update an existing timestamp entry")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Timestamp entry successfully updated",
@@ -122,6 +156,12 @@ public class TimestampEntryController {
         }
     }
 
+    /**
+     * Deletes a timestamp entry by ID.
+     * @param jwtToken JWT token for authentication
+     * @param id ID of the timestamp entry to delete
+     * @return 204 if deletion succeeded, or relevant error response
+     */
     @Operation(summary = "Delete timestamp entry by ID", description = "Remove a timestamp entry by its ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Timestamp entry successfully deleted"),

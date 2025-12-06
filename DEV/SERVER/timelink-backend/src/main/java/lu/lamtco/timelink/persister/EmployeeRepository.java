@@ -7,6 +7,8 @@ import java.util.Optional;
 /**
  * Repository interface for performing CRUD operations on {@link Employee} entities.
  * Extends {@link JpaRepository} to provide standard data access methods.
+ *
+ * @version 0.1
  */
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 

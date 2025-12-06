@@ -19,6 +19,8 @@ import java.util.Optional;
  * Service responsible for managing projects and their relationship to customers.
  * Handles creation, updates, retrieval and deletion with proper authentication
  * and authorization checks.
+ *
+ * @version 0.1
  */
 @Service
 public class ProjectService {

@@ -12,6 +12,8 @@ import java.util.List;
 /**
  * Represents a customer entity in the system.
  * A customer is usually a company or client associated with projects.
+ *
+ * @version 0.1
  */
 @Entity
 @Getter

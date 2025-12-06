@@ -10,6 +10,8 @@ import lombok.Setter;
  * Represents an authentication request containing user credentials.
  * Used to transfer email and password from the client to the authentication endpoint.
  * Validation ensures the email is valid and no fields are blank.
+ *
+ * @version 0.1
  */
 @Setter
 @Getter

@@ -3,6 +3,8 @@ package lu.lamtco.timelink.exeptions;
 /**
  * Exception thrown when the provided data does not meet the required format or business rules.
  * This can occur during creation or updating of entities when validation fails.
+ *
+ * @version 0.1
  */
 public class NonConformRequestedDataException extends Exception {
 

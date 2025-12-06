@@ -7,6 +7,8 @@ import lu.lamtco.timelink.domain.Role;
 /**
  * Data Transfer Object for transferring employee data
  * between client and server without exposing the entity directly.
+ *
+ * @version 0.1
  */
 @Getter
 @Setter
