@@ -48,7 +48,8 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = "User authenticated successfully",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = String.class))),
-            @ApiResponse(responseCode = "401", description = "Invalid credentials")
+            @ApiResponse(responseCode = "401", description = "Invalid credentials"),
+            @ApiResponse(responseCode = "400", description = "Email is not conform")
     })
     @PostMapping("/signin")
     public ResponseEntity<String> signIn(@RequestBody AuthRequest request) {
@@ -58,7 +59,7 @@ public class AuthController {
         } catch (NonConformRequestedDataException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (InvalidAuthentication | UnexistingEntityException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(401).body(e.getMessage());
         }
     }
 }
