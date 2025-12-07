@@ -55,36 +55,48 @@ const LoginScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [serverLocation, setServerLocation] = useState('');
 
+    // const handleLogin = async () => {
+    //     // TODO: Replace with backend API call later
+    //     if (email === '' || password === '') {
+    //         Alert.alert('Error', 'Please fill in both fields.');
+    //         return;
+    //     }
+
+    //     // Fake authentication for now
+    //     if (email.toLowerCase() === 'test@test.com' && password === '1234') {
+    //         await AsyncStorage.setItem('authToken', 'FAKE_TOKEN_ABC123');
+    //         navigation.replace('Dashboard');
+    //     } else {
+    //         Alert.alert('Login failed', 'Invalid email or password.');
+    //     }
+    // };
+
     const handleLogin = async () => {
-        // TODO: Replace with backend API call later
-        if (email === '' || password === '') {
-            Alert.alert('Error', 'Please fill in both fields.');
+        if (!serverLocation || !email || !password) {
+            Alert.alert("Error", "Please enter all fields.");
             return;
         }
 
-        // Fake authentication for now
-        if (email.toLowerCase() === 'test@test.com' && password === '1234') {
-            await AsyncStorage.setItem('authToken', 'FAKE_TOKEN_ABC123');
-            navigation.replace('Dashboard');
-        } else {
-            Alert.alert('Login failed', 'Invalid email or password.');
-        }
-    };
+        try {
+            const res = await axios.post(
+                `${serverLocation}/api/auth/signin`,
+                { email, password },
+                { headers: { "Content-Type": "application/json" } }
+            );
 
-    const handleLogin2 = async () => {
-        const loginCredentials = {
-            email,
-            password
+            const token = res.data;
+            await AsyncStorage.setItem("authToken", token);
+            await AsyncStorage.setItem("serverLocation", serverLocation);
+
+            navigation.replace("Dashboard");
+
+            // Alert.alert("Token", token);
+            // Alert.alert("serverLocation", serverLocation);
+
+        } catch (err) {
+            console.error(err);
+            Alert.alert("Failed", "Invalid login credentials.");
         }
-        axios
-            .get(`${serverLocation}/api/auth/signin`, { params : loginCredentials})
-            .then(async (response) => {
-                await AsyncStorage.setItem('authToken', response as unknown as string);
-                console.log(response);
-            })
-            .catch((err) => {
-                console.error(err);
-            })
     }
 
     return (
@@ -120,11 +132,11 @@ const LoginScreen = ({ navigation }) => {
                 secureTextEntry
                 onChangeText={setPassword}
                 value={password}
-                onSubmitEditing={handleLogin2}
+                onSubmitEditing={handleLogin}
             />
 
             <TouchableOpacity   style={styles.button} 
-                                onPress={handleLogin2}>
+                                onPress={handleLogin}>
                 <Text style={styles.buttonText}>Log In</Text>
             </TouchableOpacity>
         </SafeAreaView>

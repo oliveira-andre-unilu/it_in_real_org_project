@@ -1,4 +1,4 @@
-import { Image } from 'expo-image';
+// React Native
 import React, { useEffect, useState } from 'react';
 import {
     View,
@@ -9,9 +9,23 @@ import {
     ScrollView,
     Alert
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import * as Location from 'expo-location';
+
+// Internal Storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Axios
+import axios from 'axios';
+
+// GPS Functionality
+import * as Location from 'expo-location';
+
+// Images
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Image } from 'expo-image';
+
+// Import External Scripts
+import { getProjects } from './apiClient';
+
 
 // @ts-ignore
 const Dashboard = ({ navigation }) => {
@@ -23,9 +37,11 @@ const Dashboard = ({ navigation }) => {
     const [timeTick, setTimeTick] = useState(0);
 
 
-    // ----------------------------------
+      ////////////////////////////
+     // On Page Load Functions //
+    ////////////////////////////
+
     // Updates TimeTick
-    // ----------------------------------
     useEffect(() => {
         const interval = setInterval(() => {
             setTimeTick(t => t + 1); // forces re-render
@@ -35,9 +51,7 @@ const Dashboard = ({ navigation }) => {
     }, []);
 
 
-    // ----------------------------------
     // Check if there is an ongoing shift
-    // ----------------------------------
     useEffect(() => {
         const loadShift = async () => {
             const storedShift = await AsyncStorage.getItem("currentShift");
@@ -49,9 +63,7 @@ const Dashboard = ({ navigation }) => {
     }, []);
 
 
-    // ---------------------------
     // Fetch user's GPS location
-    // ---------------------------
     useEffect(() => {
         const requestLocation = async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -71,31 +83,41 @@ const Dashboard = ({ navigation }) => {
     }, []);
 
 
-    // --------------------------------------
     // Fetch Work Sites (API placeholder)
     // Replace with real backend API later
-    // --------------------------------------
     useEffect(() => {
         const fetchSites = async () => {
             // Sample data (replace with backend fetch)
-            const sampleData = [
-                { id: 1, name: "Belval Uni", number: "A12", latitude: 49.504575, longitude: 5.949298 },
-                { id: 2, name: "Luxembourg Gare", number: "B57", latitude: 49.600764, longitude: 6.134055 },
-                { id: 3, name: "André's Home", number: "HQ-01", latitude: 49.486582, longitude: 6.086660 },
-                { id: 4, name: "Test Location 1", number: "TEST01", latitude: 49.487582, longitude: 6.186660 },
-                { id: 5, name: "Test Location 2", number: "TEST02", latitude: 49.488582, longitude: 6.176660 },
-                { id: 6, name: "Test Location 3", number: "TEST03", latitude: 49.488482, longitude: 6.177660 }
-            ];
-            setProjects(sampleData);
+            // const sampleData = [
+            //     { id: 1, name: "Belval Uni", number: "A12", latitude: 49.504575, longitude: 5.949298 },
+            //     { id: 2, name: "Luxembourg Gare", number: "B57", latitude: 49.600764, longitude: 6.134055 },
+            //     { id: 3, name: "André's Home", number: "HQ-01", latitude: 49.486582, longitude: 6.086660 },
+            //     { id: 4, name: "Test Location 1", number: "TEST01", latitude: 49.487582, longitude: 6.186660 },
+            //     { id: 5, name: "Test Location 2", number: "TEST02", latitude: 49.488582, longitude: 6.176660 },
+            //     { id: 6, name: "Test Location 3", number: "TEST03", latitude: 49.488482, longitude: 6.177660 }
+            // ];
+            // setProjects(sampleData);
+
+            try {
+                const data = await getProjects();
+                setProjects(data);
+            } catch (err) {
+                Alert.alert("Error", "Could not load projects.\n" + err);
+            }
+
         };
 
         fetchSites();
     }, []);
 
 
-    // ------------------------------------------------
+
+
+      //////////////////////
+     // Helper Functions //
+    //////////////////////
+
     // Calculate distance between user <-> work site
-    // ------------------------------------------------
     const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
         if (!lat1 || !lon1 || !lat2 || !lon2) return null;
 
@@ -122,9 +144,7 @@ const Dashboard = ({ navigation }) => {
     };
 
 
-    // ----------------------------
     // Get Time Since start of Shift
-    // ----------------------------
     const getTimeAgo = (timestamp: Date) => {
         const start = new Date(timestamp);
         const now = new Date();
@@ -140,9 +160,12 @@ const Dashboard = ({ navigation }) => {
 
 
 
-    // ----------------------------
+
+      ////////////////////
+     // Main Functions //
+    ////////////////////
+
     // Start Shift Function
-    // ----------------------------
     const handleStartShift = async () => {
         if (!selectedProjectId) {
             Alert.alert("No selection", "Please select a work site first.");
@@ -170,9 +193,7 @@ const Dashboard = ({ navigation }) => {
     };
 
 
-    // ----------------------------
     // End Shift Function
-    // ----------------------------
     const handleEndShift = async () => {
         const shiftData = await AsyncStorage.getItem("currentShift");
 
@@ -202,7 +223,9 @@ const Dashboard = ({ navigation }) => {
             <View style={styles.content}>
                 {!currentShift ? (
                     <>
-                        <Text style={styles.subtitle}>Select a Shift:</Text>
+                        {/* Select Shift View */}
+
+                        <Text style={styles.subtitle}>Select a Shift</Text>
                     
                         {/* Scrollable list */}
                         <ScrollView style={{ width: "100%" }}>
@@ -225,15 +248,14 @@ const Dashboard = ({ navigation }) => {
                                             selectedProjectId === project.id && styles.cardSelected
                                             ]}
                                         onPress={() => setSelectedProjectId(project.id)} >
-                                        {/* Left Section */}
+                                        {/* Left Section: Project Name & Number */}
                                         <View style={styles.cardLeft}>
                                             <Text style={styles.projectName}>{project.name}</Text>
                                             <Text style={styles.projectNumber}>{project.number}</Text>
                                         </View>
 
-                                        {/* Right Section */}
+                                        {/* Right Section: GPS Logo & Distance */}
                                         <View style={styles.cardRight}>
-                                            {/* Temporary — replace this with your GPS icon */}
                                             <Icon name="location-outline" size={22} color="#444" />
                                             <Text style={styles.distanceText}>{distanceText}</Text>
                                         </View>
@@ -249,6 +271,8 @@ const Dashboard = ({ navigation }) => {
                     </>
                 ) : (
                     <>
+                        {/* Current Shift View */}
+
                         <Text style={styles.subtitle}>Current Shift</Text>
 
                         <View style={styles.runningShiftContainer}>
@@ -258,10 +282,6 @@ const Dashboard = ({ navigation }) => {
 
                             {/* Use timeTick to trigger re-render */}
                             {timeTick > -1 && null}
-
-                            {/* <Text style={styles.runningSubText}>
-                                ({getTimeAgo(currentShift.startTime)})
-                            </Text> */}
 
                             <Text style={styles.runningText}>
                                 Location: {currentShift.projectLocation}
@@ -274,8 +294,8 @@ const Dashboard = ({ navigation }) => {
                         </TouchableOpacity>
                     </>
                 )}
-                
             </View>
+
 
             {/* Bottom Navigation */}
             <View style={styles.navbar}>
@@ -299,6 +319,7 @@ const Dashboard = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    // Global Styles
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -333,13 +354,25 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#777',
     },
+    navbar: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingVertical: 15,
+        borderTopWidth: 1,
+        borderTopColor: '#eee',
+        backgroundColor: '#fafafa',
+    },
+    navItem: {
+        alignItems: 'center',
+    },
+    navText: {
+        fontSize: 12,
+        color: '#333',
+        marginTop: 4,
+    },
 
 
-    //--------------------
-    // Start Shift
-    //--------------------
-
-    /* Cards */
+    // Select Shift Styles
     card: {
         width: "100%",
         backgroundColor: "#f9f9f9",
@@ -358,12 +391,12 @@ const styles = StyleSheet.create({
     cardLeft: {
         width: "80%",
     },
-    siteName: {
+    projectName: {
         fontSize: 18,
         fontWeight: "700",
         color: "#333",
     },
-    siteNumber: {
+    projectNumber: {
         fontSize: 14,
         color: "#666",
         marginTop: 3,
@@ -378,8 +411,6 @@ const styles = StyleSheet.create({
         color: "#444",
         fontSize: 14,
     },
-
-    /* Start Shift Button */
     startButton: {
         width: "100%",
         backgroundColor: "#007AFF",
@@ -395,10 +426,7 @@ const styles = StyleSheet.create({
     },
 
 
-    //--------------------
-    // End Shift
-    //--------------------
-
+    // Current Shift Styles
     runningShiftContainer: {
         width: "100%",
         borderWidth: 2,
@@ -411,8 +439,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         // fontWeight: "700",
     },
-
-    /* End Shift Button */
     endButton: {
         width: "100%",
         backgroundColor: "#c00404ff",
@@ -425,26 +451,6 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 18,
         fontWeight: "600",
-    },
-
-
-
-
-    navbar: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingVertical: 15,
-        borderTopWidth: 1,
-        borderTopColor: '#eee',
-        backgroundColor: '#fafafa',
-    },
-    navItem: {
-        alignItems: 'center',
-    },
-    navText: {
-        fontSize: 12,
-        color: '#333',
-        marginTop: 4,
     },
 });
 
