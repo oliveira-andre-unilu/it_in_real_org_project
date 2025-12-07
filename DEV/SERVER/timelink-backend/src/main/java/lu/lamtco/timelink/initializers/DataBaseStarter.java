@@ -37,9 +37,9 @@ public class DataBaseStarter implements CommandLineRunner {
         Customer customer2 = new Customer("Code42", "LU987654321", "info@code42.lu", "0025998", "0025998");
         customerRepository.save(customer1);
         customerRepository.save(customer2);
-        Project project1 = new Project("IT in real org", "1", customer1, "University Belval");
+        Project project1 = new Project("IT in real org", "1", customer1, "49.504575;5.949298");
         projectRepository.save(project1);
-        Project project2 = new Project("Integration of management systems", "2", customer2, "Red buildings in Belval");
+        Project project2 = new Project("Integration of management systems", "2", customer2, "49.600764,6.134055");
         projectRepository.save(project2);
     }
 
