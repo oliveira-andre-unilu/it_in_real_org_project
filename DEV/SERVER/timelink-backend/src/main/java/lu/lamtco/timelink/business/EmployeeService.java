@@ -188,7 +188,7 @@ public class EmployeeService {
      */
     private boolean verifyEmail(String email) {
         Optional<Employee> isExisting = employeeRepository.findByEmail(email);
-        if(isExisting.isEmpty() || !email.contains("@")) {
+        if(isExisting.isPresent() || !email.contains("@")) {
             return false;
         }
         return true;
