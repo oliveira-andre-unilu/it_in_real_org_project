@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     View,
     Text,
@@ -10,9 +10,11 @@ import {
     BackHandler
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 // @ts-ignore
 const LoginScreen = ({ navigation }) => {
+    const serverLocationRef = useRef(null);
     const inputEmailRef = useRef(null);
     const inputPasswordRef = useRef(null);
 
@@ -51,6 +53,7 @@ const LoginScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [serverLocation, setServerLocation] = useState('');
 
     const handleLogin = async () => {
         // TODO: Replace with backend API call later
@@ -68,9 +71,36 @@ const LoginScreen = ({ navigation }) => {
         }
     };
 
+    const handleLogin2 = async () => {
+        const loginCredentials = {
+            email,
+            password
+        }
+        axios
+            .get(`${serverLocation}/api/auth/signin`, { params : loginCredentials})
+            .then(async (response) => {
+                await AsyncStorage.setItem('authToken', response as unknown as string);
+                console.log(response);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.title}>Login</Text>
+
+            <TextInput
+                ref={serverLocationRef}
+                style={styles.input}
+                placeholder="Server Url"
+                keyboardType="url"
+                onChangeText={setServerLocation}
+                value={serverLocation}
+                onSubmitEditing={() => inputEmailRef.current?.focus()}
+                blurOnSubmit={false}
+            />
 
             <TextInput
                 ref={inputEmailRef}
@@ -90,11 +120,11 @@ const LoginScreen = ({ navigation }) => {
                 secureTextEntry
                 onChangeText={setPassword}
                 value={password}
-                onSubmitEditing={handleLogin}
+                onSubmitEditing={handleLogin2}
             />
 
             <TouchableOpacity   style={styles.button} 
-                                onPress={handleLogin}>
+                                onPress={handleLogin2}>
                 <Text style={styles.buttonText}>Log In</Text>
             </TouchableOpacity>
         </SafeAreaView>

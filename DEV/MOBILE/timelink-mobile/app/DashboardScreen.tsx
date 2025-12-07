@@ -16,9 +16,38 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // @ts-ignore
 const Dashboard = ({ navigation }) => {
 
-    const [projects, setProjects] = useState([]);
-    const [selectedProjectId, setSelectedProjectId] = useState(null);
-    const [userLocation, setUserLocation] = useState(null);
+    const [projects, setProjects] = useState<any[]>([]);
+    const [selectedProjectId, setSelectedProjectId] = useState<any | null>(null); // Not sure using any here is a good idea
+    const [userLocation, setUserLocation] = useState<any | null>(null); // Not sure using any here is a good idea
+    const [currentShift, setCurrentShift] = useState<any | null>(null); // Not sure using any here is a good idea
+    const [timeTick, setTimeTick] = useState(0);
+
+
+    // ----------------------------------
+    // Updates TimeTick
+    // ----------------------------------
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTimeTick(t => t + 1); // forces re-render
+        }, 60000); // every 60 seconds
+
+        return () => clearInterval(interval);
+    }, []);
+
+
+    // ----------------------------------
+    // Check if there is an ongoing shift
+    // ----------------------------------
+    useEffect(() => {
+        const loadShift = async () => {
+            const storedShift = await AsyncStorage.getItem("currentShift");
+            if (storedShift) {
+                setCurrentShift(JSON.parse(storedShift));
+            }
+        };
+        loadShift();
+    }, []);
+
 
     // ---------------------------
     // Fetch user's GPS location
@@ -94,7 +123,25 @@ const Dashboard = ({ navigation }) => {
 
 
     // ----------------------------
-    // Start Shift Saving Function
+    // Get Time Since start of Shift
+    // ----------------------------
+    const getTimeAgo = (timestamp: Date) => {
+        const start = new Date(timestamp);
+        const now = new Date();
+
+        const diffMs = now - start;
+        const diffMin = Math.floor(diffMs / 60000);
+        const diffH = Math.floor(diffMin / 60);
+        const mins = diffMin % 60;
+
+        if (diffH > 0) return `${diffH} h ${mins} m ago`;
+        return `${mins} m ago`;
+    };
+
+
+
+    // ----------------------------
+    // Start Shift Function
     // ----------------------------
     const handleStartShift = async () => {
         if (!selectedProjectId) {
@@ -106,8 +153,9 @@ const Dashboard = ({ navigation }) => {
 
         let startTime = new Date().toISOString();
 
-        let entry = {
+        let entry: any = {
             projectId: selectedProject.id,
+            projectLocation: selectedProject.name,
             tag: "Work",
             startTime: startTime,
             latitude: userLocation?.latitude || null,
@@ -117,7 +165,26 @@ const Dashboard = ({ navigation }) => {
         await AsyncStorage.setItem("currentShift", JSON.stringify(entry));
 
         Alert.alert("Shift Started", `Shift started at: ${startTime}`);
+
+        setCurrentShift(entry);
     };
+
+
+    // ----------------------------
+    // End Shift Function
+    // ----------------------------
+    const handleEndShift = async () => {
+        const shiftData = await AsyncStorage.getItem("currentShift");
+
+        if (!shiftData) return;
+
+        // TODO: send to backend
+
+        await AsyncStorage.removeItem("currentShift");
+
+        setCurrentShift(null);
+    };
+
 
 
     return (
@@ -133,50 +200,81 @@ const Dashboard = ({ navigation }) => {
 
             {/* Main Content */}
             <View style={styles.content}>
-                <Text style={styles.subtitle}>Select a Shift:</Text>
+                {!currentShift ? (
+                    <>
+                        <Text style={styles.subtitle}>Select a Shift:</Text>
+                    
+                        {/* Scrollable list */}
+                        <ScrollView style={{ width: "100%" }}>
+                            {projects.map((project) => {
+
+                                const distanceText = userLocation
+                                    ? calculateDistance(
+                                        userLocation.latitude,
+                                        userLocation.longitude,
+                                        project.latitude,
+                                        project.longitude
+                                    )
+                                    : "Locating...";
+
+                                return (
+                                    <TouchableOpacity
+                                        key={project.id}
+                                        style={[
+                                            styles.card,
+                                            selectedProjectId === project.id && styles.cardSelected
+                                            ]}
+                                        onPress={() => setSelectedProjectId(project.id)} >
+                                        {/* Left Section */}
+                                        <View style={styles.cardLeft}>
+                                            <Text style={styles.projectName}>{project.name}</Text>
+                                            <Text style={styles.projectNumber}>{project.number}</Text>
+                                        </View>
+
+                                        {/* Right Section */}
+                                        <View style={styles.cardRight}>
+                                            {/* Temporary — replace this with your GPS icon */}
+                                            <Icon name="location-outline" size={22} color="#444" />
+                                            <Text style={styles.distanceText}>{distanceText}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                );
+                            })}
+                        </ScrollView>
+
+                        {/* Start Shift Button */}
+                        <TouchableOpacity style={styles.startButton} onPress={handleStartShift}>
+                            <Text style={styles.startButtonText}>Start Shift</Text>
+                        </TouchableOpacity>
+                    </>
+                ) : (
+                    <>
+                        <Text style={styles.subtitle}>Current Shift</Text>
+
+                        <View style={styles.runningShiftContainer}>
+                            <Text style={styles.runningText}>
+                                Start: {new Date(currentShift.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} ({getTimeAgo(currentShift.startTime)})
+                            </Text>
+
+                            {/* Use timeTick to trigger re-render */}
+                            {timeTick > -1 && null}
+
+                            {/* <Text style={styles.runningSubText}>
+                                ({getTimeAgo(currentShift.startTime)})
+                            </Text> */}
+
+                            <Text style={styles.runningText}>
+                                Location: {currentShift.projectLocation}
+                            </Text>
+                        </View>
+
+                        {/* End Shift Button */}
+                        <TouchableOpacity style={styles.endButton} onPress={handleEndShift}>
+                            <Text style={styles.endButtonText}>End Shift</Text>
+                        </TouchableOpacity>
+                    </>
+                )}
                 
-                {/* Scrollable list */}
-                <ScrollView style={{ width: "100%" }}>
-                    {projects.map((project) => {
-
-                        const distanceText = userLocation
-                            ? calculateDistance(
-                                userLocation.latitude,
-                                userLocation.longitude,
-                                project.latitude,
-                                project.longitude
-                            )
-                            : "Locating...";
-
-                        return (
-                            <TouchableOpacity
-                                key={project.id}
-                                style={[
-                                    styles.card,
-                                    selectedProjectId === project.id && styles.cardSelected
-                                    ]}
-                                onPress={() => setSelectedProjectId(project.id)} >
-                                {/* Left Section */}
-                                <View style={styles.cardLeft}>
-                                    <Text style={styles.projectName}>{project.name}</Text>
-                                    <Text style={styles.projectNumber}>{project.number}</Text>
-                                </View>
-
-                                {/* Right Section */}
-                                <View style={styles.cardRight}>
-                                    {/* Temporary — replace this with your GPS icon */}
-                                    <Icon name="location-outline" size={22} color="#444" />
-                                    <Text style={styles.distanceText}>{distanceText}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        );
-                    })}
-                </ScrollView>
-
-                {/* Start Shift Button */}
-                <TouchableOpacity style={styles.startButton} onPress={handleStartShift}>
-                    <Text style={styles.startButtonText}>Start Shift</Text>
-                </TouchableOpacity>
             </View>
 
             {/* Bottom Navigation */}
@@ -220,7 +318,7 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20,
     },
@@ -235,6 +333,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#777',
     },
+
+
+    //--------------------
+    // Start Shift
+    //--------------------
 
     /* Cards */
     card: {
@@ -290,6 +393,42 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "600",
     },
+
+
+    //--------------------
+    // End Shift
+    //--------------------
+
+    runningShiftContainer: {
+        width: "100%",
+        borderWidth: 2,
+        padding: 15,
+        borderRadius: 12,
+        marginBottom: 12,
+        backgroundColor: "#f9f9f9",
+    },
+    runningText: {
+        fontSize: 18,
+        // fontWeight: "700",
+    },
+
+    /* End Shift Button */
+    endButton: {
+        width: "100%",
+        backgroundColor: "#c00404ff",
+        paddingVertical: 14,
+        borderRadius: 10,
+        marginTop: 15,
+    },
+    endButtonText: {
+        textAlign: "center",
+        color: "#fff",
+        fontSize: 18,
+        fontWeight: "600",
+    },
+
+
+
 
     navbar: {
         flexDirection: 'row',
