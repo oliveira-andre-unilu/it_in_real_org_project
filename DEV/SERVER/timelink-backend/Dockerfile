@@ -20,7 +20,7 @@ RUN ./mvnw dependency:go-offline -B
 COPY src src
 
 # Build application
-RUN ./mvnw clean package -DskipTests
+RUN ./mvnw clean package -DskipTests -Dmaven.test.skip=true
 
 # ====== 2) Runtime stage ======
 FROM eclipse-temurin:17-jre AS runtime
