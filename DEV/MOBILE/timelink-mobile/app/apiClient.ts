@@ -53,6 +53,16 @@ export const postTimestamp = async (shiftData: any) => {
     }
 };
 
+export const postTimestampNoID = async (shiftData: any) => {
+    try {
+        const response = await api.post("/api/timestamps/withNoId", shiftData);
+        return response.data;
+    } catch (err) {
+        console.error("Error posting timestamp:", err);
+        throw err;
+    }
+};
+
 // GET /api/timestamps
 export const getTimestamp = async () => {
     try {

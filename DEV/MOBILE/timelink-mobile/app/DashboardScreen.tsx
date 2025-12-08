@@ -24,7 +24,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Image } from 'expo-image';
 
 // Import External Scripts
-import { getProjects, postTimestamp } from './apiClient';
+import { getProjects, postTimestamp, postTimestampNoID } from './apiClient';
 
 
 // @ts-ignore
@@ -215,7 +215,7 @@ const Dashboard = ({ navigation }) => {
 
         await AsyncStorage.setItem("currentShift", JSON.stringify(entry));
 
-        Alert.alert("Shift Started", `Shift started at: ${startTime}`);
+        Alert.alert("Shift Started", `Shift started at: ${new Date(startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`);
 
         setCurrentShift(entry);
     };
@@ -253,7 +253,7 @@ const Dashboard = ({ navigation }) => {
             }
 
             // Send POST request
-            await postTimestamp(shiftPayload);
+            await postTimestampNoID(shiftPayload);
 
             await AsyncStorage.removeItem("currentShift");
             setCurrentShift(null);
