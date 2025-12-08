@@ -24,7 +24,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Image } from 'expo-image';
 
 // Import External Scripts
-import { getProjects } from './apiClient';
+import { getProjects, postTimestamp } from './apiClient';
 
 
 // @ts-ignore
@@ -87,20 +87,46 @@ const Dashboard = ({ navigation }) => {
     // Replace with real backend API later
     useEffect(() => {
         const fetchSites = async () => {
-            // Sample data (replace with backend fetch)
-            // const sampleData = [
-            //     { id: 1, name: "Belval Uni", number: "A12", latitude: 49.504575, longitude: 5.949298 },
-            //     { id: 2, name: "Luxembourg Gare", number: "B57", latitude: 49.600764, longitude: 6.134055 },
-            //     { id: 3, name: "André's Home", number: "HQ-01", latitude: 49.486582, longitude: 6.086660 },
-            //     { id: 4, name: "Test Location 1", number: "TEST01", latitude: 49.487582, longitude: 6.186660 },
-            //     { id: 5, name: "Test Location 2", number: "TEST02", latitude: 49.488582, longitude: 6.176660 },
-            //     { id: 6, name: "Test Location 3", number: "TEST03", latitude: 49.488482, longitude: 6.177660 }
-            // ];
-            // setProjects(sampleData);
-
             try {
-                const data = await getProjects();
-                setProjects(data);
+                   ///////////////////////////////////////////////////////////////
+                  //     IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT     //
+                 // Original code (works with proper back-end implementation) //
+                ///////////////////////////////////////////////////////////////
+                // const data = await getProjects();
+                // setProjects(data);
+
+
+
+                   ///////////////////////////////////////////////////////////////
+                  //     IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT     //
+                 // Temporary Fix for improper coordinate values in back-end  //
+                ///////////////////////////////////////////////////////////////                
+                const raw = await getProjects();
+
+                // FIX: Convert "location" string into latitude & longitude
+                const cleaned = raw.map((project: any) => {
+                    if (project.location && typeof project.location === "string") {
+                        const [latStr, lonStr] = project.location.split(";");
+
+                        const latitude = parseFloat(latStr);
+                        const longitude = parseFloat(lonStr);
+
+                        return {
+                            ...project,
+                            latitude: isNaN(latitude) ? null : latitude,
+                            longitude: isNaN(longitude) ? null : longitude
+                        };
+                    }
+
+                    // If location is missing, fallback safely
+                    return {
+                        ...project,
+                        latitude: project.latitude ?? null,
+                        longitude: project.longitude ?? null
+                    };
+                });
+
+                setProjects(cleaned);
             } catch (err) {
                 Alert.alert("Error", "Could not load projects.\n" + err);
             }
@@ -146,8 +172,8 @@ const Dashboard = ({ navigation }) => {
 
     // Get Time Since start of Shift
     const getTimeAgo = (timestamp: Date) => {
-        const start = new Date(timestamp);
-        const now = new Date();
+        const start: any = new Date(timestamp);
+        const now: any = new Date();
 
         const diffMs = now - start;
         const diffMin = Math.floor(diffMs / 60000);
@@ -177,12 +203,14 @@ const Dashboard = ({ navigation }) => {
         let startTime = new Date().toISOString();
 
         let entry: any = {
-            projectId: selectedProject.id,
-            projectLocation: selectedProject.name,
-            tag: "Work",
             startTime: startTime,
+            //Duration added on End Shift Handle
             latitude: userLocation?.latitude || null,
-            longitude: userLocation?.longitude || null
+            longitude: userLocation?.longitude || null,
+            // employeeId: , // CHECK HOW TO IMPLEMENT THIS
+            projectId: selectedProject.id,
+            projectName: selectedProject.name,
+            tag: "Work",
         };
 
         await AsyncStorage.setItem("currentShift", JSON.stringify(entry));
