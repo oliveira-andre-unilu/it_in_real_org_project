@@ -207,7 +207,7 @@ const Dashboard = ({ navigation }) => {
             //Duration added on End Shift Handle
             latitude: userLocation?.latitude || null,
             longitude: userLocation?.longitude || null,
-            // employeeId: , // CHECK HOW TO IMPLEMENT THIS
+            // employeeId: "2", // CHECK HOW TO IMPLEMENT THIS
             projectId: selectedProject.id,
             projectName: selectedProject.name,
             tag: "Work",
@@ -223,15 +223,48 @@ const Dashboard = ({ navigation }) => {
 
     // End Shift Function
     const handleEndShift = async () => {
-        const shiftData = await AsyncStorage.getItem("currentShift");
+        try {
+            const shiftDataJSON = await AsyncStorage.getItem("currentShift");
 
-        if (!shiftData) return;
+            if (!shiftDataJSON) {
+                Alert.alert("Error", "No active shift found.");
+                return;
+            }
 
-        // TODO: send to backend
+            const shiftData = JSON.parse(shiftDataJSON);
 
-        await AsyncStorage.removeItem("currentShift");
+            // Calculate duration
+            const start = new Date(shiftData.startTime).getTime();
+            const end = Date.now();
+            const diffMs = end - start;
+            const durationHours = diffMs / (1000 * 60 * 60); // Converts Milliseconds to Hours
 
-        setCurrentShift(null);
+            const roundedDuration = Number(durationHours.toFixed(2));
+
+            // Build Shift Payload
+            const shiftPayload = {
+                startTime: shiftData.startTime,
+                duration: roundedDuration,
+                latitude: shiftData.latitude?.toString() ?? "0",
+                longitude: shiftData.longitude?.toString() ?? "0",
+                // employeeId: Number(shiftData.employeeId),
+                projectId: Number(shiftData.projectId),
+                tag: "WORK"
+            }
+
+            // Send POST request
+            await postTimestamp(shiftPayload);
+
+            await AsyncStorage.removeItem("currentShift");
+            setCurrentShift(null);
+
+            Alert.alert("Shift Ended", `Duration: ${roundedDuration} hours`);
+
+        } catch (err) {
+            console.error("End shift error:", err);
+            Alert.alert("Error", "Could not end shift.\n" + err);
+        }
+        
     };
 
 
