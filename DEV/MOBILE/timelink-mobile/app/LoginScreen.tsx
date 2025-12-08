@@ -109,6 +109,8 @@ const LoginScreen = ({ navigation }) => {
                 placeholder="Server Url"
                 keyboardType="url"
                 onChangeText={setServerLocation}
+                importantForAutofill='yes'
+                autoCapitalize='none'
                 value={serverLocation}
                 onSubmitEditing={() => inputEmailRef.current?.focus()}
                 blurOnSubmit={false}
@@ -120,6 +122,8 @@ const LoginScreen = ({ navigation }) => {
                 placeholder="Email"
                 keyboardType="email-address"
                 onChangeText={setEmail}
+                importantForAutofill='yes'
+                autoCapitalize='none'
                 value={email}
                 onSubmitEditing={() => inputPasswordRef.current?.focus()}
                 blurOnSubmit={false}
@@ -131,6 +135,8 @@ const LoginScreen = ({ navigation }) => {
                 placeholder="Password"
                 secureTextEntry
                 onChangeText={setPassword}
+                importantForAutofill='yes'
+                autoCapitalize='none'
                 value={password}
                 onSubmitEditing={handleLogin}
             />
