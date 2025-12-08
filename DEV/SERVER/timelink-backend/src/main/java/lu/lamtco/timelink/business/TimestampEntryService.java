@@ -3,6 +3,7 @@ package lu.lamtco.timelink.business;
 import lu.lamtco.timelink.domain.Employee;
 import lu.lamtco.timelink.domain.Project;
 import lu.lamtco.timelink.domain.TimestampEntry;
+import lu.lamtco.timelink.dto.SimpleTimeStampEntryDTO;
 import lu.lamtco.timelink.dto.TimeStampEntryDTO;
 import lu.lamtco.timelink.exeptions.InvalidAuthentication;
 import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
@@ -77,6 +78,33 @@ public class TimestampEntryService {
             if (!this.verifyTimeStamp(newTimeStamp)) {
                 throw new NonConformRequestedDataException("The requested TimeStamp is not conform!!!");
             }
+
+            TimestampEntry timestampEntry = new TimestampEntry();
+            timestampEntry.setProject(finalProject);
+            timestampEntry.setEmployee(finalEmployee);
+            timestampEntry.setStartingTime(newTimeStamp.getStartTime());
+            timestampEntry.setDuration(newTimeStamp.getDuration());
+            timestampEntry.setLatitude(newTimeStamp.getLatitude());
+            timestampEntry.setLongitude(newTimeStamp.getLongitude());
+            timestampEntry.setTag(newTimeStamp.getTag());
+            return timestampEntryRepository.save(timestampEntry);
+        } else {
+            throw new UnexistingEntityException("The requested TimeStamp does not have a valid project/employee id");
+        }
+    }
+
+    public TimestampEntry createTimeStampWithNoUser(String jwtToken, SimpleTimeStampEntryDTO newTimeStamp) throws InvalidAuthentication, UnexistingEntityException{
+        //Getting identity credentials
+        UserAuthData userData = authService.getAuthData(jwtToken);
+
+        Long id = userData.id();
+
+        Optional<Project> project = projectRepository.findById(newTimeStamp.getProjectId());
+        Optional<Employee> employee = employeeRepository.findById(id);
+
+        if (project.isPresent() && employee.isPresent()) {
+            Project finalProject = project.get();
+            Employee finalEmployee = employee.get();
 
             TimestampEntry timestampEntry = new TimestampEntry();
             timestampEntry.setProject(finalProject);

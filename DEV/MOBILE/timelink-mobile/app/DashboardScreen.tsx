@@ -345,7 +345,7 @@ const Dashboard = ({ navigation }) => {
                             {timeTick > -1 && null}
 
                             <Text style={styles.runningText}>
-                                Location: {currentShift.projectLocation}
+                                Location: {currentShift.projectName}
                             </Text>
                         </View>
 
