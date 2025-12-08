@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lu.lamtco.timelink.dto.SimpleTimeStampEntryDTO;
 import lu.lamtco.timelink.dto.TimeStampEntryDTO;
 import lu.lamtco.timelink.exeptions.InvalidAuthentication;
 import lu.lamtco.timelink.exeptions.NonConformRequestedDataException;
@@ -89,6 +90,33 @@ public class TimestampEntryController {
             return ResponseEntity.status(498).build();
         } catch (UnauthorizedActionException e) {
             return ResponseEntity.status(401).build();
+        }
+    }
+
+    /**
+     * Creates a new timestamp entry.
+     * @param jwtToken JWT token for authentication
+     * @param newEntry SimpleTimestampEntryDTO containing details of the new entry
+     * @return Created TimestampEntry or relevant error response
+     */
+    @Operation(summary = "Create a new timestamp entry", description = "Add a new timestamp entry to the system")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Timestamp entry successfully created",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TimestampEntry.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "Referenced entity not found"),
+            @ApiResponse(responseCode = "498", description = "Invalid JWT token")
+    })
+    @PostMapping("/withNoId")
+    public ResponseEntity<TimestampEntry> createWithoutID(@RequestHeader String jwtToken, @RequestBody SimpleTimeStampEntryDTO newEntry) {
+        try {
+            TimestampEntry result = service.createTimeStampWithNoUser(jwtToken, newEntry);
+            return ResponseEntity.ok(result);
+        } catch (UnexistingEntityException e) {
+            return ResponseEntity.notFound().build();
+        } catch (InvalidAuthentication e) {
+            return ResponseEntity.status(498).build();
         }
     }
 
