@@ -54,7 +54,7 @@ public class CustomerService {
     public Customer createCustomer(CustomerDTO newCustomer, String jwtToken) throws NonConformRequestedDataException, InvalidAuthentication, UnauthorizedActionException {
         this.verifyAdminAccess(jwtToken);
 
-        if(this.isCostumerEntryConform(newCustomer)) {
+        if(!this.isCostumerEntryConform(newCustomer)) {
             throw new NonConformRequestedDataException("The requested data was not conform to the requirements");
         }
 
