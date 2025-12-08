@@ -1,17 +1,39 @@
-import React from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import WeeklyHoursHistogram from './WeeklyHoursHistogram';
 import {
     View,
     Text,
     TouchableOpacity,
     StyleSheet,
+    Button,
     SafeAreaView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getTimestamp} from './apiClient';
+import moment from 'moment';
+import { BarChart } from 'react-native-gifted-charts';
 
 // @ts-ignore
 const MonitorScreen = ({ navigation }) => {
 
+    const [timeStamps, setTimeStamps] = useState();
+    const [loading, setLoading] = useState(true);
+
+    const getAllTimeStamps = async () => {
+        try {
+            const data = await getTimestamp();
+            setTimeStamps(data);
+        } catch (err) {
+            console.error("Failed to fetch timestamps:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getAllTimeStamps();
+    }, []);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -19,7 +41,11 @@ const MonitorScreen = ({ navigation }) => {
 
             {/* Main Content */}
             <View style={styles.content}>
-                
+                {loading && <Text>Loading…</Text>}
+
+                {!loading && timeStamps && (
+                    <WeeklyHoursHistogram data={timeStamps} />
+                )}
             </View>
 
             {/* Bottom Navigation */}

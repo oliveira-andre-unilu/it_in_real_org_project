@@ -52,3 +52,13 @@ export const postTimestamp = async (shiftData: any) => {
         throw err;
     }
 };
+
+// GET /api/timestamps
+export const getTimestamp = async () => {
+    try {
+        const response = await api.get("api/timestamps");
+        return response.data;
+    } catch (err) {
+        console.error("Error when trying to get the timestamp data")
+    }
+}
