@@ -38,6 +38,13 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow TimeLink to access your location.",
+          "locationWhenInUsePermission": "Allow TimeLink to access your location while using the app."
+        }
       ]
     ],
     "experiments": {
