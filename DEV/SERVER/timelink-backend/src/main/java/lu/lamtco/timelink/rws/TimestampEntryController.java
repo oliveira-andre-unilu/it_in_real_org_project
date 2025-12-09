@@ -62,6 +62,29 @@ public class TimestampEntryController {
     }
 
     /**
+     * Retrieves all timestamp entries.
+     * @param jwtToken JWT token for authentication
+     * @return List of all timestamp entries or 498 if JWT token is invalid
+     */
+    @Operation(summary = "Get all self timestamp entries", description = "Retrieve a list of all timestamp entries")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved list",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TimestampEntry.class))),
+            @ApiResponse(responseCode = "498", description = "Invalid JWT token")
+    })
+    @GetMapping("/self")
+    public ResponseEntity<List<TimestampEntry>> getSelfEntries(@RequestHeader String jwtToken) {
+        List<TimestampEntry> resultList;
+        try{
+            resultList = service.getSelfTimeEntries(jwtToken);
+        }catch(InvalidAuthentication e){
+            return ResponseEntity.status(498).build();
+        }
+        return ResponseEntity.ok(resultList);
+    }
+
+    /**
      * Creates a new timestamp entry.
      * @param jwtToken JWT token for authentication
      * @param newEntry TimestampEntryDTO containing details of the new entry

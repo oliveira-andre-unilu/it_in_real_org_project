@@ -60,4 +60,19 @@ public class TimestampEntry {
     @Enumerated(EnumType.STRING)
     @Schema(description = "Tag of the entry (work or break)", example = "WORK")
     private Tag tag;
+
+    //Constructors
+    public TimestampEntry(){
+        super();
+    }
+
+    public TimestampEntry(LocalDateTime startingTime, Double duration, String latitude, String longitude, Employee employee, Project project, Tag tag){
+        this.startingTime = startingTime;
+        this.duration = duration;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.employee = employee;
+        this.project = project;
+        this.tag = tag;
+    }
 }

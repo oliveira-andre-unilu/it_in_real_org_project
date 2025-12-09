@@ -5,6 +5,7 @@ import { BarChart } from 'react-native-gifted-charts';
 
 export default function WeeklyHoursHistogram({ data }) {
   const [weekOffset, setWeekOffset] = useState(0);
+  const [maxHoursDone, setMaxHoursDone] = useState(0);
 
   // Get Monday and Sunday of the displayed week
   const weekStart = useMemo(() => moment().startOf('week').add(weekOffset, 'weeks'), [weekOffset]);
@@ -22,6 +23,7 @@ export default function WeeklyHoursHistogram({ data }) {
       if (date.isBetween(weekStart, weekEnd, null, '[]')) {
         const weekday = date.format('ddd'); // Mon, Tue, Wed, ...
         result[weekday] = (result[weekday] || 0) + entry.duration;
+        setMaxHoursDone(Math.max(maxHoursDone, result[weekday]));
       }
     });
 
@@ -53,7 +55,7 @@ export default function WeeklyHoursHistogram({ data }) {
         spacing={10}
         roundedTop
         noOfSections={4}
-        maxValue={8}   // Adjust based on expected hours
+        maxValue={maxHoursDone+1}   // Adjust based on expected hours
         yAxisTextStyle={{ color: '#444' }}
         xAxisLabelTextStyle={{ color: '#444' }}
       />

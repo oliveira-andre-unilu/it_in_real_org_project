@@ -93,6 +93,7 @@ public class TimestampEntryService {
         }
     }
 
+    @Transactional
     public TimestampEntry createTimeStampWithNoUser(String jwtToken, SimpleTimeStampEntryDTO newTimeStamp) throws InvalidAuthentication, UnexistingEntityException{
         //Getting identity credentials
         UserAuthData userData = authService.getAuthData(jwtToken);
@@ -205,7 +206,7 @@ public class TimestampEntryService {
     /**
      * Helper to retrieve timestamps for the authenticated user only.
      */
-    private List<TimestampEntry> getSelfTimeEntries(String jwtToken) throws InvalidAuthentication {
+    public List<TimestampEntry> getSelfTimeEntries(String jwtToken) throws InvalidAuthentication {
         UserAuthData userAuthData = authService.getAuthData(jwtToken);
         long id = userAuthData.id();
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
