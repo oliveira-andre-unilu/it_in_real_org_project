@@ -1,4 +1,4 @@
-import { Image } from 'expo-image';
+// React Native
 import React, { useEffect, useState } from 'react';
 import {
     View,
@@ -9,9 +9,23 @@ import {
     ScrollView,
     Alert
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import * as Location from 'expo-location';
+
+// Internal Storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Axios
+import axios from 'axios';
+
+// GPS Functionality
+import * as Location from 'expo-location';
+
+// Images
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Image } from 'expo-image';
+
+// Import External Scripts
+import { getProjects, postTimestamp, postTimestampNoID } from './apiClient';
+
 
 // @ts-ignore
 const Dashboard = ({ navigation }) => {
@@ -22,10 +36,13 @@ const Dashboard = ({ navigation }) => {
     const [currentShift, setCurrentShift] = useState<any | null>(null); // Not sure using any here is a good idea
     const [timeTick, setTimeTick] = useState(0);
 
+    
 
-    // ----------------------------------
+      ////////////////////////////
+     // On Page Load Functions //
+    ////////////////////////////
+
     // Updates TimeTick
-    // ----------------------------------
     useEffect(() => {
         const interval = setInterval(() => {
             setTimeTick(t => t + 1); // forces re-render
@@ -35,9 +52,7 @@ const Dashboard = ({ navigation }) => {
     }, []);
 
 
-    // ----------------------------------
     // Check if there is an ongoing shift
-    // ----------------------------------
     useEffect(() => {
         const loadShift = async () => {
             const storedShift = await AsyncStorage.getItem("currentShift");
@@ -49,53 +64,115 @@ const Dashboard = ({ navigation }) => {
     }, []);
 
 
-    // ---------------------------
     // Fetch user's GPS location
-    // ---------------------------
-    useEffect(() => {
-        const requestLocation = async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                Alert.alert("Error", "Location permission denied.");
-                return;
-            }
+    // useEffect(() => {
+    //     const requestLocation = async () => {
+    //         let { status } = await Location.requestForegroundPermissionsAsync();
+    //         if (status !== 'granted') {
+    //             Alert.alert("Error", "Location permission denied.");
+    //             return;
+    //         }
 
-            let location = await Location.getCurrentPositionAsync({});
-            setUserLocation({
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude
-            });
+    //         let location = await Location.getCurrentPositionAsync({});
+    //         setUserLocation({
+    //             latitude: location.coords.latitude,
+    //             longitude: location.coords.longitude
+    //         });
+    //     };
+
+    //     requestLocation();
+    // }, []);
+    useEffect(() => {
+        let subscription: { remove: any; };
+
+        const startWatching = async () => {
+            const { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== "granted") return;
+
+            subscription = await Location.watchPositionAsync(
+                {
+                    accuracy: Location.Accuracy.High,
+                    timeInterval: 2000,
+                    distanceInterval: 1,
+                },
+                (location) => {
+                    setUserLocation({
+                        latitude: location.coords.latitude,
+                        longitude: location.coords.longitude,
+                    });
+                }
+            );
         };
 
-        requestLocation();
+        startWatching();
+
+        return () => {
+            subscription?.remove();
+        };
     }, []);
 
-
-    // --------------------------------------
+    
     // Fetch Work Sites (API placeholder)
     // Replace with real backend API later
-    // --------------------------------------
     useEffect(() => {
         const fetchSites = async () => {
-            // Sample data (replace with backend fetch)
-            const sampleData = [
-                { id: 1, name: "Belval Uni", number: "A12", latitude: 49.504575, longitude: 5.949298 },
-                { id: 2, name: "Luxembourg Gare", number: "B57", latitude: 49.600764, longitude: 6.134055 },
-                { id: 3, name: "André's Home", number: "HQ-01", latitude: 49.486582, longitude: 6.086660 },
-                { id: 4, name: "Test Location 1", number: "TEST01", latitude: 49.487582, longitude: 6.186660 },
-                { id: 5, name: "Test Location 2", number: "TEST02", latitude: 49.488582, longitude: 6.176660 },
-                { id: 6, name: "Test Location 3", number: "TEST03", latitude: 49.488482, longitude: 6.177660 }
-            ];
-            setProjects(sampleData);
+            try {
+                   ///////////////////////////////////////////////////////////////
+                  //     IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT     //
+                 // Original code (works with proper back-end implementation) //
+                ///////////////////////////////////////////////////////////////
+                // const data = await getProjects();
+                // setProjects(data);
+
+
+
+                   ///////////////////////////////////////////////////////////////
+                  //     IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT     //
+                 // Temporary Fix for improper coordinate values in back-end  //
+                ///////////////////////////////////////////////////////////////                
+                const raw = await getProjects();
+
+                // FIX: Convert "location" string into latitude & longitude
+                const cleaned = raw.map((project: any) => {
+                    if (project.location && typeof project.location === "string") {
+                        const [latStr, lonStr] = project.location.split(";");
+
+                        const latitude = parseFloat(latStr);
+                        const longitude = parseFloat(lonStr);
+
+                        return {
+                            ...project,
+                            latitude: isNaN(latitude) ? null : latitude,
+                            longitude: isNaN(longitude) ? null : longitude
+                        };
+                    }
+
+                    // If location is missing, fallback safely
+                    return {
+                        ...project,
+                        latitude: project.latitude ?? null,
+                        longitude: project.longitude ?? null
+                    };
+                });
+
+                setProjects(cleaned);
+            } catch (err) {
+                Alert.alert("Error", "Could not load projects.\n" + err);
+            }
+
         };
 
         fetchSites();
     }, []);
 
 
-    // ------------------------------------------------
+
+
+      //////////////////////
+     // Helper Functions //
+    //////////////////////
+
     // Calculate distance between user <-> work site
-    // ------------------------------------------------
     const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
         if (!lat1 || !lon1 || !lat2 || !lon2) return null;
 
@@ -122,12 +199,10 @@ const Dashboard = ({ navigation }) => {
     };
 
 
-    // ----------------------------
     // Get Time Since start of Shift
-    // ----------------------------
     const getTimeAgo = (timestamp: Date) => {
-        const start = new Date(timestamp);
-        const now = new Date();
+        const start: any = new Date(timestamp);
+        const now: any = new Date();
 
         const diffMs = now - start;
         const diffMin = Math.floor(diffMs / 60000);
@@ -138,11 +213,68 @@ const Dashboard = ({ navigation }) => {
         return `${mins} m ago`;
     };
 
+    // Start Shift Logic
+    const startShift = async (selectedProject: { id: any; name: any; }) => {
+        let startTime = new Date().toISOString();
+
+        let entry: any = {
+            startTime: startTime,
+            //Duration added on End Shift Handle
+            latitude: userLocation?.latitude || null,
+            longitude: userLocation?.longitude || null,
+            // employeeId: "2", // CHECK HOW TO IMPLEMENT THIS
+            projectId: selectedProject.id,
+            projectName: selectedProject.name,
+            tag: "Work",
+        };
+
+        await AsyncStorage.setItem("currentShift", JSON.stringify(entry));
+
+        Alert.alert("Shift Started", `Shift started at: ${new Date(startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`);
+
+        setCurrentShift(entry);
+    };
+
+    // End Shift Logic
+    const endShift = async (shiftDataJSON: string) => {
+        const shiftData = JSON.parse(shiftDataJSON);
+
+        // Calculate duration
+        const start = new Date(shiftData.startTime).getTime();
+        const end = Date.now();
+        const diffMs = end - start;
+        const durationHours = diffMs / (1000 * 60 * 60); // Converts Milliseconds to Hours
+
+        const roundedDuration = Number(durationHours.toFixed(2));
+
+        // Build Shift Payload
+        const shiftPayload = {
+            startTime: shiftData.startTime,
+            duration: roundedDuration,
+            latitude: shiftData.latitude?.toString() ?? "0",
+            longitude: shiftData.longitude?.toString() ?? "0",
+            // employeeId: Number(shiftData.employeeId),
+            projectId: Number(shiftData.projectId),
+            tag: "WORK"
+        }
+
+        // Send POST request
+        await postTimestampNoID(shiftPayload);
+
+        await AsyncStorage.removeItem("currentShift");
+        setCurrentShift(null);
+
+        Alert.alert("Shift Ended", `Duration: ${roundedDuration} hours`);
+    }
 
 
-    // ----------------------------
+
+
+      ////////////////////
+     // Main Functions //
+    ////////////////////
+
     // Start Shift Function
-    // ----------------------------
     const handleStartShift = async () => {
         if (!selectedProjectId) {
             Alert.alert("No selection", "Please select a work site first.");
@@ -151,38 +283,61 @@ const Dashboard = ({ navigation }) => {
 
         const selectedProject = projects.find(s => s.id === selectedProjectId);
 
-        let startTime = new Date().toISOString();
+        Alert.alert(
+            "Start Shift",
+            `Do you want to start a shift at:\n\n${selectedProject.name}?`,
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "Yes",
+                    style: "destructive",
+                    onPress: async () => {
+                        startShift(selectedProject);
+                    }
+                }
+            ]
+        );
 
-        let entry: any = {
-            projectId: selectedProject.id,
-            projectLocation: selectedProject.name,
-            tag: "Work",
-            startTime: startTime,
-            latitude: userLocation?.latitude || null,
-            longitude: userLocation?.longitude || null
-        };
-
-        await AsyncStorage.setItem("currentShift", JSON.stringify(entry));
-
-        Alert.alert("Shift Started", `Shift started at: ${startTime}`);
-
-        setCurrentShift(entry);
     };
 
 
-    // ----------------------------
     // End Shift Function
-    // ----------------------------
     const handleEndShift = async () => {
-        const shiftData = await AsyncStorage.getItem("currentShift");
+        try {
+            const shiftDataJSON = await AsyncStorage.getItem("currentShift");
 
-        if (!shiftData) return;
+            if (!shiftDataJSON) {
+                Alert.alert("Error", "No active shift found.");
+                return;
+            }
 
-        // TODO: send to backend
+            Alert.alert(
+                "End Shift",
+                "Do you want to end your current shift?",
+                [
+                    {
+                        text: "Cancel",
+                        style: "cancel"
+                    },
+                    {
+                        text: "End Shift",
+                        style: "destructive",
+                        onPress: async () => {
+                            endShift(shiftDataJSON);
+                        }
+                    }
+                ]
+            );
+            
 
-        await AsyncStorage.removeItem("currentShift");
-
-        setCurrentShift(null);
+        } catch (err) {
+            console.error("End shift error:", err);
+            Alert.alert("Error", "Could not end shift.\n" + err);
+        }
+        
     };
 
 
@@ -202,7 +357,9 @@ const Dashboard = ({ navigation }) => {
             <View style={styles.content}>
                 {!currentShift ? (
                     <>
-                        <Text style={styles.subtitle}>Select a Shift:</Text>
+                        {/* Select Shift View */}
+
+                        <Text style={styles.subtitle}>Select a Shift</Text>
                     
                         {/* Scrollable list */}
                         <ScrollView style={{ width: "100%" }}>
@@ -225,15 +382,14 @@ const Dashboard = ({ navigation }) => {
                                             selectedProjectId === project.id && styles.cardSelected
                                             ]}
                                         onPress={() => setSelectedProjectId(project.id)} >
-                                        {/* Left Section */}
+                                        {/* Left Section: Project Name & Number */}
                                         <View style={styles.cardLeft}>
                                             <Text style={styles.projectName}>{project.name}</Text>
                                             <Text style={styles.projectNumber}>{project.number}</Text>
                                         </View>
 
-                                        {/* Right Section */}
+                                        {/* Right Section: GPS Logo & Distance */}
                                         <View style={styles.cardRight}>
-                                            {/* Temporary — replace this with your GPS icon */}
                                             <Icon name="location-outline" size={22} color="#444" />
                                             <Text style={styles.distanceText}>{distanceText}</Text>
                                         </View>
@@ -249,6 +405,8 @@ const Dashboard = ({ navigation }) => {
                     </>
                 ) : (
                     <>
+                        {/* Current Shift View */}
+
                         <Text style={styles.subtitle}>Current Shift</Text>
 
                         <View style={styles.runningShiftContainer}>
@@ -259,12 +417,8 @@ const Dashboard = ({ navigation }) => {
                             {/* Use timeTick to trigger re-render */}
                             {timeTick > -1 && null}
 
-                            {/* <Text style={styles.runningSubText}>
-                                ({getTimeAgo(currentShift.startTime)})
-                            </Text> */}
-
                             <Text style={styles.runningText}>
-                                Location: {currentShift.projectLocation}
+                                Location: {currentShift.projectName}
                             </Text>
                         </View>
 
@@ -274,8 +428,8 @@ const Dashboard = ({ navigation }) => {
                         </TouchableOpacity>
                     </>
                 )}
-                
             </View>
+
 
             {/* Bottom Navigation */}
             <View style={styles.navbar}>
@@ -299,6 +453,7 @@ const Dashboard = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    // Global Styles
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -333,13 +488,25 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#777',
     },
+    navbar: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingVertical: 15,
+        borderTopWidth: 1,
+        borderTopColor: '#eee',
+        backgroundColor: '#fafafa',
+    },
+    navItem: {
+        alignItems: 'center',
+    },
+    navText: {
+        fontSize: 12,
+        color: '#333',
+        marginTop: 4,
+    },
 
 
-    //--------------------
-    // Start Shift
-    //--------------------
-
-    /* Cards */
+    // Select Shift Styles
     card: {
         width: "100%",
         backgroundColor: "#f9f9f9",
@@ -358,12 +525,12 @@ const styles = StyleSheet.create({
     cardLeft: {
         width: "80%",
     },
-    siteName: {
+    projectName: {
         fontSize: 18,
         fontWeight: "700",
         color: "#333",
     },
-    siteNumber: {
+    projectNumber: {
         fontSize: 14,
         color: "#666",
         marginTop: 3,
@@ -378,8 +545,6 @@ const styles = StyleSheet.create({
         color: "#444",
         fontSize: 14,
     },
-
-    /* Start Shift Button */
     startButton: {
         width: "100%",
         backgroundColor: "#007AFF",
@@ -395,10 +560,7 @@ const styles = StyleSheet.create({
     },
 
 
-    //--------------------
-    // End Shift
-    //--------------------
-
+    // Current Shift Styles
     runningShiftContainer: {
         width: "100%",
         borderWidth: 2,
@@ -411,8 +573,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         // fontWeight: "700",
     },
-
-    /* End Shift Button */
     endButton: {
         width: "100%",
         backgroundColor: "#c00404ff",
@@ -425,26 +585,6 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 18,
         fontWeight: "600",
-    },
-
-
-
-
-    navbar: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingVertical: 15,
-        borderTopWidth: 1,
-        borderTopColor: '#eee',
-        backgroundColor: '#fafafa',
-    },
-    navItem: {
-        alignItems: 'center',
-    },
-    navText: {
-        fontSize: 12,
-        color: '#333',
-        marginTop: 4,
     },
 });
 
