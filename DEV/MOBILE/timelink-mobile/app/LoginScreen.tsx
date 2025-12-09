@@ -153,13 +153,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         paddingHorizontal: 30,
     },
     title: {
         fontSize: 32,
         fontWeight: '600',
         textAlign: 'center',
+        marginTop: 125,
         marginBottom: 40,
     },
     input: {

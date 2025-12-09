@@ -36,6 +36,7 @@ const Dashboard = ({ navigation }) => {
     const [currentShift, setCurrentShift] = useState<any | null>(null); // Not sure using any here is a good idea
     const [timeTick, setTimeTick] = useState(0);
 
+    
 
       ////////////////////////////
      // On Page Load Functions //
@@ -64,25 +65,53 @@ const Dashboard = ({ navigation }) => {
 
 
     // Fetch user's GPS location
-    useEffect(() => {
-        const requestLocation = async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                Alert.alert("Error", "Location permission denied.");
-                return;
-            }
+    // useEffect(() => {
+    //     const requestLocation = async () => {
+    //         let { status } = await Location.requestForegroundPermissionsAsync();
+    //         if (status !== 'granted') {
+    //             Alert.alert("Error", "Location permission denied.");
+    //             return;
+    //         }
 
-            let location = await Location.getCurrentPositionAsync({});
-            setUserLocation({
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude
-            });
+    //         let location = await Location.getCurrentPositionAsync({});
+    //         setUserLocation({
+    //             latitude: location.coords.latitude,
+    //             longitude: location.coords.longitude
+    //         });
+    //     };
+
+    //     requestLocation();
+    // }, []);
+    useEffect(() => {
+        let subscription: { remove: any; };
+
+        const startWatching = async () => {
+            const { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== "granted") return;
+
+            subscription = await Location.watchPositionAsync(
+                {
+                    accuracy: Location.Accuracy.High,
+                    timeInterval: 2000,
+                    distanceInterval: 1,
+                },
+                (location) => {
+                    setUserLocation({
+                        latitude: location.coords.latitude,
+                        longitude: location.coords.longitude,
+                    });
+                }
+            );
         };
 
-        requestLocation();
+        startWatching();
+
+        return () => {
+            subscription?.remove();
+        };
     }, []);
 
-
+    
     // Fetch Work Sites (API placeholder)
     // Replace with real backend API later
     useEffect(() => {
@@ -184,22 +213,8 @@ const Dashboard = ({ navigation }) => {
         return `${mins} m ago`;
     };
 
-
-
-
-      ////////////////////
-     // Main Functions //
-    ////////////////////
-
-    // Start Shift Function
-    const handleStartShift = async () => {
-        if (!selectedProjectId) {
-            Alert.alert("No selection", "Please select a work site first.");
-            return;
-        }
-
-        const selectedProject = projects.find(s => s.id === selectedProjectId);
-
+    // Start Shift Logic
+    const startShift = async (selectedProject: { id: any; name: any; }) => {
         let startTime = new Date().toISOString();
 
         let entry: any = {
@@ -220,6 +235,74 @@ const Dashboard = ({ navigation }) => {
         setCurrentShift(entry);
     };
 
+    // End Shift Logic
+    const endShift = async (shiftDataJSON: string) => {
+        const shiftData = JSON.parse(shiftDataJSON);
+
+        // Calculate duration
+        const start = new Date(shiftData.startTime).getTime();
+        const end = Date.now();
+        const diffMs = end - start;
+        const durationHours = diffMs / (1000 * 60 * 60); // Converts Milliseconds to Hours
+
+        const roundedDuration = Number(durationHours.toFixed(2));
+
+        // Build Shift Payload
+        const shiftPayload = {
+            startTime: shiftData.startTime,
+            duration: roundedDuration,
+            latitude: shiftData.latitude?.toString() ?? "0",
+            longitude: shiftData.longitude?.toString() ?? "0",
+            // employeeId: Number(shiftData.employeeId),
+            projectId: Number(shiftData.projectId),
+            tag: "WORK"
+        }
+
+        // Send POST request
+        await postTimestampNoID(shiftPayload);
+
+        await AsyncStorage.removeItem("currentShift");
+        setCurrentShift(null);
+
+        Alert.alert("Shift Ended", `Duration: ${roundedDuration} hours`);
+    }
+
+
+
+
+      ////////////////////
+     // Main Functions //
+    ////////////////////
+
+    // Start Shift Function
+    const handleStartShift = async () => {
+        if (!selectedProjectId) {
+            Alert.alert("No selection", "Please select a work site first.");
+            return;
+        }
+
+        const selectedProject = projects.find(s => s.id === selectedProjectId);
+
+        Alert.alert(
+            "Start Shift",
+            `Do you want to start a shift at:\n\n${selectedProject.name}?`,
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "Yes",
+                    style: "destructive",
+                    onPress: async () => {
+                        startShift(selectedProject);
+                    }
+                }
+            ]
+        );
+
+    };
+
 
     // End Shift Function
     const handleEndShift = async () => {
@@ -231,34 +314,24 @@ const Dashboard = ({ navigation }) => {
                 return;
             }
 
-            const shiftData = JSON.parse(shiftDataJSON);
-
-            // Calculate duration
-            const start = new Date(shiftData.startTime).getTime();
-            const end = Date.now();
-            const diffMs = end - start;
-            const durationHours = diffMs / (1000 * 60 * 60); // Converts Milliseconds to Hours
-
-            const roundedDuration = Number(durationHours.toFixed(2));
-
-            // Build Shift Payload
-            const shiftPayload = {
-                startTime: shiftData.startTime,
-                duration: roundedDuration,
-                latitude: shiftData.latitude?.toString() ?? "0",
-                longitude: shiftData.longitude?.toString() ?? "0",
-                // employeeId: Number(shiftData.employeeId),
-                projectId: Number(shiftData.projectId),
-                tag: "WORK"
-            }
-
-            // Send POST request
-            await postTimestampNoID(shiftPayload);
-
-            await AsyncStorage.removeItem("currentShift");
-            setCurrentShift(null);
-
-            Alert.alert("Shift Ended", `Duration: ${roundedDuration} hours`);
+            Alert.alert(
+                "End Shift",
+                "Do you want to end your current shift?",
+                [
+                    {
+                        text: "Cancel",
+                        style: "cancel"
+                    },
+                    {
+                        text: "End Shift",
+                        style: "destructive",
+                        onPress: async () => {
+                            endShift(shiftDataJSON);
+                        }
+                    }
+                ]
+            );
+            
 
         } catch (err) {
             console.error("End shift error:", err);
