@@ -53,11 +53,15 @@ export default function WeeklyHoursHistogram({ data }) {
         data={chartData}
         barWidth={30}
         spacing={10}
-        roundedTop
+        // roundedTop
+        barBorderRadius={4}
+        barBorderWidth={2}
+        barBorderColor= "#000000ff"
         noOfSections={4}
         maxValue={maxHoursDone+1}   // Adjust based on expected hours
         yAxisTextStyle={{ color: '#444' }}
         xAxisLabelTextStyle={{ color: '#444' }}
+        frontColor= "#2990feff"
       />
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 20}}>

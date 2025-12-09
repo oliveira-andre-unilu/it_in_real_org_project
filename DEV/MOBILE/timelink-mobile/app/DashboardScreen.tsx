@@ -46,7 +46,7 @@ const Dashboard = ({ navigation }) => {
     useEffect(() => {
         const interval = setInterval(() => {
             setTimeTick(t => t + 1); // forces re-render
-        }, 60000); // every 60 seconds
+        }, 30000); // every 30 seconds
 
         return () => clearInterval(interval);
     }, []);
@@ -523,7 +523,7 @@ const styles = StyleSheet.create({
         borderColor: "#007AFF",
     },
     cardLeft: {
-        width: "80%",
+        width: "75%",
     },
     projectName: {
         fontSize: 18,
@@ -538,7 +538,7 @@ const styles = StyleSheet.create({
     cardRight: {
         alignItems: "center",
         justifyContent: "center",
-        width: "20%",
+        width: "25%",
     },
     distanceText: {
         marginTop: 4,
