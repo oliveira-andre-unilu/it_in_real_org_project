@@ -1,0 +1,40 @@
+services:
+  database:
+    image: mariadb:latest
+    volumes:
+      - ./backup:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      net_timelink:
+        ipv4_address: 172.16.255.20
+    environment:
+      MARIADB_ROOT_PASSWORD: secret
+      MARIADB_DATABASE: timelink_db
+      MARIADB_USER: timelink_admin
+      MARIADB_PASSWORD: SecureAdminPwd2025!
+      MARIADB_AUTO_UPGRADE: true
+      MARIADB_DISABLE_UPGRADE_BACKUP: true
+
+  backend:
+    build: .
+    image: timelink-backend
+    depends_on:
+      - database
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://172.16.255.20:3306/timelink_db
+      SPRING_DATASOURCE_USERNAME: timelink_admin
+      SPRING_DATASOURCE_PASSWORD: SecureAdminPwd2025!
+    networks:
+      net_timelink:
+        ipv4_address: 172.16.255.10
+    ports:
+      - "5996:8080"
+
+networks:
+  net_timelink:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.255.0/24
+          gateway: 172.16.255.1
