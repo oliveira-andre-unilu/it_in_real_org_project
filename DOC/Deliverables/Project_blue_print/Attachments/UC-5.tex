@@ -1,0 +1,106 @@
+\section{Use Case: Secure Admin
+Login}\label{use-case-secure-admin-login}
+
+\textbf{Use Case ID:} UC-5\\
+\textbf{Version:} 1.0\\
+\textbf{Created:} 16/10/2025\\
+\textbf{Last Updated:} 17/10/2025\\
+\textbf{Priority:} \texttt{High}\\
+\textbf{Status:} \texttt{Draft} \\
+\textbf{Related US:} US-5
+
+\textbf{Primary Actor:} Admin\\
+\textbf{Secondary Actors:} Authentication Service\\
+\textbf{Stakeholders:}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Admin:} needs secure access to the platform
+\item
+  \textbf{IT/Security Team:} requires proper authentication and data
+  protection
+\item
+  \textbf{Company Management:} wants controlled access to administrative
+  functions
+\end{itemize}
+
+\textbf{Brief Description:}\\
+This use case describes how an admin securely logs in to the Admin
+Platform to access administrative functions, ensuring that only
+authorized users can enter the system.
+
+\textbf{Trigger:}\\
+The admin attempts to access the Admin Platform.
+
+\textbf{Preconditions:}\\
+- Admin has valid credentials - The Admin Platform is online and
+accessible
+
+\textbf{Postconditions:} - Admin is authenticated and redirected to the
+Admin Dashboard
+
+\subsubsection{Main Success Scenario}\label{main-success-scenario}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1579}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3947}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4474}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Step
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actor Action
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+System Response
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Admin opens the Admin Platform & System displays the login form \\
+2 & Admin enters username and password & System securely transmits and
+validates credentials \\
+3 & Admin is authenticated & System redirects to the Admin Dashboard \\
+\end{longtable}
+
+\subsubsection{Extensions (Alternative
+Flows)}\label{extensions-alternative-flows}
+
+\textbf{2a. Invalid Login}\\
+- \textbf{Condition:} Credentials are invalid\\
+- \textbf{Action:} System displays an error and logs the attempt -
+\textbf{Result:} Admin may retry login
+
+\subsubsection{Special Requirements}\label{special-requirements}
+
+\textbf{Performance:}\\
+- Login validation within 2 seconds
+
+\textbf{Security:}
+
+\begin{itemize}
+\tightlist
+\item
+  HTTPS for all connections
+\item
+  Passwords hashed and encrypted
+\item
+  JWT-based authentication
+\item
+  Session timeout after inactivity
+\end{itemize}
+
+\textbf{Reliability:}\\
+- Authentication service uptime \textgreater= 99.5\%
+
+\textbf{Technical Constraints:}\\
+- Integration with Authentication Service via REST API
+
+\subsubsection{Open Issues}\label{open-issues}
+
+\begin{itemize}
+\tightlist
+\item
+  Define session timeout duration
+\end{itemize}

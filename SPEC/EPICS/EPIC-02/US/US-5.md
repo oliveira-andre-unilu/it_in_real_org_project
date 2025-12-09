@@ -1,0 +1,24 @@
+# US-5
+
+## Epic: EPIC-002
+
+### US-101: As an admin, I want to log in securely to the Admin Platform
+**Status:** `Backlog`
+
+**As a** admin
+**I want to** log in securely to the Admin Platform
+**So that** only authorized users can access administrative functions
+
+**Acceptance Criteria:**
+- [ ] The login form requires a valid username and password
+- [ ] Passwords are stored and transmitted securely (e.g. hashed and encrypted)
+- [ ] Invalid login attempts are logged
+- [ ] Successful login redirects to the Admin Dashboard
+
+**Technical Notes:**
+- Use secure authentication (e.g. JWT)
+- Implement HTTPS for all connections
+- Include session timeout after inactivity
+
+**Estimate:** 3 Story Points
+**Priority:** `High`

@@ -1,0 +1,21 @@
+# User Story 01
+
+## Epic: EPIC-01
+
+### 01: Employer Shift Monitoring
+**Status:** `Backlog` <!-- | `Ready` | `In Progress`  |  `Review`  | `Done` -->
+
+**As a(n)** Employee,  
+**I want to** see a list of all my logged hours,  
+**So that** I can monitor attendance and verify shift compliance.
+
+**Acceptance Criteria:**
+- [ ] Show weekly, monthly, or yearly totals per employee.
+- [ ] Show hours in graphical diagram (example: histogram).
+- [ ] View detailed employee information (site, total hours, employee since, etc.).
+
+**Technical Notes:**
+- Graphical Diagrams could be generated at the end of each week.
+
+**Estimate:** 2-3 Story Points
+**Priority:** <!-- `High` | `Medium` | --> `Low` 

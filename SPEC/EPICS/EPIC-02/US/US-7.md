@@ -1,0 +1,22 @@
+# US-7
+
+## Epic: EPIC-002
+
+### US-103: As an admin, I want to see graphs of total hours worked per working place
+**Status:** `Backlog`
+
+**As a** admin
+**I want to** see visual representations of total working hours per location
+**So that** I can easily analyze workload distribution
+
+**Acceptance Criteria:**
+- [ ] Admin can view bar or pie charts of total hours per working place
+- [ ] Charts update dynamically when filters change
+- [ ] Data source matches what is displayed in the working hours overview
+
+**Technical Notes:**
+- Use a chart library (e.g. d3.js)
+- Ensure responsiveness for desktop and tablet views
+
+**Estimate:** 4-5 Story Points
+**Priority:** `Medium`

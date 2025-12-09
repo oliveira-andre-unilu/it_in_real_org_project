@@ -1,0 +1,38 @@
+@startuml C2_architecture
+
+component DataBase_System #LightBlue{
+    component SpringBootApplication{
+        component REST_API
+        component Back_end_logic
+
+        REST_API == Back_end_logic
+    }
+    database SQL_Database
+
+    SQL_Database =right= Back_end_logic
+}
+
+component Timelink_mobile #B7C9E2{
+    component React_based_application[
+        **React based application**
+
+        - Usage of some external libraries for
+        creation of charters
+        - Usage of some libraries for API_communication        
+    ]
+}
+
+component Timelink_admin #536878;text:White;line:White{
+    component React_web_application[
+        **React admin application**
+        - Usage of some external libraries for
+        creation of charters
+        - Usage of some libraries for API_communication 
+    ]
+}
+
+REST_API <--> Timelink_admin : HTTPS secure communication
+
+REST_API <-right-> Timelink_mobile : HTTP/HTTPS communication
+
+@enduml
