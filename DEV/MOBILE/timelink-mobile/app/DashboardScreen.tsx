@@ -1,5 +1,6 @@
 // React Native
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext} from 'react';
+import { ThemeContext } from './ThemeContext';
 import {
     View,
     Text,
@@ -29,6 +30,9 @@ import { getProjects, postTimestamp, postTimestampNoID } from './apiClient';
 
 // @ts-ignore
 const Dashboard = ({ navigation }) => {
+
+    const { theme } = useContext(ThemeContext);
+    const isDark = theme === 'dark'; // Dark mode flag
 
     const [projects, setProjects] = useState<any[]>([]);
     const [selectedProjectId, setSelectedProjectId] = useState<any | null>(null); // Not sure using any here is a good idea
@@ -340,7 +344,7 @@ const Dashboard = ({ navigation }) => {
         
     };
 
-
+    const styles = themedStyles(isDark);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -452,140 +456,66 @@ const Dashboard = ({ navigation }) => {
     );
 };
 
-const styles = StyleSheet.create({
-    // Global Styles
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    header: {
-        paddingTop: 20,
-        paddingBottom: 20,
-        alignItems: 'center',
-        // backgroundColor: '#f8f8f8',
-    },
-    logo: {
-        // backgroundColor: 'darkgrey',
-        // borderRadius: 300,
-        width: 200,
-        height: 100,
-        textAlign: "center",
-    },
-    content: {
-        flex: 1,
-        // justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 20,
-    },
-    subtitle: {
-        fontSize: 24,
-        fontWeight: '600',
-        marginBottom: 10,
-        color: '#555',
-    },
-    description: {
-        fontSize: 16,
-        textAlign: 'center',
-        color: '#777',
-    },
-    navbar: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingVertical: 15,
-        borderTopWidth: 1,
-        borderTopColor: '#eee',
-        backgroundColor: '#fafafa',
-    },
-    navItem: {
-        alignItems: 'center',
-    },
-    navText: {
-        fontSize: 12,
-        color: '#333',
-        marginTop: 4,
-    },
+const themedStyles = (dark: boolean) => StyleSheet.create({
+        // Global Styles
+        container: { flex: 1, backgroundColor: dark ? "#000" : "#fff" },
+        header: { paddingTop: 20, paddingBottom: 20, alignItems: 'center' },
+        logo: { width: 200, height: 100, textAlign: "center" },
+        content: { flex: 1, alignItems: 'center', paddingHorizontal: 20 },
 
+        // Text Styles
+        subtitle: { fontSize: 24, fontWeight: '600', marginBottom: 10, color: dark ? "#fff" : "#555" },
+        description: { fontSize: 16, textAlign: 'center', color: dark ? "#ccc" : "#777" },
+        projectName: { fontSize: 18, fontWeight: "700", color: dark ? "#fff" : "#333" },
+        projectNumber: { fontSize: 14, color: dark ? "#ccc" : "#666", marginTop: 3 },
+        distanceText: { marginTop: 4, fontSize: 14, color: dark ? "#aaa" : "#444" },
+        runningText: { fontSize: 18, color: dark ? "#fff" : "#000" },
+        navText: { fontSize: 12, color: dark ? "#eee" : "#333", marginTop: 4 },
 
-    // Select Shift Styles
-    card: {
-        width: "100%",
-        backgroundColor: "#f9f9f9",
-        padding: 15,
-        borderRadius: 12,
-        marginBottom: 12,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        borderWidth: 2,
-        borderColor: "transparent"
-    },
-    cardSelected: {
-        borderColor: "#007AFF",
-    },
-    cardLeft: {
-        width: "80%",
-    },
-    projectName: {
-        fontSize: 18,
-        fontWeight: "700",
-        color: "#333",
-    },
-    projectNumber: {
-        fontSize: 14,
-        color: "#666",
-        marginTop: 3,
-    },
-    cardRight: {
-        alignItems: "center",
-        justifyContent: "center",
-        width: "20%",
-    },
-    distanceText: {
-        marginTop: 4,
-        color: "#444",
-        fontSize: 14,
-    },
-    startButton: {
-        width: "100%",
-        backgroundColor: "#007AFF",
-        paddingVertical: 14,
-        borderRadius: 10,
-        marginTop: 15,
-    },
-    startButtonText: {
-        textAlign: "center",
-        color: "#fff",
-        fontSize: 18,
-        fontWeight: "600",
-    },
+        // Card Styles
+        card: {
+            width: "100%",
+            backgroundColor: dark ? "#222" : "#f9f9f9",
+            padding: 15,
+            borderRadius: 12,
+            marginBottom: 12,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            borderWidth: 2,
+            borderColor: "transparent"
+        },
+        cardSelected: { borderColor: "#007AFF" },
+        cardLeft: { width: "80%" },
+        cardRight: { alignItems: "center", justifyContent: "center", width: "20%" },
 
+        // Button Styles
+        startButton: { width: "100%", backgroundColor: "#007AFF", paddingVertical: 14, borderRadius: 10, marginTop: 15 },
+        startButtonText: { textAlign: "center", color: "#fff", fontSize: 18, fontWeight: "600" },
+        endButton: { width: "100%", backgroundColor: "#c00404ff", paddingVertical: 14, borderRadius: 10, marginTop: 15 },
+        endButtonText: { textAlign: "center", color: "#fff", fontSize: 18, fontWeight: "600" },
 
-    // Current Shift Styles
-    runningShiftContainer: {
-        width: "100%",
-        borderWidth: 2,
-        padding: 15,
-        borderRadius: 12,
-        marginBottom: 12,
-        backgroundColor: "#f9f9f9",
-    },
-    runningText: {
-        fontSize: 18,
-        // fontWeight: "700",
-    },
-    endButton: {
-        width: "100%",
-        backgroundColor: "#c00404ff",
-        paddingVertical: 14,
-        borderRadius: 10,
-        marginTop: 15,
-    },
-    endButtonText: {
-        textAlign: "center",
-        color: "#fff",
-        fontSize: 18,
-        fontWeight: "600",
-    },
-});
+        // Current Shift Container
+        runningShiftContainer: {
+            width: "100%",
+            borderWidth: 2,
+            padding: 15,
+            borderRadius: 12,
+            marginBottom: 12,
+            backgroundColor: dark ? "#222" : "#f9f9f9"
+        },
+
+        // Navbar Styles
+        navbar: {
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            paddingVertical: 15,
+            borderTopWidth: 1,
+            borderTopColor: dark ? "#333" : "#eee",
+            backgroundColor: dark ? "#111" : "#fafafa"
+        },
+        navItem: { alignItems: 'center' }
+    });
+
 
 export default Dashboard;

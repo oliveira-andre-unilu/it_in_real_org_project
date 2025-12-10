@@ -1,9 +1,11 @@
-import React from 'react';
-import AppNavigator from './Navigator';
-// import { NavigationContainer } from '@react-navigation/native';
+import React from "react";
+import AppNavigator from "./Navigator";
+import { ThemeProvider } from "./ThemeContext";
 
 export default function App() {
   return (
-    <AppNavigator />
+      <ThemeProvider>
+        <AppNavigator />
+      </ThemeProvider>
   );
 }
