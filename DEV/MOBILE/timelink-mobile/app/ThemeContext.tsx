@@ -18,7 +18,7 @@ type Props = { children: ReactNode };
 export const ThemeProvider = ({ children }: Props) => {
     const [theme, setTheme] = useState<ThemeType>("light");
 
-    // Load saved theme on mount
+    // Load saved theme out of Storage
     useEffect(() => {
         AsyncStorage.getItem("theme").then(saved => {
             if (saved === "light" || saved === "dark") setTheme(saved);
