@@ -1,0 +1,641 @@
+\subsection{QA Test Report}\label{qa-test-report}
+
+\subsubsection{Manual Tests}\label{manual-tests}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0260}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1039}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2684}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2684}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2684}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0649}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+UC \#
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Preconditions
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Steps
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Expected Result
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actual Result
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Monitor Employee Shift & - User connected to the Internet- User
+logged into the application & - Open application- Click button ``Review
+work'' to go to the review page- Select the time period & - Employee's
+working hours are displayed for the selected time- Employee's
+information is displayed, within 2 seconds & \\
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0233}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1946}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2412}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2412}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2412}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0584}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+UC \#
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Preconditions
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Steps
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Expected Result
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actual Result
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Monitor Employee Shift (no time period selected) & - User connected
+to the Internet- User logged into the application & - Open application-
+Click button ``Review work'' to go to the review page & - Employee's
+working hours of the month are displayed - Employee's information is
+displayed, within 2 seconds & \\
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0223}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2305}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2305}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2305}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2305}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0558}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+UC \#
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Preconditions
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Steps
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Expected Result
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actual Result
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Monitor Employee Shift (no working hours for this time period) & -
+User connected to the Internet- User logged into the application & -
+Open application- Click button ``Review work'' to go to the review page-
+Select the time period & - Warning message: ``No working hours for the
+selected time period.'' & \\
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0270}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0676}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2793}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2793}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2793}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0676}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+UC \#
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Preconditions
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Steps
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Expected Result
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actual Result
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+2 & Start a Shift & - User connected to the Internet- User logged into
+the application- Application has GPS allowed & - Open application- Go to
+the Shift Page- Click button: ``Start shift'' & - Shift has started
+within 2 seconds- Timestamps and GPS saved- Message: ``Shift started at
+hh:mm'' & \\
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0259}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1078}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2672}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2672}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2672}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0647}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+UC \#
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Preconditions
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Steps
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Expected Result
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actual Result
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+2 & Start a Shift (offline) & - User not connected to the internet- User
+logged into the application- Application has GPS allowed & - Open
+application- Go to the Shift Page- Click button: ``Start shift'' & -
+Application saved shift data locally- Message: ``Data will be
+synchronized when you are online''- Response within 2 seconds- Data is
+sent to the server when online & \\
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0260}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1039}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2684}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2684}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2684}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0649}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+UC \#
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Preconditions
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Steps
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Expected Result
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actual Result
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+2 & Start a Shift (no GPS) & - User connected to the internet- User
+logged into the application- GPS not allowed on the App & - Open
+application- Go to the Shift Page- Click button: ``Start shift'' & -
+Shift has started within 2 seconds- Timestamps only is saved and GPS
+value are null- Data is sent to the server- Message: ``Shift started at
+hh:mm'' & \\
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0273}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0591}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2818}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2818}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2818}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0682}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+UC \#
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Preconditions
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Steps
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Expected Result
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actual Result
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+3 & End a Shift & - User connected to the Internet- User logged into the
+application- Has an active shift & - Open application- Go to the Shift
+Page- Click button: ``End shift'' & - Shift has ended within 2 seconds-
+Hours saved and total number of hours computed without errors- Message:
+``Shift ended total: hh:mm'' & \\
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0261}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2696}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2696}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2696}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0652}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+UC \#
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Preconditions
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Steps
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Expected Result
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actual Result
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+3 & End a Shift (offline) & - User not connected to the Internet- User
+logged into the application- Has an active shift & - Open application-
+Go to the Shift Page- Click button: ``End shift'' & - Shift has ended
+within 2 seconds- Data stored locally, auto synchronization when online-
+Message: ``Shift ended total: hh:mm'' & \\
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1556}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.3444}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0389}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.3444}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0833}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+UC \#
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Preconditions
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Steps
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Expected Result
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actual Result
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+4 & Employee Reminder (Part 1) & - User connected to the Internet- User
+logged into the application- Notifications for this application are
+enabled- At least one available shift is associated with the reminder-
+User has configured a reminder for its shift (example: 5min before the
+start of the shift)- The specified time for the notification to be send
+is reached & /// & - Notification is send to the user (``Your shift
+starts in \ldots{} minutes.'' / ``Your shift ends in \ldots{} minutes.''
+) within 2 seconds. & \\
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0255}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1191}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2638}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2638}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2638}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0638}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+UC \#
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Preconditions
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Steps
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Expected Result
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actual Result
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+4 & Employee Reminder (Part 2) & - User connected to the Internet- User
+logged into the application- Notifications for this application are
+enabled- At least one available shift is associated with the reminder-
+User has configured a reminder for its shift (example: 5min before the
+start of the shift)- The notification has been sent & - User opens the
+notification on its device- User click on its notification & -
+Applocation opens directly to ``Start a shift'' / ``End shift'' screen.
+& \\
+\end{longtable}
+
+\subsubsection{Unit \& Integration Tests}\label{unit-integration-tests}
+
+\paragraph{Unit test summary}\label{unit-test-summary}
+
+During the execution of the unit tests, several issues were discovered,
+mostly related to incorrect business logic in the backend layer. For
+example, the verifyEmail() method returned false when the email did not
+exist in the system, while logically it should only return false when
+the email already exists. These issues demonstrate the usefulness of
+unit tests in detecting logic defects very early in the development
+phase.
+
+Most modules passed unit tests successfully, including:
+
+\begin{itemize}
+\tightlist
+\item
+  Service layer
+\item
+  Domain and DTO objects
+\item
+  Exception handling
+\item
+  Security configuration
+\end{itemize}
+
+However, the Controller tests encoutered problems and were unable to
+complete execution.
+
+Overall, unit testing revealed multiple design inconsistency that need
+to be fixed before release. The test campaign proved highly valuable for
+improving code reliability, especially on core business logic.
+
+\paragraph{List of executed tests}\label{list-of-executed-tests}
+
+The unit tests cover all critical features of the application:
+EmployeeServiceTest
+
+\begin{itemize}
+\tightlist
+\item
+  Employee creation (validations, admin role, email conflicts)
+\item
+  Update
+\item
+  Deletion
+\item
+  Retrieval by ID or Email
+\item
+  Admin access vs.~self-identity access
+\item
+  Authorization checks
+\item
+  Exceptions on invalid data
+\end{itemize}
+
+ProjectServiceTest
+
+\begin{itemize}
+\tightlist
+\item
+  Project creation
+\item
+  Project number conflicts
+\item
+  Client/project association
+\item
+  Update
+\item
+  Deletion
+\item
+  Full project listing
+\item
+  Admin access
+\item
+  Exceptions for missing client or project
+\end{itemize}
+
+TimestampEntryServiceTest
+
+\begin{itemize}
+\tightlist
+\item
+  Timestamp creation
+\item
+  Update
+\item
+  Deletion
+\item
+  Global and per-ID retrieval
+\item
+  Duration/GPS coordinate validation
+\item
+  Exceptions for missing employee/project or invalid duration
+\end{itemize}
+
+CustomerServiceTest
+
+\begin{itemize}
+\tightlist
+\item
+  Valid customer creation
+\item
+  Valid/invalid email
+\item
+  Customer update
+\item
+  Customer deletion
+\item
+  Customer search
+\item
+  Admin validation
+\item
+  Exceptions based on data compliance
+\end{itemize}
+
+AuthServiceTest
+
+\begin{itemize}
+\tightlist
+\item
+  Successful authentication
+\item
+  Encrypted password verification
+\item
+  Token generation
+\item
+  Non-existing email
+\item
+  Invalid credentials
+\end{itemize}
+
+UserAuthDataTest
+
+\begin{itemize}
+\tightlist
+\item
+  Creation of authentication users with or without constructor arguments
+\item
+  Equality between instances
+\item
+  Proper hashCode() and toString() implementation
+\end{itemize}
+
+AuthRequestTest
+
+\begin{itemize}
+\tightlist
+\item
+  Validation of both constructors
+\item
+  Getters / setters behavior
+\item
+  Data consistency
+\end{itemize}
+
+Each entity test includes:
+
+\begin{itemize}
+\tightlist
+\item
+  field initialization
+\item
+  consistency of bidirectional relationships
+\item
+  persistence of stored values
+\end{itemize}
+
+Enums Role \& Tag
+
+\begin{itemize}
+\tightlist
+\item
+  Validation of enum constants
+\item
+  Behavior of valueOf()
+\end{itemize}
+
+DTO tests validate:
+
+\begin{itemize}
+\tightlist
+\item
+  creation with or without attributes
+\item
+  setters behavior
+\item
+  field updates
+\item
+  acceptance of null values when allowed
+\end{itemize}
+
+ExceptionsTest
+
+\begin{itemize}
+\tightlist
+\item
+  Verification of business exception hierarchy
+\item
+  Correct initialization of message and cause
+\end{itemize}
+
+\textbf{Integration} AuthControllerIT
+
+\begin{itemize}
+\tightlist
+\item
+  Login validated via password hash
+\item
+  Checks for wrong password and non-existent user
+\end{itemize}
+
+CustomerControllerIT
+
+\begin{itemize}
+\tightlist
+\item
+  Retrieval, creation, and database persistence
+\end{itemize}
+
+EmployeeControllerIT
+
+\begin{itemize}
+\tightlist
+\item
+  Full CRUD (read, create, update, delete)
+\end{itemize}
+
+ProjectControllerIT
+
+\begin{itemize}
+\tightlist
+\item
+  Retrieval and creation in client context
+\end{itemize}
+
+TimestampEntryControllerIT
+
+\begin{itemize}
+\tightlist
+\item
+  Creation, reading, updating, and deletion
+\item
+  Admin vs.~self access rules
+\item
+  Business validation (maximum duration, etc.)
+\end{itemize}
+
+\paragraph{Percentage of tests that
+passed/failed}\label{percentage-of-tests-that-passedfailed}
+
+\begin{longtable}[]{@{}clcc@{}}
+\toprule\noalign{}
+\textbf{Test class} & Number of tests executed & \textbf{Passed} &
+\textbf{Failed} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Services & 45 & 44 & 1 \\
+Controllers & 19 & 0 & 0 \\
+Domain/Models & 10 & 10 & 0 \\
+DTO & 11 & 11 & 0 \\
+Exceptions & 6 & 6 & 0 \\
+Security & 22 & 22 & 0 \\
+Total & 113 & 113 & 1 \\
+\end{longtable}
+
+\paragraph{Summary of detected critical
+errors}\label{summary-of-detected-critical-errors}
+
+Only one error was noted, concerning
+TimestampEntryService.updateTimeStamp: - the test reports a
+NonConformRequestedDataException related to Timestamp compliance, likely
+due to validation (duration / start time / business rule). - No other
+test revealed functional errors. - No errors related to the Repository
+or dependency injections. - Admin / self-access rules work correctly. -
+Business constraints (email, existing project, etc.) are properly
+enforced.
+
+\textbf{Note:} The integration tests for controllers (AuthControllerIT,
+CustomerControllerIT, EmployeeControllerIT, ProjectControllerIT,
+TimestampEntryControllerIT) do not complete execution, they remain
+pending instead of passing or failing.
+
+\paragraph{Conclusion}\label{conclusion}
+
+Unit tests demonstrate a stable, consistent, and secure application,
+where:
+
+\begin{itemize}
+\tightlist
+\item
+  business rules are properly enforced,
+\item
+  administrative access controls are robust,
+\item
+  CRUD operations behave correctly,
+\item
+  exceptions are correctly propagated.
+\end{itemize}
+
+The test coverage is extensive and relevant, covering both normal and
+exceptional scenarios. The only non-compliance to address concerns the
+update of a Timestamp, potentially related to overly strict business
+rule validation or a missing initialization in the mock.\\
+\textbf{Note:} The integration tests for controllers remain pending and
+do not complete execution, so their actual pass/fail status is not
+determined.

@@ -1,3 +1,3 @@
 # Final project
 
-Folder containing all the deliverables used for th final presentation
+Folder containing all the deliverables used for the final presentation
