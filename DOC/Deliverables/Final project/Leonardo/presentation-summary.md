@@ -46,27 +46,65 @@
 
 ## Final Conclusion
 
-### Project Overview
+### Project overview
 
-* The project achieved its primary objective of delivering a functional prototype within the defined scope.
+The Timelink project was carried out through a structured development process that covered the full software lifecycle. The main deliverables included:
 
-### Results and Highlights
+* Brainstorming and idea definition
+* Specification and requirements analysis
+* Software architecture design
+* UI mockups and blueprint creation
+* Back-end development
+* Front-end (mobile) development
 
-* Fully operational mobile app connected to a data server.
-* Strong test results with an excellent pass rate.
+This approach allowed the team to progress from concept to a functional prototype in a controlled and iterative manner.
 
-### Challenges and Resolutions
+---
 
-* Scope adjustments were required to meet deadlines.
-* Technical challenges were addressed through iterative development and testing.
+### Results and highlights
 
-### Positive Outcomes
+* Delivery of **Timelink Prototype Version 1**, serving as a proof of concept
+* A solid and extensible codebase established for future development
+* Functional foundations in place for:
 
-* Stable and usable prototype.
-* Clear validation of system architecture and design choices.
+  * Security and authentication
+  * Back-end data handling
+  * Mobile front-end user experience
 
-### Lessons Learned
+---
 
-* Importance of scope management and prioritization.
-* Early and continuous testing greatly improves overall quality.
-* Incremental development helps identify and resolve issues efficiently.
+### Challenges and resolutions
+
+Several challenges were encountered during development:
+
+* Part of the initial scope had to be reduced to ensure timely delivery
+* Defining a compliant and feasible architecture required multiple iterations
+* Team members had to learn and adapt to new programming languages and technologies
+* Early design definitions were sometimes lacking, requiring later adjustments
+
+These challenges were addressed through prioritization, continuous discussion, and iterative improvements.
+
+---
+
+### Positive outcomes
+
+**Technical outcomes:**
+
+* Hands-on experience with Expo and React Native
+* Integration and usage of Swagger / OpenAPI for backend communication
+* Better understanding of the differences between React Native and React
+
+**General outcomes:**
+
+* Improved task management and individual responsibility
+* Enhanced teamwork and collaboration through coordinated development and testing efforts
+
+---
+
+### Lessons learned
+
+* Design phases should be emphasized more and specified in greater detail
+* Testing should be introduced earlier in the development process
+* Scope creep should be avoided, and contingencies should always be planned for unexpected issues
+
+Overall, the project provided valuable technical and organizational learning experiences while delivering a working prototype of the Timelink system.
