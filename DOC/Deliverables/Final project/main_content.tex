@@ -1,0 +1,128 @@
+% ------------------------------------------------
+% PROFESSIONAL PROJECT BLUEPRINT TEMPLATE
+% ------------------------------------------------
+\documentclass[12pt,a4paper]{report}
+
+% -------------------------------
+% PACKAGES
+% -------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{tocloft}
+\usepackage{xcolor}
+\usepackage{tikz}            % For the colored background on title page
+\usepackage{lipsum}          % Sample text (remove later)
+
+% -------------------------------
+% COLORS
+% -------------------------------
+\definecolor{myblue}{HTML}{0B3D91}   % Deep corporate blue
+\definecolor{lightgray}{HTML}{F5F5F5}
+\definecolor{darkgray}{HTML}{2E2E2E}
+
+% -------------------------------
+% LINK STYLES
+% -------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=myblue,
+    urlcolor=myblue,
+    citecolor=myblue
+}
+
+% -------------------------------
+% HEADER & FOOTER
+% -------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{Project Blueprint}}
+\fancyhead[R]{\leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% -------------------------------
+% SECTION STYLE
+% -------------------------------
+\titleformat{\chapter}[hang]{\bfseries\Huge\color{myblue}}{\thechapter\quad}{0pt}{}
+\titleformat{\section}[hang]{\bfseries\Large\color{myblue}}{\thesection\quad}{0pt}{}
+\titleformat{\subsection}[hang]{\bfseries\large\color{myblue}}{\thesubsection\quad}{0pt}{}
+
+% -------------------------------
+% PANDOC COMMANDS
+% -------------------------------
+\input{pandoc-compat.tex}
+
+% -------------------------------
+% TITLE PAGE (CUSTOM DESIGN)
+% -------------------------------
+\newcommand{\makemytitle}{
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture,overlay]
+        % Background rectangle (change 'myblue' to 'darkgray' for a gray version)
+        \fill[darkgray] (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}
+
+    \vspace*{3cm}
+    \begin{center}
+        \includegraphics[width=0.25\textwidth]{../../Assets/Main_logo.png} \\[2cm] % Replace with your logo file
+
+        {\Huge\bfseries\color{white} Final Report}\\[0.5cm]
+        {\Large\color{white} IT in a real organization}\\[2cm]
+
+        {\large\color{white} André Martins,\\Manon Barthelemy,\\Elvin Cocco,\\Leonardo Coimbra,\\Tomás Coimbra}\\[2cm]
+        {\color{white} Lamtco Solutions}\\[0.2cm]
+        {\color{white}\href{mailto:0230991223@uni.lu}{0230991223@uni.lu}}\\[2cm]
+
+        {\large\color{white}\today}
+    \end{center}
+\end{titlepage}
+}
+
+% -------------------------------
+% DOCUMENT START
+% -------------------------------
+\begin{document}
+
+% Custom Cover Page
+\makemytitle
+\thispagestyle{empty}
+\clearpage
+
+% Table of Contents
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+
+% Main Content
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+
+In this document you will find the a summary of the work that has been accomplished by the whole team for this project.
+
+\chapter{Risk Management}
+
+\input{Manon/Risk Register.tex}
+
+\input{Manon/QA_Test_Report.tex}
+
+{
+    \let\subsection\section
+    \let\section\chapter
+    
+
+    \input{Leonardo/presentation-summary.tex}
+}
+
+
+\end{document}
