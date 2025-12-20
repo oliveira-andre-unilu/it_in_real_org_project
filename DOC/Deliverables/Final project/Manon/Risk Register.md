@@ -1,4 +1,5 @@
 # Risk Register
+
 | Risk name                                                    | Risk Description                                             | Risk Impact                                                  | Solution                                                     |
 |--------------------------------------------------------------|--------------------------------------------------------------|--------------------------------------------------------------|--------------------------------------------------------------|
 | Regulatory non-compliance (GDPR)                             | The system can expose sensible data (name, ID, hire date) without respecting GDPR. | High, legal risk and reputation risk                         | We can either accept this risk because our project will not be public, or we can try to add compliant measures (hahsing) |

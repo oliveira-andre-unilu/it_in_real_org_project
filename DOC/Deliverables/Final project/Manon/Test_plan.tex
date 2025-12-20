@@ -1,0 +1,159 @@
+\hypertarget{qa-test-plan}{%
+\section{QA Test Plan}\label{qa-test-plan}}
+
+\hypertarget{objective}{%
+\subsection{Objective}\label{objective}}
+
+The objective of this test plan is to validate the functional quality,
+the reliability, and security of the employee shift management
+application, based on the results of:
+
+\begin{itemize}
+\tightlist
+\item
+  manual tests
+\item
+  unit tests
+\item
+  integration tests and based on the risks identified in the Risk
+  Register.
+\end{itemize}
+
+This plan aims to ensure that critical features are operational and that
+the main risks are either covered by testing or explicitly accepted.
+
+\hypertarget{scope-of-testing}{%
+\subsection{Scope of Testing}\label{scope-of-testing}}
+
+\hypertarget{features-tested}{%
+\subsubsection{Features tested}\label{features-tested}}
+
+The tests cover the following use cases:
+
+\begin{itemize}
+\tightlist
+\item
+  UC-1: Monitor Employee Shift
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Viewing working hours
+  \item
+    Managing default periods
+  \item
+    Cases where no data is available
+  \end{itemize}
+\item
+  UC-2: Start a Shift
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Starting online/offline
+  \item
+    GPS management
+  \end{itemize}
+\item
+  UC-3: End a Shift
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Ending a shift online
+  \item
+    Ending a shift offline (partially tested)
+  \end{itemize}
+\item
+  UC-4: Employee Reminder
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Sending notifications
+  \item
+    Redirection from the notification
+  \end{itemize}
+\end{itemize}
+
+Backend testing covers:
+
+\begin{itemize}
+\tightlist
+\item
+  business services (Employee, Project, Timestamp, Customer, Auth),
+\item
+  security and authorization rules,
+\item
+  exceptions and data validation,
+\item
+  controller integration testing (partially executed).
+\end{itemize}
+
+\hypertarget{out-of-scope}{%
+\subsubsection{Out of scope}\label{out-of-scope}}
+
+\begin{itemize}
+\tightlist
+\item
+  Large-scale performance
+\item
+  Load testing
+\item
+  Full regulatory compliance (GDPR)
+\item
+  Advanced competition management (multi-admin)
+\end{itemize}
+
+\hypertarget{testing-strategy}{%
+\subsection{Testing strategy}\label{testing-strategy}}
+
+\hypertarget{types-of-tests}{%
+\subsubsection{Types of tests}\label{types-of-tests}}
+
+\begin{itemize}
+\tightlist
+\item
+  Manual functional tests
+\item
+  Unit tests
+\item
+  Integration tests
+\end{itemize}
+
+\hypertarget{risk-based-prioritization}{%
+\subsubsection{Risk-based
+prioritization}\label{risk-based-prioritization}}
+
+The following features are considered critical:
+
+\begin{itemize}
+\tightlist
+\item
+  Start and end of shift (UC-2, UC-3)
+\item
+  Access rights management (Auth, Employee, Admin)
+\item
+  Working time data integrity
+\end{itemize}
+
+The following features are secondary:
+
+\begin{itemize}
+\tightlist
+\item
+  Notifications (UC-4)
+\item
+  Offline management of shift end
+\end{itemize}
+
+\hypertarget{conclusion}{%
+\subsection{Conclusion}\label{conclusion}}
+
+The test plan shows that the application is functionally stable for its
+main uses.\\
+Critical features have been validated, and identified risks are either
+covered by testing or clearly accepted with full knowledge of the
+facts.\\
+However, improvements are needed in notification management, offline
+shift, and compliance rules before large-scale deployment.

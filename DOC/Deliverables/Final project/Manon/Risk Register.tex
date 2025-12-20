@@ -1,24 +1,15 @@
-\section{Risk Register}\label{risk-register}
+\hypertarget{risk-register}{%
+\section{Risk Register}\label{risk-register}}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Risk name
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Risk Description
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Risk Impact
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Solution
-\end{minipage} \\
-\midrule\noalign{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.25}}@{}}
+\toprule
+Risk name & Risk Description & Risk Impact & Solution \\
+\midrule
 \endhead
-\bottomrule\noalign{}
-\endlastfoot
 Regulatory non-compliance (GDPR) & The system can expose sensible data
 (name, ID, hire date) without respecting GDPR. & High, legal risk and
 reputation risk & We can either accept this risk because our project
@@ -41,7 +32,7 @@ modification to prevent this risk \\
 No validation prior to major modification (add, remove, edit a user or a
 working place) & No confirmation before modification or deletion.Risk of
 irreversible human error. & High & Implement a validation system, a
-message (``Are you sure you want to\ldots'') \\
+message (``Are you sure you want to\ldots{}'') \\
 Poor management of duplicates & Users, project, working places, etc..
 are created multiple times & Medium & When developement, think of
 managing duplicates to prevent this risk \\
@@ -52,4 +43,5 @@ Unautorized access, security failure & A compromised admin account, or a
 password leak that allow access to the system. & High, GDPR sanctions,
 data breaches, manipulation of sensitive information & Use security
 measures (multi-factor authentication, strong password, etc\ldots) \\
+\bottomrule
 \end{longtable}
